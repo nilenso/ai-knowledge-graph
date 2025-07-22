@@ -25,10 +25,71 @@ body {
     z-index: 10;
 }
 
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 .controls h2 {
-    margin: 0 0 10px 0;
+    margin: 0;
     color: #2c3e50;
     font-size: 1.5rem;
+}
+
+.mode-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.download-btn {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background: #138496;
+}
+
+.edit-toggle-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.edit-toggle-btn:hover {
+    background: #2980b9;
+}
+
+.edit-toggle-btn.active {
+    background: #e74c3c;
+}
+
+.edit-toggle-btn.active:hover {
+    background: #c0392b;
+}
+
+.changes-indicator {
+    color: #e74c3c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .filter-controls {
@@ -59,12 +120,25 @@ body {
     cursor: pointer;
 }
 
-.category-color {
+.edge-color {
     width: 12px;
     height: 12px;
     border-radius: 2px;
     display: inline-block;
     border: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+.synonym-color {
+    background-color: #27ae60;
+}
+
+.related-color {
+    background-color: #f39c12;
+}
+
+.mentions-color {
+    background-color: #9b59b6;
 }
 
 .filter-controls input[type="checkbox"] {
@@ -188,6 +262,117 @@ body {
 
 .edge-type.mentions {
     background: #9b59b6;
+}
+
+/* Edit form styles */
+.edit-form {
+    padding-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #495057;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.edges-list {
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.edge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+}
+
+.edge-item:last-child {
+    margin-bottom: 0;
+}
+
+.edge-item select,
+.edge-item input {
+    flex: 1;
+    min-width: 0;
+}
+
+.edge-item .remove-edge {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.edge-item .remove-edge:hover {
+    background: #c82333;
+}
+
+.add-edge-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+}
+
+.add-edge-btn:hover {
+    background: #218838;
+}
+
+.form-actions {
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Node modification indicators */
+.node-modified {
+    border-style: dashed !important;
+    border-width: 3px !important;
 }
 
 .tooltip {

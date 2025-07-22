@@ -4,12 +4,28 @@ let allEdges = [];
 let allNodes = [];
 let categories = [];
 let categoryColors = {};
+let isEditMode = false;
+let originalData = [];
+let modifiedNodes = new Set();
+let currentEditingNode = null;
+
+// Simple hash function for consistent positioning
+function hashString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+}
 
 // Initialize the graph
 async function initGraph() {
     try {
         const response = await fetch('ai-knowledge-graph.json');
         graphData = await response.json();
+        originalData = JSON.parse(JSON.stringify(graphData)); // Deep copy for change tracking
         
         const elements = createCytoscapeElements(graphData);
         allEdges = elements.edges;
@@ -22,6 +38,15 @@ async function initGraph() {
         // Create category filter UI
         createCategoryFilters(categories);
         
+        // Set a deterministic random seed for consistent layouts
+        Math.random = (function() {
+            let seed = 12345; // Fixed seed for consistency
+            return function() {
+                seed = (seed * 9301 + 49297) % 233280;
+                return seed / 233280;
+            };
+        })();
+
         cy = cytoscape({
             container: document.getElementById('cy'),
             elements: elements,
@@ -30,11 +55,11 @@ async function initGraph() {
                     selector: 'node',
                     style: {
                         'shape': 'roundrectangle',
-                        'background-color': 'data(categoryColor)',
+                        'background-color': '#f8f9fa',
                         'label': 'data(label)',
                         'text-valign': 'center',
                         'text-halign': 'center',
-                        'color': '#fff',
+                        'color': '#333',
                         'font-size': '11px',
                         'font-weight': 'bold',
                         'text-wrap': 'wrap',
@@ -42,7 +67,7 @@ async function initGraph() {
                         'width': 'mapData(labelLength, 10, 50, 80, 160)',
                         'height': 'mapData(labelLength, 10, 50, 40, 80)',
                         'border-width': 2,
-                        'border-color': 'data(categoryBorderColor)',
+                        'border-color': '#dee2e6',
                         'padding': '8px'
                     }
                 },
@@ -92,7 +117,7 @@ async function initGraph() {
                 refresh: 20,
                 fit: true,
                 padding: 30,
-                randomize: false,
+                randomize: true,
                 componentSpacing: 100,
                 nodeRepulsion: 400000,
                 edgeElasticity: 100,
@@ -101,7 +126,8 @@ async function initGraph() {
                 numIter: 1000,
                 initialTemp: 200,
                 coolingFactor: 0.95,
-                minTemp: 1.0
+                minTemp: 1.0,
+                animate: false
             },
             wheelSensitivity: 0.2
         });
@@ -109,6 +135,10 @@ async function initGraph() {
         setupEventListeners();
         setupEdgeFilters();
         setupCategoryFilters();
+        setupEditMode();
+        
+        // Load filter state from URL
+        loadFiltersFromURL();
         
     } catch (error) {
         console.error('Error loading graph data:', error);
@@ -165,8 +195,6 @@ function createCytoscapeElements(data) {
             definition: item.definition || '',
             explanation: item.explanation || '',
             category: category,
-            categoryColor: categoryColor ? categoryColor.background : '#95a5a6',
-            categoryBorderColor: categoryColor ? categoryColor.border : '#7f8c8d',
             hasDefinition: !!item.definition,
             labelLength: item.term.length,
             fullData: item
@@ -187,7 +215,6 @@ function createCytoscapeElements(data) {
                 // Add target node if it doesn't exist
                 if (!nodeMap.has(targetId)) {
                     const defaultCategory = 'General';
-                    const defaultColor = categoryColors[defaultCategory] || { background: '#95a5a6', border: '#7f8c8d' };
                     
                     const targetNodeData = {
                         id: targetId,
@@ -195,8 +222,6 @@ function createCytoscapeElements(data) {
                         definition: '',
                         explanation: '',
                         category: defaultCategory,
-                        categoryColor: defaultColor.background,
-                        categoryBorderColor: defaultColor.border,
                         hasDefinition: false,
                         labelLength: targetId.length,
                         fullData: { term: targetId, category: defaultCategory }
@@ -252,7 +277,11 @@ function setupEventListeners() {
         const node = evt.target;
         const data = node.data('fullData');
         
-        showSidebar(data);
+        if (isEditMode) {
+            showEditForm(data, node);
+        } else {
+            showSidebar(data);
+        }
     });
 
     // Close sidebar
@@ -327,12 +356,7 @@ function createCategoryFilters(categories) {
         checkbox.checked = true;
         checkbox.dataset.category = category;
         
-        const colorIndicator = document.createElement('span');
-        colorIndicator.className = 'category-color';
-        colorIndicator.style.backgroundColor = categoryColors[category].background;
-        
         label.appendChild(checkbox);
-        label.appendChild(colorIndicator);
         label.appendChild(document.createTextNode(category));
         
         container.appendChild(label);
@@ -348,6 +372,7 @@ function setupEdgeFilters() {
 
     function updateEdgeFilters() {
         applyFilters();
+        updateURL();
     }
 
     filterAllEdges.addEventListener('change', () => {
@@ -378,6 +403,7 @@ function setupCategoryFilters() {
 
     function updateCategoryFilters() {
         applyFilters();
+        updateURL();
     }
 
     filterAllCategories.addEventListener('change', () => {
@@ -449,8 +475,501 @@ function applyFilters() {
         numIter: 1000,
         initialTemp: 200,
         coolingFactor: 0.95,
-        minTemp: 1.0
+        minTemp: 1.0,
+        animate: false
     }).run();
+}
+
+// Setup edit mode functionality
+function setupEditMode() {
+    const editToggle = document.getElementById('edit-toggle');
+    const changesIndicator = document.getElementById('changes-indicator');
+    const downloadBtn = document.getElementById('download-patch');
+    
+    editToggle.addEventListener('click', () => {
+        isEditMode = !isEditMode;
+        editToggle.textContent = isEditMode ? 'View Mode' : 'Edit Mode';
+        editToggle.classList.toggle('active', isEditMode);
+        
+        if (!isEditMode) {
+            // Hide edit form, show read-only sidebar
+            const sidebar = document.getElementById('sidebar');
+            const editForm = document.getElementById('sidebar-edit-form');
+            const sidebarContent = document.getElementById('sidebar-content');
+            
+            editForm.classList.add('hidden');
+            sidebarContent.classList.remove('hidden');
+        }
+    });
+
+    // Download patch button
+    downloadBtn.addEventListener('click', downloadPatch);
+}
+
+// Show edit form in sidebar
+function showEditForm(data, node) {
+    const sidebar = document.getElementById('sidebar');
+    const termEl = document.getElementById('sidebar-term');
+    const contentEl = document.getElementById('sidebar-content');
+    const editForm = document.getElementById('sidebar-edit-form');
+    
+    currentEditingNode = { data, node };
+    
+    // Hide read-only content, show edit form
+    contentEl.classList.add('hidden');
+    editForm.classList.remove('hidden');
+    
+    // Populate form
+    document.getElementById('edit-term').value = data.term || '';
+    document.getElementById('edit-definition').value = data.definition || '';
+    document.getElementById('edit-explanation').value = data.explanation || '';
+    
+    // Populate category dropdown
+    populateCategoryDropdown();
+    document.getElementById('edit-category').value = data.category || '';
+    
+    // Populate edges
+    populateEdgesList(data.edges || []);
+    
+    termEl.textContent = `Editing: ${data.term}`;
+    sidebar.classList.add('active');
+    
+    setupFormEventListeners();
+}
+
+// Populate category dropdown with existing categories plus option for new
+function populateCategoryDropdown() {
+    const categorySelect = document.getElementById('edit-category');
+    categorySelect.innerHTML = '<option value="">Select or type new...</option>';
+    
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        categorySelect.appendChild(option);
+    });
+    
+    const newOption = document.createElement('option');
+    newOption.value = '__new__';
+    newOption.textContent = '+ Create New Category';
+    categorySelect.appendChild(newOption);
+}
+
+// Populate edges list with current edges
+function populateEdgesList(edges) {
+    const edgesList = document.getElementById('edges-list');
+    edgesList.innerHTML = '';
+    
+    edges.forEach((edge, index) => {
+        addEdgeItem(edge.type, edge.target, index);
+    });
+    
+    if (edges.length === 0) {
+        edgesList.innerHTML = '<p style="color: #6c757d; font-style: italic;">No edges defined</p>';
+    }
+}
+
+// Add a single edge item to the list
+function addEdgeItem(type = '', target = '', index = null) {
+    const edgesList = document.getElementById('edges-list');
+    const edgeItem = document.createElement('div');
+    edgeItem.className = 'edge-item';
+    
+    if (edgesList.querySelector('p')) {
+        edgesList.innerHTML = '';
+    }
+    
+    edgeItem.innerHTML = `
+        <select name="edge-type-${index || Date.now()}">
+            <option value="synonym" ${type === 'synonym' ? 'selected' : ''}>Synonym</option>
+            <option value="related" ${type === 'related' ? 'selected' : ''}>Related</option>
+            <option value="mentions" ${type === 'mentions' ? 'selected' : ''}>Mentions</option>
+            <option value="__custom__" ${!['synonym', 'related', 'mentions'].includes(type) ? 'selected' : ''}>Custom</option>
+        </select>
+        <input type="text" placeholder="Custom type" class="custom-type ${!['synonym', 'related', 'mentions'].includes(type) ? '' : 'hidden'}" value="${!['synonym', 'related', 'mentions'].includes(type) ? type : ''}">
+        <input type="text" name="edge-target-${index || Date.now()}" placeholder="Target term" value="${target}">
+        <button type="button" class="remove-edge">×</button>
+    `;
+    
+    // Handle custom type toggle
+    const typeSelect = edgeItem.querySelector('select');
+    const customInput = edgeItem.querySelector('.custom-type');
+    
+    typeSelect.addEventListener('change', () => {
+        if (typeSelect.value === '__custom__') {
+            customInput.classList.remove('hidden');
+            customInput.focus();
+        } else {
+            customInput.classList.add('hidden');
+        }
+    });
+    
+    // Handle remove
+    edgeItem.querySelector('.remove-edge').addEventListener('click', () => {
+        edgeItem.remove();
+        if (edgesList.children.length === 0) {
+            edgesList.innerHTML = '<p style="color: #6c757d; font-style: italic;">No edges defined</p>';
+        }
+        updateNodeFromForm();
+    });
+    
+    edgesList.appendChild(edgeItem);
+}
+
+// Setup form event listeners for real-time updates
+function setupFormEventListeners() {
+    // Add event listeners to form elements
+    const form = document.getElementById('node-edit-form');
+    
+    // Add listeners to all form elements
+    form.querySelectorAll('input, textarea, select').forEach(field => {
+        // Remove any existing listeners first
+        field.removeEventListener('input', updateNodeFromForm);
+        field.removeEventListener('change', updateNodeFromForm);
+        
+        // Add new listeners
+        field.addEventListener('input', updateNodeFromForm);
+        field.addEventListener('change', updateNodeFromForm);
+    });
+    
+    // Handle category selection
+    const categorySelect = document.getElementById('edit-category');
+    categorySelect.removeEventListener('change', handleCategoryChange);
+    categorySelect.addEventListener('change', handleCategoryChange);
+    
+    // Add edge button
+    const addEdgeBtn = document.getElementById('add-edge');
+    addEdgeBtn.removeEventListener('click', handleAddEdge);
+    addEdgeBtn.addEventListener('click', handleAddEdge);
+}
+
+// Handle category selection changes
+function handleCategoryChange(e) {
+    const customInput = document.getElementById('edit-category-custom');
+    if (e.target.value === '__new__') {
+        customInput.classList.remove('hidden');
+        customInput.focus();
+    } else {
+        customInput.classList.add('hidden');
+    }
+    updateNodeFromForm();
+}
+
+// Handle add edge button
+function handleAddEdge() {
+    addEdgeItem();
+    updateNodeFromForm();
+}
+
+// Update node data and graph from form input
+function updateNodeFromForm() {
+    if (!currentEditingNode) return;
+    
+    const { data, node } = currentEditingNode;
+    
+    // Get values directly from form elements instead of FormData
+    const newTerm = document.getElementById('edit-term').value;
+    const newDefinition = document.getElementById('edit-definition').value;
+    const newExplanation = document.getElementById('edit-explanation').value;
+    let newCategory = document.getElementById('edit-category').value;
+    
+    // Handle custom category
+    if (newCategory === '__new__') {
+        newCategory = document.getElementById('edit-category-custom').value || 'General';
+        
+        // Add new category to system if not exists
+        if (!categories.includes(newCategory)) {
+            categories.push(newCategory);
+            categoryColors[newCategory] = createCategoryColors([newCategory])[newCategory];
+            
+            // Update category filters
+            document.querySelector('#category-filters').innerHTML = '';
+            createCategoryFilters(categories);
+            setupCategoryFilters();
+        }
+    } else if (!newCategory || newCategory === '') {
+        // If no category selected, keep the original
+        newCategory = data.category || 'General';
+    }
+    
+    // Collect edges
+    const edges = [];
+    const edgeItems = document.querySelectorAll('.edge-item');
+    edgeItems.forEach(item => {
+        const typeSelect = item.querySelector('select');
+        const customType = item.querySelector('.custom-type');
+        const targetInput = item.querySelector('input[name^="edge-target"]');
+        
+        let edgeType = typeSelect.value;
+        if (edgeType === '__custom__' && customType.value.trim()) {
+            edgeType = customType.value.trim();
+        }
+        
+        const target = targetInput.value.trim();
+        if (edgeType && target && edgeType !== '__custom__') {
+            edges.push({ type: edgeType, target });
+        }
+    });
+    
+    // Update data objects
+    data.term = newTerm;
+    data.definition = newDefinition;
+    data.explanation = newExplanation;
+    data.category = newCategory || 'General';
+    data.edges = edges;
+    
+    // Mark as modified
+    modifiedNodes.add(data.term);
+    document.getElementById('changes-indicator').classList.remove('hidden');
+    document.getElementById('download-patch').classList.remove('hidden');
+    
+    // Update graph node
+    updateGraphNode(node, data);
+    
+    // Update graph data
+    const graphItem = graphData.find(item => item.term === data.term);
+    if (graphItem) {
+        Object.assign(graphItem, data);
+    }
+    
+    // Rebuild graph elements to reflect edge changes
+    rebuildGraphElements();
+}
+
+// Update the visual graph node
+function updateGraphNode(node, data) {
+    node.data({
+        label: data.term,
+        definition: data.definition,
+        explanation: data.explanation,
+        category: data.category,
+        hasDefinition: !!data.definition,
+        fullData: data
+    });
+    
+    // Add visual indicator for modification
+    node.addClass('node-modified');
+    
+    // Force update style
+    cy.style().update();
+}
+
+// Rebuild graph elements when edges change
+function rebuildGraphElements() {
+    const newElements = createCytoscapeElements(graphData);
+    
+    // Store current positions
+    const positions = {};
+    cy.nodes().forEach(node => {
+        positions[node.id()] = node.position();
+    });
+    
+    // Update elements
+    allNodes = newElements.nodes;
+    allEdges = newElements.edges;
+    
+    // Apply current filters
+    applyFilters();
+    
+    // Restore positions where possible
+    cy.nodes().forEach(node => {
+        if (positions[node.id()]) {
+            node.position(positions[node.id()]);
+        }
+    });
+}
+
+// Generate and download git patch for all changes
+function downloadPatch() {
+    // Sort data consistently for comparison
+    const sortedOriginal = [...originalData].sort((a, b) => a.term.localeCompare(b.term));
+    const sortedModified = [...graphData].sort((a, b) => a.term.localeCompare(b.term));
+    
+    const originalString = JSON.stringify(sortedOriginal, null, 2);
+    const modifiedString = JSON.stringify(sortedModified, null, 2);
+    
+    if (originalString === modifiedString) {
+        alert('No changes detected!');
+        return;
+    }
+    
+    const patch = generateGitPatch(originalString, modifiedString);
+    
+    // Download patch file
+    const blob = new Blob([patch], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `knowledge-graph-changes-${new Date().toISOString().split('T')[0]}.patch`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Comprehensive git patch generator
+function generateGitPatch(original, modified) {
+    const originalLines = original.split('\n');
+    const modifiedLines = modified.split('\n');
+    
+    let patch = `diff --git a/ai-knowledge-graph.json b/ai-knowledge-graph.json
+index 1234567..abcdef0 100644
+--- a/ai-knowledge-graph.json
++++ b/ai-knowledge-graph.json
+`;
+    
+    // Find all different lines
+    const differences = [];
+    const maxLines = Math.max(originalLines.length, modifiedLines.length);
+    
+    for (let i = 0; i < maxLines; i++) {
+        const origLine = originalLines[i] || '';
+        const modLine = modifiedLines[i] || '';
+        
+        if (origLine !== modLine) {
+            differences.push({
+                lineNum: i,
+                original: origLine,
+                modified: modLine
+            });
+        }
+    }
+    
+    if (differences.length === 0) {
+        return patch + ' No differences found\n';
+    }
+    
+    // Group consecutive differences into hunks
+    const hunks = [];
+    let currentHunk = [];
+    
+    differences.forEach((diff, index) => {
+        if (currentHunk.length === 0 || diff.lineNum <= currentHunk[currentHunk.length - 1].lineNum + 5) {
+            currentHunk.push(diff);
+        } else {
+            hunks.push(currentHunk);
+            currentHunk = [diff];
+        }
+    });
+    
+    if (currentHunk.length > 0) {
+        hunks.push(currentHunk);
+    }
+    
+    // Generate patch for each hunk
+    hunks.forEach(hunk => {
+        const firstLine = hunk[0].lineNum;
+        const lastLine = hunk[hunk.length - 1].lineNum;
+        const context = 3;
+        
+        const startLine = Math.max(0, firstLine - context);
+        const endLine = Math.min(originalLines.length - 1, lastLine + context);
+        
+        const origStart = startLine + 1;
+        const origCount = endLine - startLine + 1;
+        const modStart = startLine + 1;
+        const modCount = endLine - startLine + 1;
+        
+        patch += `@@ -${origStart},${origCount} +${modStart},${modCount} @@\n`;
+        
+        // Add lines for this hunk
+        for (let i = startLine; i <= endLine; i++) {
+            const isDifferent = hunk.some(diff => diff.lineNum === i);
+            
+            if (isDifferent) {
+                const diff = hunk.find(d => d.lineNum === i);
+                // Show removed line
+                if (diff.original && i < originalLines.length) {
+                    patch += `-${diff.original}\n`;
+                }
+                // Show added line
+                if (diff.modified && i < modifiedLines.length) {
+                    patch += `+${diff.modified}\n`;
+                } else if (!diff.modified && i >= modifiedLines.length) {
+                    // Line was deleted
+                }
+            } else {
+                // Context line (unchanged)
+                if (originalLines[i] !== undefined) {
+                    patch += ` ${originalLines[i]}\n`;
+                }
+            }
+        }
+    });
+    
+    return patch;
+}
+
+// URL parameter management for filter persistence
+function updateURL() {
+    const params = new URLSearchParams();
+    
+    // Get edge filter states
+    const edgeFilters = [];
+    if (document.getElementById('filter-synonym').checked) edgeFilters.push('synonym');
+    if (document.getElementById('filter-related').checked) edgeFilters.push('related');
+    if (document.getElementById('filter-mentions').checked) edgeFilters.push('mentions');
+    
+    if (edgeFilters.length > 0 && edgeFilters.length < 3) {
+        params.set('edges', edgeFilters.join(','));
+    }
+    
+    // Get category filter states
+    const categoryFilters = [];
+    document.querySelectorAll('[data-category]:checked').forEach(checkbox => {
+        categoryFilters.push(checkbox.dataset.category);
+    });
+    
+    if (categoryFilters.length > 0 && categoryFilters.length < categories.length) {
+        params.set('categories', categoryFilters.join(','));
+    }
+    
+    // Update URL without page reload
+    const newURL = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
+    window.history.replaceState({}, '', newURL);
+}
+
+function loadFiltersFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    
+    // Load edge filters
+    const edgeFiltersParam = params.get('edges');
+    if (edgeFiltersParam) {
+        const activeEdges = edgeFiltersParam.split(',');
+        
+        // Uncheck all first
+        document.getElementById('filter-all-edges').checked = false;
+        document.getElementById('filter-synonym').checked = false;
+        document.getElementById('filter-related').checked = false;
+        document.getElementById('filter-mentions').checked = false;
+        
+        // Check only the specified ones
+        activeEdges.forEach(edge => {
+            const checkbox = document.getElementById(`filter-${edge}`);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+    
+    // Load category filters
+    const categoryFiltersParam = params.get('categories');
+    if (categoryFiltersParam) {
+        const activeCategories = categoryFiltersParam.split(',');
+        
+        // Uncheck all categories first
+        document.getElementById('filter-all-categories').checked = false;
+        document.querySelectorAll('[data-category]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        
+        // Check only the specified ones
+        activeCategories.forEach(category => {
+            const checkbox = document.querySelector(`[data-category="${category}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+    
+    // Apply the loaded filters
+    applyFilters();
 }
 
 // Initialize when page loads

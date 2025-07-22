@@ -10,14 +10,21 @@
 <body>
     <div class="container">
         <div class="controls">
-            <h2>AI Knowledge Graph</h2>
+            <div class="header-controls">
+                <h2>AI Knowledge Graph</h2>
+                <div class="mode-controls">
+                    <button id="edit-toggle" class="edit-toggle-btn">Edit Mode</button>
+                    <button id="download-patch" class="download-btn hidden">Download Patch</button>
+                    <span id="changes-indicator" class="changes-indicator hidden">● Changes Made</span>
+                </div>
+            </div>
             <div class="filter-controls">
                 <div class="filter-group">
                     <label>Edge Filters:</label>
                     <label><input type="checkbox" id="filter-all-edges" checked> All</label>
-                    <label><input type="checkbox" id="filter-synonym" checked> Synonym</label>
-                    <label><input type="checkbox" id="filter-related" checked> Related</label>
-                    <label><input type="checkbox" id="filter-mentions" checked> Mentions</label>
+                    <label><input type="checkbox" id="filter-synonym" checked> <span class="edge-color synonym-color"></span>Synonym</label>
+                    <label><input type="checkbox" id="filter-related" checked> <span class="edge-color related-color"></span>Related</label>
+                    <label><input type="checkbox" id="filter-mentions" checked> <span class="edge-color mentions-color"></span>Mentions</label>
                 </div>
                 <div class="filter-group">
                     <label>Category Filters:</label>
@@ -34,6 +41,36 @@
                 <button id="close-sidebar" class="close-btn">&times;</button>
                 <h3 id="sidebar-term"></h3>
                 <div id="sidebar-content"></div>
+                <div id="sidebar-edit-form" class="edit-form hidden">
+                    <form id="node-edit-form">
+                        <div class="form-group">
+                            <label for="edit-term">Term:</label>
+                            <input type="text" id="edit-term" name="term" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-definition">Definition:</label>
+                            <textarea id="edit-definition" name="definition" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-explanation">Explanation:</label>
+                            <textarea id="edit-explanation" name="explanation" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-category">Category:</label>
+                            <select id="edit-category" name="category">
+                                <option value="">Select or type new...</option>
+                            </select>
+                            <input type="text" id="edit-category-custom" name="categoryCustom" placeholder="New category name" class="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label>Edges:</label>
+                            <div id="edges-list" class="edges-list"></div>
+                            <button type="button" id="add-edge" class="add-edge-btn">+ Add Edge</button>
+                        </div>
+                        <div class="form-actions">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
