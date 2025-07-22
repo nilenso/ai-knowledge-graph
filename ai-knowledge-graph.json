@@ -37,18 +37,6 @@
       {
         "type": "related",
         "target": "Shoggoth with pink mask"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Base model"
-      },
-      {
-        "type": "mentions",
-        "target": "Fine-Tuning"
       }
     ]
   },
@@ -79,14 +67,6 @@
       {
         "type": "related",
         "target": "Context engineering"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Prompt"
       }
     ]
   },
@@ -105,24 +85,14 @@
     "definition": "Getting an answer back from the model.",
     "explanation": "When you ask the AI a question and it gives you an answer, that’s called inference. It’s the process of the AI making predictions or responses. Knowing this helps you understand how the AI works and the time or resources it might need to give answers.",
     "category": "Basics",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Neural Networks",
     "definition": "Computational models inspired by the brain's structure",
     "explanation": "They are the core technology that enables AI to learn from text and generate human-like responses.",
     "category": "Basics",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Prompt",
@@ -143,12 +113,7 @@
     "definition": "A hidden instruction given to the model about its persona, rules, and identity.",
     "explanation": "It's a powerful way to steer the AI's behavior consistently without the user seeing the underlying instructions.",
     "category": "Basics",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Tokens",
@@ -167,14 +132,6 @@
       {
         "type": "related",
         "target": "vocabulary"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Vocabulary"
       }
     ]
   },
@@ -192,96 +149,42 @@
     "definition": "Making a smaller, faster model from a big one.",
     "explanation": "It lets you use cheaper, faster models with less delay (latency). But the smaller model might not be as accurate or powerful as the big one. So, you trade some performance for speed and cost savings.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Hyperparameters",
     "definition": "Settings that affect how the model works.",
     "explanation": "These include the number of layers, vocabulary size, and dimensions of the model. By adjusting these settings, you can make the AI learn better. It often takes trying different options to find what works best.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Vocabulary"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Knowledge cut-off",
     "definition": "The date beyond which a model has no information.",
     "explanation": "This is a fundamental limitation of current LLMs, because they stop learning after training is complete. They don't have real-time knowledge unless they are augmented with tools like web search.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Tools"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Loss",
     "definition": "A number that measures how wrong the model's predictions are during training.",
     "explanation": "The goal of training is to minimize the loss. Watching the loss go down is how researchers know the model is learning.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Multimodal",
     "definition": "Models that handle different data types like text and images.",
     "explanation": "People use words, pictures, and sounds. When AI can understand all these, it can help users better. Using multimodal AI makes your tools more powerful.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Tools"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Neural network architecture",
     "definition": "Design of the math functions that create the neural network",
     "explanation": "It influences ability to learn, scalability, modalities, and training / inference cost. Breakthroughs here are big. Examples include Transformer, Mixture of Experts (MoE), State Space Models (SSMs), Multimodal / Unified, Matryoshka Representation, etc.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Inference"
-      },
-      {
-        "type": "mentions",
-        "target": "Multimodal"
-      },
-      {
-        "type": "mentions",
-        "target": "Transformer"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Parameters",
@@ -296,10 +199,6 @@
       {
         "type": "related",
         "target": "model size"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
       }
     ]
   },
@@ -318,14 +217,6 @@
       {
         "type": "related",
         "target": "attention"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Neural network architecture"
       }
     ]
   },
@@ -337,44 +228,21 @@
     "definition": "The complete set of unique tokens that a model can recognize and produce.",
     "explanation": "The vocabulary defines the atomic units of language the model works with. Its size is a key design choice in an LLM's architecture.",
     "category": "Pre training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Tokens"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Chain of Thought",
     "definition": "Prompting the model to think and plan before answering.",
     "explanation": "When the model thinks first, it gives better answers but takes longer. This trade-off affects speed and quality.",
     "category": "Post training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Prompt"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Fine-Tuning",
     "definition": "Adjusting a pre-trained model for a specific job.",
     "explanation": "It helps make the AI better for your needs by teaching it with your data. But it might become less good at general tasks. Fine-tuning works best for specific jobs where you need higher accuracy.",
     "category": "Post training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Tools",
@@ -385,14 +253,6 @@
       {
         "type": "related",
         "target": "Tool use"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Knowledge cut-off"
       }
     ]
   },
@@ -404,12 +264,7 @@
     "definition": "Safety rules to control model outputs.",
     "explanation": "Guardrails help reduce the chance of the AI giving bad or harmful answers. But they are not perfect. It’s important to use them wisely and not rely on them completely.",
     "category": "Post training",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Thinking model",
@@ -420,10 +275,6 @@
       {
         "type": "related",
         "target": "reasoning model"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
       }
     ]
   },
@@ -443,10 +294,6 @@
       {
         "type": "related",
         "target": "RLAIF"
-      },
-      {
-        "type": "mentions",
-        "target": "model"
       }
     ]
   },
@@ -468,32 +315,14 @@
     "definition": "A model whose parameters are publicly released, allowing anyone to use, modify, and build upon it.",
     "explanation": "This fosters innovation and competition, preventing the most powerful AI technology from being controlled by only a handful of large corporations.",
     "category": "AI Engineering",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Parameters"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Context Engineering",
     "definition": "Context engineering is the art and science of strategically assembling all necessary information—such as task descriptions, few-shot examples, retrieved data (RAG), tools, and conversation history—into an LLM's context window to optimize its performance for the next step.",
     "explanation": "An LLM's performance is critically dependent on the quality and relevance of the information in its context window. Providing too little information leads to poor results, while too much or irrelevant information increases costs and can degrade performance.",
     "category": "AI Engineering",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "Context"
-      },
-      {
-        "type": "mentions",
-        "target": "Tools"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Embeddings",
@@ -507,28 +336,14 @@
     "definition": "Teaching the model with only a few examples.",
     "explanation": "By giving the model examples, you can guide it to behave the way you want. It’s a simple but powerful way to teach the AI what is good or bad.",
     "category": "AI Engineering",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Retrieval Augmented Generation (RAG)",
     "definition": "Providing relevant context to the LLM.",
     "explanation": "A language model needs proper context to answer questions. Like a person, it needs access to information such as data, past conversations, or documents to give a good answer. Collecting and giving this info to the AI before asking helps prevent mistakes or it saying, “I don’t know.”",
     "category": "AI Engineering",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "model"
-      },
-      {
-        "type": "mentions",
-        "target": "Context"
-      }
-    ]
+    "edges": []
   },
   {
     "term": "Temperature",
@@ -549,11 +364,6 @@
     "definition": "A special database for storing and searching embeddings.",
     "explanation": "They store embeddings of text, images, and more, so you can search by meaning. This makes finding similar items faster and improves searches and recommendations.",
     "category": "AI Engineering",
-    "edges": [
-      {
-        "type": "mentions",
-        "target": "Embeddings"
-      }
-    ]
+    "edges": []
   }
 ]

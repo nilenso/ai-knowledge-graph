@@ -96,13 +96,6 @@ async function initGraph() {
                     }
                 },
                 {
-                    selector: 'edge[type="mentions"]',
-                    style: {
-                        'line-color': '#9b59b6',
-                        'target-arrow-color': '#9b59b6'
-                    }
-                },
-                {
                     selector: 'node:selected',
                     style: {
                         'border-width': 4,
@@ -368,7 +361,6 @@ function setupEdgeFilters() {
     const filterAllEdges = document.getElementById('filter-all-edges');
     const filterSynonym = document.getElementById('filter-synonym');
     const filterRelated = document.getElementById('filter-related');
-    const filterMentions = document.getElementById('filter-mentions');
 
     function updateEdgeFilters() {
         applyFilters();
@@ -379,16 +371,15 @@ function setupEdgeFilters() {
         if (filterAllEdges.checked) {
             filterSynonym.checked = true;
             filterRelated.checked = true;
-            filterMentions.checked = true;
         }
         updateEdgeFilters();
     });
 
-    [filterSynonym, filterRelated, filterMentions].forEach(filter => {
+    [filterSynonym, filterRelated].forEach(filter => {
         filter.addEventListener('change', () => {
             if (!filter.checked) {
                 filterAllEdges.checked = false;
-            } else if (filterSynonym.checked && filterRelated.checked && filterMentions.checked) {
+            } else if (filterSynonym.checked && filterRelated.checked) {
                 filterAllEdges.checked = true;
             }
             updateEdgeFilters();
@@ -427,7 +418,6 @@ function applyFilters() {
     // Get active edge filters
     const filterSynonym = document.getElementById('filter-synonym').checked;
     const filterRelated = document.getElementById('filter-related').checked;
-    const filterMentions = document.getElementById('filter-mentions').checked;
     
     // Get active categories
     const activeCategoriesSet = new Set();
@@ -445,8 +435,7 @@ function applyFilters() {
     const visibleEdges = allEdges.filter(edge => {
         const type = edge.data.type;
         const typeVisible = (type === 'synonym' && filterSynonym) ||
-                          (type === 'related' && filterRelated) ||
-                          (type === 'mentions' && filterMentions);
+                          (type === 'related' && filterRelated);
         
         const nodesVisible = visibleNodeIds.has(edge.data.source) && 
                             visibleNodeIds.has(edge.data.target);
@@ -583,10 +572,9 @@ function addEdgeItem(type = '', target = '', index = null) {
         <select name="edge-type-${index || Date.now()}">
             <option value="synonym" ${type === 'synonym' ? 'selected' : ''}>Synonym</option>
             <option value="related" ${type === 'related' ? 'selected' : ''}>Related</option>
-            <option value="mentions" ${type === 'mentions' ? 'selected' : ''}>Mentions</option>
-            <option value="__custom__" ${!['synonym', 'related', 'mentions'].includes(type) ? 'selected' : ''}>Custom</option>
+            <option value="__custom__" ${!['synonym', 'related'].includes(type) ? 'selected' : ''}>Custom</option>
         </select>
-        <input type="text" placeholder="Custom type" class="custom-type ${!['synonym', 'related', 'mentions'].includes(type) ? '' : 'hidden'}" value="${!['synonym', 'related', 'mentions'].includes(type) ? type : ''}">
+        <input type="text" placeholder="Custom type" class="custom-type ${!['synonym', 'related'].includes(type) ? '' : 'hidden'}" value="${!['synonym', 'related'].includes(type) ? type : ''}">
         <input type="text" name="edge-target-${index || Date.now()}" placeholder="Target term" value="${target}">
         <button type="button" class="remove-edge">×</button>
     `;
@@ -908,9 +896,8 @@ function updateURL() {
     const edgeFilters = [];
     if (document.getElementById('filter-synonym').checked) edgeFilters.push('synonym');
     if (document.getElementById('filter-related').checked) edgeFilters.push('related');
-    if (document.getElementById('filter-mentions').checked) edgeFilters.push('mentions');
     
-    if (edgeFilters.length > 0 && edgeFilters.length < 3) {
+    if (edgeFilters.length > 0 && edgeFilters.length < 2) {
         params.set('edges', edgeFilters.join(','));
     }
     
@@ -941,7 +928,6 @@ function loadFiltersFromURL() {
         document.getElementById('filter-all-edges').checked = false;
         document.getElementById('filter-synonym').checked = false;
         document.getElementById('filter-related').checked = false;
-        document.getElementById('filter-mentions').checked = false;
         
         // Check only the specified ones
         activeEdges.forEach(edge => {

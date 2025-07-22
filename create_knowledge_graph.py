@@ -54,9 +54,6 @@ def parse_csv_to_knowledge_graph(csv_file: str) -> List[Dict[str, Any]]:
             definition = row['Short Definition'].strip()
             explanation = row['Why It Matters'].strip()
             
-            # Find references to other terms in the text
-            all_text = f"{definition} {explanation}".lower()
-            
             # Create the term entry
             term_entry = {
                 "term": main_term,
@@ -80,23 +77,6 @@ def parse_csv_to_knowledge_graph(csv_file: str) -> List[Dict[str, Any]]:
                 if rel and rel.lower() not in term_map:
                     knowledge_graph.append({"term": rel})
                     term_map[rel.lower()] = rel
-    
-    # Add cross-references based on content
-    for entry in knowledge_graph:
-        if 'definition' in entry and 'explanation' in entry:
-            text_content = f"{entry['definition']} {entry['explanation']}".lower()
-            
-            # Look for mentions of other terms
-            for term_key, term_name in term_map.items():
-                if (term_key != entry['term'].lower() and 
-                    len(term_key) > 3 and  # Avoid short words
-                    term_key in text_content and
-                    not any(edge['target'] == term_name for edge in entry.get('edges', []))):
-                    
-                    entry.setdefault('edges', []).append({
-                        "type": "mentions", 
-                        "target": term_name
-                    })
     
     return knowledge_graph
 

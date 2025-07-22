@@ -4,7 +4,7 @@ An interactive, spatial knowledge graph for exploring AI terminology and concept
 
 ## Overview
 
-Unlike traditional glossaries that present terms in alphabetical lists, this knowledge graph leverages spatial relationships to show how AI concepts connect to each other. Terms are displayed as nodes with edges representing different types of relationships (synonyms, related concepts, mentions). This spatial approach helps users:
+Unlike traditional glossaries that present terms in alphabetical lists, this knowledge graph leverages spatial relationships to show how AI concepts connect to each other. Terms are displayed as nodes with edges representing different types of relationships (synonyms, related concepts). This spatial approach helps users:
 
 - **Discover related concepts** by exploring connected terms
 - **Understand context** through visual clustering and relationships
@@ -18,7 +18,7 @@ The project uses a JSON representation that remains both human and machine-reada
 ### 🌐 **Interactive Visualization**
 - **Cytoscape.js-powered** graph with smooth zoom, pan, and navigation
 - **Rectangular nodes** with term names and automatic text wrapping
-- **Color-coded edges** for different relationship types (synonym, related, mentions)
+- **Color-coded edges** for different relationship types (synonym, related)
 - **Hover tooltips** showing definitions for quick reference
 - **Consistent layout** that remains stable across page refreshes
 
