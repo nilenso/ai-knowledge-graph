@@ -760,7 +760,8 @@ function setupAutocomplete(input) {
         
         // Clear selected ID if input changes
         delete input.dataset.selectedId;
-        updateNodeFromForm();
+        // Don't call updateNodeFromForm on every keystroke during autocomplete
+        // Only call it when user explicitly selects or finishes typing
     });
     
     input.addEventListener('keydown', handleKeyNavigation);
@@ -771,6 +772,11 @@ function setupAutocomplete(input) {
             const filteredTerms = filterTerms(query);
             showDropdown(filteredTerms);
         }
+    });
+    
+    input.addEventListener('blur', (e) => {
+        // Call updateNodeFromForm when user finishes editing
+        setTimeout(() => updateNodeFromForm(), 100); // Small delay to allow click events to fire first
     });
     
     // Close dropdown when clicking outside
@@ -882,8 +888,31 @@ function updateNodeFromForm() {
                 if (targetNode.length > 0) {
                     targetId = targetNode.data('id');
                 } else {
-                    // Generate ID for new target
-                    targetId = targetName.toLowerCase().replace(' ', '_').replace('(', '').replace(')', '').replace('/', '_').replace('-', '_').replace('.', '').replace(',', '').replace("'", '').replace('"', '');
+                    // Generate ID for new target using the same logic as the Python script
+                    targetId = targetName.toLowerCase()
+                        .replace(/\s+/g, '_')
+                        .replace(/[()]/g, '')
+                        .replace(/\//g, '_')
+                        .replace(/-/g, '_')
+                        .replace(/\./g, '')
+                        .replace(/,/g, '')
+                        .replace(/'/g, '')
+                        .replace(/"/g, '');
+                    
+                    // Only create new node if it's not already in graphData
+                    const existingNode = graphData.find(item => item.id === targetId);
+                    if (!existingNode) {
+                        // Create a new node in graphData for this target
+                        const newTargetNode = {
+                            id: targetId,
+                            term: targetName,
+                            definition: '',
+                            explanation: '',
+                            category: 'General',
+                            edges: []
+                        };
+                        graphData.push(newTargetNode);
+                    }
                 }
             }
             

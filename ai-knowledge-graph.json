@@ -39,7 +39,11 @@
   },
   {
     "id": "llm",
-    "term": "LLM"
+    "term": "LLM foo",
+    "definition": "",
+    "explanation": "",
+    "category": "General",
+    "edges": []
   },
   {
     "id": "assistant___instruct_model",
@@ -68,6 +72,14 @@
       {
         "type": "related",
         "target": "shoggoth"
+      },
+      {
+        "type": "related",
+        "target": "assistant___instruct_model"
+      },
+      {
+        "type": "related",
+        "target": "model"
       }
     ]
   },
@@ -178,10 +190,6 @@
     "term": "encoding"
   },
   {
-    "id": "vocabulary",
-    "term": "vocabulary"
-  },
-  {
     "id": "distillation",
     "term": "Distillation",
     "definition": "Making a smaller, faster model from a big one.",
@@ -252,7 +260,16 @@
   },
   {
     "id": "model_size",
-    "term": "model size"
+    "term": "model size",
+    "definition": "",
+    "explanation": "",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "vocabulary"
+      }
+    ]
   },
   {
     "id": "transformer",
