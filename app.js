@@ -610,6 +610,8 @@ function addEdgeItem(type = '', target = '', index = null) {
         edgesList.innerHTML = '';
     }
     
+    const targetInputId = `edge-target-${index || Date.now()}`;
+    
     edgeItem.innerHTML = `
         <select name="edge-type-${index || Date.now()}">
             <option value="synonym" ${type === 'synonym' ? 'selected' : ''}>Synonym</option>
@@ -617,7 +619,10 @@ function addEdgeItem(type = '', target = '', index = null) {
             <option value="__custom__" ${!['synonym', 'related'].includes(type) ? 'selected' : ''}>Custom</option>
         </select>
         <input type="text" placeholder="Custom type" class="custom-type ${!['synonym', 'related'].includes(type) ? '' : 'hidden'}" value="${!['synonym', 'related'].includes(type) ? type : ''}">
-        <input type="text" name="edge-target-${index || Date.now()}" placeholder="Target term" value="${target}">
+        <div class="autocomplete-container">
+            <input type="text" name="${targetInputId}" id="${targetInputId}" placeholder="Type to search terms..." value="${target}" autocomplete="off">
+            <div class="autocomplete-dropdown hidden"></div>
+        </div>
         <button type="button" class="remove-edge">×</button>
     `;
     
@@ -643,7 +648,138 @@ function addEdgeItem(type = '', target = '', index = null) {
         updateNodeFromForm();
     });
     
+    // Setup autocomplete for target input
+    setupAutocomplete(edgeItem.querySelector(`#${targetInputId}`));
+    
     edgesList.appendChild(edgeItem);
+}
+
+// Setup autocomplete functionality for target input
+function setupAutocomplete(input) {
+    const container = input.parentElement;
+    const dropdown = container.querySelector('.autocomplete-dropdown');
+    let currentFocus = -1;
+    
+    // Get all available terms for autocomplete
+    function getAvailableTerms() {
+        return graphData.filter(item => item.term).map(item => ({
+            id: item.id,
+            term: item.term,
+            category: item.category || 'General'
+        }));
+    }
+    
+    // Filter terms based on input
+    function filterTerms(query) {
+        if (!query) return [];
+        const lowercaseQuery = query.toLowerCase();
+        return getAvailableTerms().filter(item => 
+            item.term.toLowerCase().includes(lowercaseQuery)
+        ).slice(0, 10); // Limit to 10 results
+    }
+    
+    // Show dropdown with filtered results
+    function showDropdown(terms) {
+        if (terms.length === 0) {
+            dropdown.classList.add('hidden');
+            return;
+        }
+        
+        dropdown.innerHTML = '';
+        terms.forEach((term, index) => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            item.innerHTML = `
+                <span class="term-name">${term.term}</span>
+                <span class="term-category">${term.category}</span>
+            `;
+            item.dataset.termId = term.id;
+            item.dataset.termName = term.term;
+            item.dataset.index = index;
+            
+            item.addEventListener('click', () => {
+                selectTerm(term.term, term.id);
+            });
+            
+            dropdown.appendChild(item);
+        });
+        
+        dropdown.classList.remove('hidden');
+        currentFocus = -1;
+    }
+    
+    // Select a term and close dropdown
+    function selectTerm(termName, termId) {
+        input.value = termName;
+        input.dataset.selectedId = termId;
+        dropdown.classList.add('hidden');
+        currentFocus = -1;
+        updateNodeFromForm();
+    }
+    
+    // Handle keyboard navigation
+    function handleKeyNavigation(e) {
+        const items = dropdown.querySelectorAll('.autocomplete-item');
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            currentFocus = Math.min(currentFocus + 1, items.length - 1);
+            updateActiveItem(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            currentFocus = Math.max(currentFocus - 1, -1);
+            updateActiveItem(items);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (currentFocus >= 0 && items[currentFocus]) {
+                const item = items[currentFocus];
+                selectTerm(item.dataset.termName, item.dataset.termId);
+            }
+        } else if (e.key === 'Escape') {
+            dropdown.classList.add('hidden');
+            currentFocus = -1;
+        }
+    }
+    
+    // Update visual focus for keyboard navigation
+    function updateActiveItem(items) {
+        items.forEach((item, index) => {
+            if (index === currentFocus) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+    
+    // Event listeners
+    input.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        const filteredTerms = filterTerms(query);
+        showDropdown(filteredTerms);
+        
+        // Clear selected ID if input changes
+        delete input.dataset.selectedId;
+        updateNodeFromForm();
+    });
+    
+    input.addEventListener('keydown', handleKeyNavigation);
+    
+    input.addEventListener('focus', (e) => {
+        const query = e.target.value.trim();
+        if (query) {
+            const filteredTerms = filterTerms(query);
+            showDropdown(filteredTerms);
+        }
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+            dropdown.classList.add('hidden');
+            currentFocus = -1;
+        }
+    });
 }
 
 // Setup form event listeners for real-time updates
@@ -737,14 +873,18 @@ function updateNodeFromForm() {
         
         const targetName = targetInput.value.trim();
         if (edgeType && targetName && edgeType !== '__custom__') {
-            // Find the target node by name and get its ID
-            let targetId = null;
-            const targetNode = cy.nodes().filter(n => n.data('label') === targetName);
-            if (targetNode.length > 0) {
-                targetId = targetNode.data('id');
-            } else {
-                // Generate ID for new target
-                targetId = targetName.toLowerCase().replace(' ', '_').replace('(', '').replace(')', '').replace('/', '_').replace('-', '_').replace('.', '').replace(',', '').replace("'", '').replace('"', '');
+            // Use the selected ID from autocomplete if available
+            let targetId = targetInput.dataset.selectedId;
+            
+            if (!targetId) {
+                // If no ID selected from autocomplete, try to find by name
+                const targetNode = cy.nodes().filter(n => n.data('label') === targetName);
+                if (targetNode.length > 0) {
+                    targetId = targetNode.data('id');
+                } else {
+                    // Generate ID for new target
+                    targetId = targetName.toLowerCase().replace(' ', '_').replace('(', '').replace(')', '').replace('/', '_').replace('-', '_').replace('.', '').replace(',', '').replace("'", '').replace('"', '');
+                }
             }
             
             edges.push({ type: edgeType, target: targetId });

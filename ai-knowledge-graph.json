@@ -85,6 +85,14 @@
       {
         "type": "related",
         "target": "context_engineering"
+      },
+      {
+        "type": "synonym",
+        "target": "prompt"
+      },
+      {
+        "type": "related",
+        "target": "system_prompt"
       }
     ]
   },
