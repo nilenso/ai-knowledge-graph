@@ -40,22 +40,32 @@ def parse_csv_to_knowledge_graph(csv_file: str) -> List[Dict[str, Any]]:
                 if rel_match:
                     related_terms = [r.strip() for r in rel_match.group(1).split(',')]
             
-            # Create edges list
+            # Helper function to generate ID from term name
+            def generate_id(term_name):
+                return term_name.lower().replace(' ', '_').replace('(', '').replace(')', '').replace('/', '_').replace('-', '_').replace('.', '').replace(',', '').replace("'", '').replace('"', '')
+            
+            # Create edges list with target IDs
             edges = []
             for syn in synonyms:
                 if syn:
-                    edges.append({"type": "synonym", "target": syn})
+                    syn_id = generate_id(syn)
+                    edges.append({"type": "synonym", "target": syn_id})
             
             for rel in related_terms:
                 if rel:
-                    edges.append({"type": "related", "target": rel})
+                    rel_id = generate_id(rel)
+                    edges.append({"type": "related", "target": rel_id})
             
             # Look for related terms mentioned in definitions or explanations
             definition = row['Short Definition'].strip()
             explanation = row['Why It Matters'].strip()
             
+            # Generate a simple ID from the term name
+            term_id = generate_id(main_term)
+            
             # Create the term entry
             term_entry = {
+                "id": term_id,
                 "term": main_term,
                 "definition": definition,
                 "explanation": explanation,
@@ -69,13 +79,15 @@ def parse_csv_to_knowledge_graph(csv_file: str) -> List[Dict[str, Any]]:
             # Add synonym entries (minimal)
             for syn in synonyms:
                 if syn and syn.lower() not in term_map:
-                    knowledge_graph.append({"term": syn})
+                    syn_id = generate_id(syn)
+                    knowledge_graph.append({"id": syn_id, "term": syn})
                     term_map[syn.lower()] = syn
             
             # Add related term entries (minimal)
             for rel in related_terms:
                 if rel and rel.lower() not in term_map:
-                    knowledge_graph.append({"term": rel})
+                    rel_id = generate_id(rel)
+                    knowledge_graph.append({"id": rel_id, "term": rel})
                     term_map[rel.lower()] = rel
     
     return knowledge_graph
