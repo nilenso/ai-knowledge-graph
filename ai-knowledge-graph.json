@@ -1,0 +1,559 @@
+[
+  {
+    "term": "AGI (Artificial General Intelligence)",
+    "definition": "AI that can do any intellectual task a human can.",
+    "explanation": "While some define AGI as AI that’s as smart as a human in every way, this isn’t something you need to focus on right now. It’s more important to build AI solutions that solve your specific problems today.",
+    "category": "Basics",
+    "edges": []
+  },
+  {
+    "term": "AI (Aritificial Intelligence)",
+    "definition": "A language model like ChatGPT",
+    "explanation": "Colloquially we say AI to refer to the current generation LLMs / models. The field of AI is broad and spans decades, covers Machine Learning, Computer Vision, Speech recognition, AGI, Robotics, etc.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "synonym",
+        "target": "model"
+      },
+      {
+        "type": "synonym",
+        "target": "LLM"
+      }
+    ]
+  },
+  {
+    "term": "model"
+  },
+  {
+    "term": "LLM"
+  },
+  {
+    "term": "Assistant / Instruct model",
+    "definition": "A base model that has been fine-tuned to be a honest, harmless, and helpful assistant.",
+    "explanation": "This is the type of model most people interact with. The fine-tuning process is what makes it useful for real-world tasks.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "related",
+        "target": "Shoggoth with pink mask"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Base model"
+      },
+      {
+        "type": "mentions",
+        "target": "Fine-Tuning"
+      }
+    ]
+  },
+  {
+    "term": "Shoggoth with pink mask"
+  },
+  {
+    "term": "Base model",
+    "definition": "A powerful text-completion engine but not a conversational assistant.",
+    "explanation": "There are only 10s of these out there because they're prohibitively expensive to train. They are foundational building blocks that can be customised, and taught new skills or behaviours.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "related",
+        "target": "Shoggoth"
+      }
+    ]
+  },
+  {
+    "term": "Shoggoth"
+  },
+  {
+    "term": "Context",
+    "definition": "Same as prompt, but usually refers to the relevant information that's necessary to answer the question or perform the task",
+    "explanation": "It is the biggest lever in influencing the AI's response. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "related",
+        "target": "Context engineering"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Prompt"
+      }
+    ]
+  },
+  {
+    "term": "Context engineering"
+  },
+  {
+    "term": "Hallucination",
+    "definition": "When AI makes up things that aren’t true.",
+    "explanation": "AIs sometimes make stuff up, and you can’t completely stop this. It’s important to be aware that mistakes can happen, so you should check the AI’s answers.",
+    "category": "Basics",
+    "edges": []
+  },
+  {
+    "term": "Inference",
+    "definition": "Getting an answer back from the model.",
+    "explanation": "When you ask the AI a question and it gives you an answer, that’s called inference. It’s the process of the AI making predictions or responses. Knowing this helps you understand how the AI works and the time or resources it might need to give answers.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Neural Networks",
+    "definition": "Computational models inspired by the brain's structure",
+    "explanation": "They are the core technology that enables AI to learn from text and generate human-like responses.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Prompt",
+    "definition": "The input or question you give to the AI.",
+    "explanation": "Giving clear and detailed prompts helps the AI understand what you want. Just like talking to a person, good communication gets better results.",
+    "category": "Basics",
+    "edges": []
+  },
+  {
+    "term": "Stochastic",
+    "definition": "AI's Nature of being probabalistic, rolling the dice",
+    "explanation": "This is why you can get a different answer every time you ask the same question. It allows for creativity but also unpredictability.",
+    "category": "Basics",
+    "edges": []
+  },
+  {
+    "term": "System Prompt",
+    "definition": "A hidden instruction given to the model about its persona, rules, and identity.",
+    "explanation": "It's a powerful way to steer the AI's behavior consistently without the user seeing the underlying instructions.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Tokens",
+    "definition": "The pieces of text that a model understands, it can be a word, a part of a word, or a character.",
+    "explanation": "Token impacts model abilities, especially with tasks like spelling or character manipulation. Also, you pay for AI based on the number of tokens used, so knowing about tokens helps manage costs. The vocabulary of tokens depends on training data, and it impacts performance in multilingual or esoteric domains.",
+    "category": "Basics",
+    "edges": [
+      {
+        "type": "related",
+        "target": "tokenisation"
+      },
+      {
+        "type": "related",
+        "target": "encoding"
+      },
+      {
+        "type": "related",
+        "target": "vocabulary"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Vocabulary"
+      }
+    ]
+  },
+  {
+    "term": "tokenisation"
+  },
+  {
+    "term": "encoding"
+  },
+  {
+    "term": "vocabulary"
+  },
+  {
+    "term": "Distillation",
+    "definition": "Making a smaller, faster model from a big one.",
+    "explanation": "It lets you use cheaper, faster models with less delay (latency). But the smaller model might not be as accurate or powerful as the big one. So, you trade some performance for speed and cost savings.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Hyperparameters",
+    "definition": "Settings that affect how the model works.",
+    "explanation": "These include the number of layers, vocabulary size, and dimensions of the model. By adjusting these settings, you can make the AI learn better. It often takes trying different options to find what works best.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Vocabulary"
+      }
+    ]
+  },
+  {
+    "term": "Knowledge cut-off",
+    "definition": "The date beyond which a model has no information.",
+    "explanation": "This is a fundamental limitation of current LLMs, because they stop learning after training is complete. They don't have real-time knowledge unless they are augmented with tools like web search.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Tools"
+      }
+    ]
+  },
+  {
+    "term": "Loss",
+    "definition": "A number that measures how wrong the model's predictions are during training.",
+    "explanation": "The goal of training is to minimize the loss. Watching the loss go down is how researchers know the model is learning.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Multimodal",
+    "definition": "Models that handle different data types like text and images.",
+    "explanation": "People use words, pictures, and sounds. When AI can understand all these, it can help users better. Using multimodal AI makes your tools more powerful.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Tools"
+      }
+    ]
+  },
+  {
+    "term": "Neural network architecture",
+    "definition": "Design of the math functions that create the neural network",
+    "explanation": "It influences ability to learn, scalability, modalities, and training / inference cost. Breakthroughs here are big. Examples include Transformer, Mixture of Experts (MoE), State Space Models (SSMs), Multimodal / Unified, Matryoshka Representation, etc.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Inference"
+      },
+      {
+        "type": "mentions",
+        "target": "Multimodal"
+      },
+      {
+        "type": "mentions",
+        "target": "Transformer"
+      }
+    ]
+  },
+  {
+    "term": "Parameters",
+    "definition": "The learned \"long-term\" memory, represented as billions of numbers",
+    "explanation": "Providing more parameters allows training on more data and creating more capabilities. It's also slower and more expensive to train and run. Conversely, smaller models are cheaper and faster, but lesser capable.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "weights"
+      },
+      {
+        "type": "related",
+        "target": "model size"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "weights"
+  },
+  {
+    "term": "model size"
+  },
+  {
+    "term": "Transformer",
+    "definition": "The main type of neural network architecture used in AI today",
+    "explanation": "It provides the crucial ability for understanding language, letting the model focus on relevant parts of input. It makes language models faster, more accurate and capable of capturing nuanced meaning.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "attention"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Neural network architecture"
+      }
+    ]
+  },
+  {
+    "term": "attention"
+  },
+  {
+    "term": "Vocabulary",
+    "definition": "The complete set of unique tokens that a model can recognize and produce.",
+    "explanation": "The vocabulary defines the atomic units of language the model works with. Its size is a key design choice in an LLM's architecture.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Tokens"
+      }
+    ]
+  },
+  {
+    "term": "Chain of Thought",
+    "definition": "Prompting the model to think and plan before answering.",
+    "explanation": "When the model thinks first, it gives better answers but takes longer. This trade-off affects speed and quality.",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Prompt"
+      }
+    ]
+  },
+  {
+    "term": "Fine-Tuning",
+    "definition": "Adjusting a pre-trained model for a specific job.",
+    "explanation": "It helps make the AI better for your needs by teaching it with your data. But it might become less good at general tasks. Fine-tuning works best for specific jobs where you need higher accuracy.",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Tools",
+    "definition": "Giving AI the ability to call external programs, like a web search, a calculator, a database, or a code interpreter.",
+    "explanation": "This overcomes the model's inherent limitations (like knowledge cut-offs or poor arithmetic) by allowing it to access real-time data and precise computation. Having tools to access the file system or databases can support the \"skill\" of programming.",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "Tool use"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Knowledge cut-off"
+      }
+    ]
+  },
+  {
+    "term": "Tool use"
+  },
+  {
+    "term": "Guardrails",
+    "definition": "Safety rules to control model outputs.",
+    "explanation": "Guardrails help reduce the chance of the AI giving bad or harmful answers. But they are not perfect. It’s important to use them wisely and not rely on them completely.",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Thinking model",
+    "definition": "A model that has undergone extensive RL, making it adept at complex, multi-step problem solving.",
+    "explanation": "These models represent the frontier of AI capabilities, moving from simple Q&A to genuine problem-solving.",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "reasoning model"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "reasoning model"
+  },
+  {
+    "term": "Reinforcement Learning (RL)",
+    "definition": "Training by making the AI do exercises and learn from its mistakes",
+    "explanation": "RL allows the model to go beyond imitating human experts and discover novel, more effective strategies for solving problems on its own. This is how it acquired difficult skills like solving math problems, or writing code.\n\nIt can get the feedback from humans (RLHF) or from another AI model (RLAIF).",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "RLHF"
+      },
+      {
+        "type": "related",
+        "target": "RLAIF"
+      },
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "RLHF"
+  },
+  {
+    "term": "RLAIF"
+  },
+  {
+    "term": "Agents",
+    "definition": "AI systems that can autonomously perform a sequence of tasks over time to achieve a complex goal.",
+    "explanation": "Agents represent the shift from single-shot commands to having AI assistants that can manage long-running jobs and projects.",
+    "category": "AI Engineering",
+    "edges": []
+  },
+  {
+    "term": "Open weights model",
+    "definition": "A model whose parameters are publicly released, allowing anyone to use, modify, and build upon it.",
+    "explanation": "This fosters innovation and competition, preventing the most powerful AI technology from being controlled by only a handful of large corporations.",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Parameters"
+      }
+    ]
+  },
+  {
+    "term": "Context Engineering",
+    "definition": "Context engineering is the art and science of strategically assembling all necessary information—such as task descriptions, few-shot examples, retrieved data (RAG), tools, and conversation history—into an LLM's context window to optimize its performance for the next step.",
+    "explanation": "An LLM's performance is critically dependent on the quality and relevance of the information in its context window. Providing too little information leads to poor results, while too much or irrelevant information increases costs and can degrade performance.",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "Context"
+      },
+      {
+        "type": "mentions",
+        "target": "Tools"
+      }
+    ]
+  },
+  {
+    "term": "Embeddings",
+    "definition": "Turning words into numbers that show meaning.",
+    "explanation": "Embeddings let you search documents by meaning, not just exact words. This helps you find information even if different words are used, making searches smarter and more accurate.",
+    "category": "AI Engineering",
+    "edges": []
+  },
+  {
+    "term": "Few-Shot Learning",
+    "definition": "Teaching the model with only a few examples.",
+    "explanation": "By giving the model examples, you can guide it to behave the way you want. It’s a simple but powerful way to teach the AI what is good or bad.",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      }
+    ]
+  },
+  {
+    "term": "Retrieval Augmented Generation (RAG)",
+    "definition": "Providing relevant context to the LLM.",
+    "explanation": "A language model needs proper context to answer questions. Like a person, it needs access to information such as data, past conversations, or documents to give a good answer. Collecting and giving this info to the AI before asking helps prevent mistakes or it saying, “I don’t know.”",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "model"
+      },
+      {
+        "type": "mentions",
+        "target": "Context"
+      }
+    ]
+  },
+  {
+    "term": "Temperature",
+    "definition": "A setting that controls how creative AI responses are.",
+    "explanation": "Lets you choose between predictable or more imaginative answers. Adjusting temperature can affect the quality and usefulness of the AI’s responses.",
+    "category": "AI Engineering",
+    "edges": []
+  },
+  {
+    "term": "Top-p Sampling",
+    "definition": "Choosing the next word from top choices making up a set probability.",
+    "explanation": "Balances predictability and creativity in AI responses. The trade-off is between safe answers and more varied ones.",
+    "category": "AI Engineering",
+    "edges": []
+  },
+  {
+    "term": "Vector Database",
+    "definition": "A special database for storing and searching embeddings.",
+    "explanation": "They store embeddings of text, images, and more, so you can search by meaning. This makes finding similar items faster and improves searches and recommendations.",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "mentions",
+        "target": "Embeddings"
+      }
+    ]
+  }
+]

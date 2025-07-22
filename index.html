@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Knowledge Graph</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <h2>AI Knowledge Graph</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label>Edge Filters:</label>
+                    <label><input type="checkbox" id="filter-all-edges" checked> All</label>
+                    <label><input type="checkbox" id="filter-synonym" checked> Synonym</label>
+                    <label><input type="checkbox" id="filter-related" checked> Related</label>
+                    <label><input type="checkbox" id="filter-mentions" checked> Mentions</label>
+                </div>
+                <div class="filter-group">
+                    <label>Category Filters:</label>
+                    <label><input type="checkbox" id="filter-all-categories" checked> All</label>
+                    <div id="category-filters" class="category-filters"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div id="cy" class="cytoscape-container"></div>
+            
+            <div id="sidebar" class="sidebar">
+                <button id="close-sidebar" class="close-btn">&times;</button>
+                <h3 id="sidebar-term"></h3>
+                <div id="sidebar-content"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tooltip" class="tooltip"></div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
