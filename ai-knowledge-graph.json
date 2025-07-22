@@ -154,7 +154,16 @@
   },
   {
     "id": "encoding",
-    "term": "encoding"
+    "term": "Encoding",
+    "definition": "The process of converting data from a human-readable format (e.g., text, images, audio) into a numerical representation that a machine learning model can process.",
+    "explanation": "AI models operate on numbers, not raw data like pixels or characters. Encoding is the crucial bridge that translates real-world information into a mathematical format the model can process, making it the foundational first step for any AI task.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "tokenisation"
+      }
+    ]
   },
   {
     "id": "distillation",
@@ -232,17 +241,9 @@
     "edges": [
       {
         "type": "related",
-        "target": "weights"
-      },
-      {
-        "type": "related",
         "target": "model_size"
       }
     ]
-  },
-  {
-    "id": "weights",
-    "term": "weights"
   },
   {
     "id": "model_size",
@@ -345,17 +346,9 @@
     "edges": [
       {
         "type": "related",
-        "target": "reasoning_model"
-      },
-      {
-        "type": "related",
-        "target": "assistant___instruct_model"
+        "target": "reinforcement_learning_rl"
       }
     ]
-  },
-  {
-    "id": "reasoning_model",
-    "term": "reasoning model"
   },
   {
     "id": "reinforcement_learning_rl",
@@ -376,7 +369,11 @@
   },
   {
     "id": "rlhf",
-    "term": "RLHF"
+    "term": "Reinforcement Learning from Human Feedback (RLHF)",
+    "definition": "A technique that uses human preferences to train a \"reward model\" which then guides the reinforcement learning process.",
+    "explanation": "RLHF is the key that unlocks RL for subjective, unverifiable domains like writing quality or helpfulness. It's used to fine-tune most modern chatbots.",
+    "category": "General",
+    "edges": []
   },
   {
     "id": "rlaif",
@@ -399,7 +396,7 @@
     "edges": [
       {
         "type": "related",
-        "target": "weights"
+        "target": "parameters"
       }
     ]
   },
@@ -504,6 +501,49 @@
       {
         "type": "related",
         "target": "reinforcement_learning_rl"
+      }
+    ]
+  },
+  {
+    "id": "prompt_injection",
+    "term": "Prompt Injection",
+    "definition": "A security risk where bad instructions are added to prompts.",
+    "explanation": "Users might try to trick the AI into ignoring your rules and doing things you don’t want. Knowing about prompt injection helps you protect your AI system from misuse.",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "related",
+        "target": "context_engineering"
+      }
+    ]
+  },
+  {
+    "id": "prompt_templates",
+    "term": "Prompt Templates",
+    "definition": "Pre-made formats for prompts to keep inputs consistent.",
+    "explanation": "They help you communicate with the AI consistently by filling in blanks in a set format. This makes it easier to use the AI in different situations and ensures you get good results.",
+    "category": "AI Engineering",
+    "edges": [
+      {
+        "type": "related",
+        "target": "context_engineering"
+      }
+    ]
+  },
+  {
+    "id": "sampling",
+    "term": "Sampling",
+    "definition": "Settings that control predictability, and creativity.",
+    "explanation": "Higher temperature for more creative responses, and lower top-p / top-k for more predictable responses. Generating fewer responses also save compute resources.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "temperature"
+      },
+      {
+        "type": "related",
+        "target": "top_p_sampling"
       }
     ]
   }
