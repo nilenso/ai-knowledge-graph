@@ -491,7 +491,8 @@ function setupEditMode() {
     const editToggle = document.getElementById('edit-toggle');
     const modeIndicator = document.getElementById('mode-indicator');
     const changesIndicator = document.getElementById('changes-indicator');
-    const downloadBtn = document.getElementById('download-json');
+    const copyBtn = document.getElementById('copy-json');
+    const addNewTermBtn = document.getElementById('add-new-term');
     
     editToggle.addEventListener('click', () => {
         const wasEditMode = isEditMode;
@@ -500,9 +501,15 @@ function setupEditMode() {
         modeIndicator.textContent = isEditMode ? 'Edit Mode' : 'View Mode';
         editToggle.classList.toggle('active', isEditMode);
         
+        // Show/hide add new term button
+        if (isEditMode) {
+            addNewTermBtn.classList.remove('hidden');
+        } else {
+            addNewTermBtn.classList.add('hidden');
+        }
+        
         if (isEditMode && selectedNode) {
             // Switching to edit mode with a selected node - show edit form
-            console.log('Switching to edit mode for:', selectedNode.data.term);
             showEditForm(selectedNode.data, selectedNode.node);
         } else if (!isEditMode && selectedNode) {
             // Switching to view mode - hide edit form, show read-only sidebar
@@ -514,7 +521,6 @@ function setupEditMode() {
             sidebarContent.classList.remove('hidden');
             
             // Show the selected node's details in view mode
-            console.log('Switching to view mode for:', selectedNode.data.term);
             showSidebar(selectedNode.data);
         } else if (!isEditMode) {
             // No selected node, just hide edit form
@@ -527,13 +533,15 @@ function setupEditMode() {
         }
     });
 
-    // Download JSON button
-    downloadBtn.addEventListener('click', downloadJSON);
+    // Copy JSON button
+    copyBtn.addEventListener('click', copyJSON);
+    
+    // Add new term button
+    addNewTermBtn.addEventListener('click', showNewTermForm);
 }
 
 // Show edit form in sidebar
 function showEditForm(data, node) {
-    console.log('showEditForm called for:', data.term);
     const sidebar = document.getElementById('sidebar');
     const termEl = document.getElementById('sidebar-term');
     const contentEl = document.getElementById('sidebar-content');
@@ -557,12 +565,114 @@ function showEditForm(data, node) {
     // Populate edges
     populateEdgesList(data.edges || []);
     
+    // Show delete button for existing terms
+    document.getElementById('delete-term').style.display = 'block';
+    
     termEl.textContent = data.term;
     sidebar.classList.add('active');
     
-    console.log('Sidebar should now be active, classes:', sidebar.className);
+    setupFormEventListeners();
+    setupDeleteButton();
+}
+
+// Show form for adding a new term
+function showNewTermForm() {
+    const sidebar = document.getElementById('sidebar');
+    const termEl = document.getElementById('sidebar-term');
+    const contentEl = document.getElementById('sidebar-content');
+    const editForm = document.getElementById('sidebar-edit-form');
+    
+    // Create empty data for new term
+    const newTermData = {
+        id: '',
+        term: '',
+        definition: '',
+        explanation: '',
+        category: 'General',
+        edges: []
+    };
+    
+    currentEditingNode = { data: newTermData, node: null };
+    
+    // Hide read-only content, show edit form
+    contentEl.classList.add('hidden');
+    editForm.classList.remove('hidden');
+    
+    // Clear and populate form with empty values
+    document.getElementById('edit-term').value = '';
+    document.getElementById('edit-definition').value = '';
+    document.getElementById('edit-explanation').value = '';
+    
+    // Populate category dropdown
+    populateCategoryDropdown();
+    document.getElementById('edit-category').value = 'General';
+    
+    // Clear edges list
+    document.getElementById('edges-list').innerHTML = '<p style="color: #6c757d; font-style: italic;">No edges defined</p>';
+    
+    termEl.textContent = 'New Term';
+    sidebar.classList.add('active');
+    
+    // Hide delete button for new terms
+    document.getElementById('delete-term').style.display = 'none';
+    
+    // Focus on term input
+    document.getElementById('edit-term').focus();
     
     setupFormEventListeners();
+}
+
+// Setup delete button functionality
+function setupDeleteButton() {
+    const deleteBtn = document.getElementById('delete-term');
+    
+    // Remove existing event listeners to avoid duplicates
+    deleteBtn.replaceWith(deleteBtn.cloneNode(true));
+    const newDeleteBtn = document.getElementById('delete-term');
+    
+    newDeleteBtn.addEventListener('click', () => {
+        if (currentEditingNode && currentEditingNode.data) {
+            const termName = currentEditingNode.data.term;
+            const termId = currentEditingNode.data.id;
+            
+            if (confirm(`Are you sure you want to delete "${termName}"? This action cannot be undone.`)) {
+                deleteTerm(termId, termName);
+            }
+        }
+    });
+}
+
+// Delete a term from the knowledge graph
+function deleteTerm(termId, termName) {
+    // Remove from graphData
+    const termIndex = graphData.findIndex(item => item.id === termId);
+    if (termIndex !== -1) {
+        graphData.splice(termIndex, 1);
+    }
+    
+    // Remove all edges that target this term
+    graphData.forEach(item => {
+        if (item.edges) {
+            item.edges = item.edges.filter(edge => edge.target !== termId);
+        }
+    });
+    
+    // Mark as modified
+    modifiedNodes.add(termName);
+    document.getElementById('changes-indicator').classList.remove('hidden');
+    
+    // Close sidebar
+    document.getElementById('sidebar').classList.remove('active');
+    
+    // Clear selection
+    selectedNode = null;
+    currentEditingNode = null;
+    
+    // Rebuild graph
+    rebuildGraphElements(true);
+    
+    // Update URL to remove node parameter
+    updateURL();
 }
 
 // Populate category dropdown with existing categories plus option for new
@@ -887,36 +997,14 @@ function updateNodeFromForm() {
                 const targetNode = cy.nodes().filter(n => n.data('label') === targetName);
                 if (targetNode.length > 0) {
                     targetId = targetNode.data('id');
-                } else {
-                    // Generate ID for new target using the same logic as the Python script
-                    targetId = targetName.toLowerCase()
-                        .replace(/\s+/g, '_')
-                        .replace(/[()]/g, '')
-                        .replace(/\//g, '_')
-                        .replace(/-/g, '_')
-                        .replace(/\./g, '')
-                        .replace(/,/g, '')
-                        .replace(/'/g, '')
-                        .replace(/"/g, '');
-                    
-                    // Only create new node if it's not already in graphData
-                    const existingNode = graphData.find(item => item.id === targetId);
-                    if (!existingNode) {
-                        // Create a new node in graphData for this target
-                        const newTargetNode = {
-                            id: targetId,
-                            term: targetName,
-                            definition: '',
-                            explanation: '',
-                            category: 'General',
-                            edges: []
-                        };
-                        graphData.push(newTargetNode);
-                    }
                 }
+                // If no existing node found, skip this edge - don't create new terms automatically
             }
             
-            edges.push({ type: edgeType, target: targetId });
+            // Only add edge if we found a valid target ID (existing term)
+            if (targetId) {
+                edges.push({ type: edgeType, target: targetId });
+            }
         }
     });
     
@@ -927,25 +1015,47 @@ function updateNodeFromForm() {
     data.category = newCategory || 'General';
     data.edges = edges;
     
+    // For new terms, generate ID if not present
+    if (!data.id && newTerm) {
+        data.id = newTerm.toLowerCase()
+            .replace(/\s+/g, '_')
+            .replace(/[()]/g, '')
+            .replace(/\//g, '_')
+            .replace(/-/g, '_')
+            .replace(/\./g, '')
+            .replace(/,/g, '')
+            .replace(/'/g, '')
+            .replace(/"/g, '');
+    }
+    
     // Mark as modified
     modifiedNodes.add(data.term);
     document.getElementById('changes-indicator').classList.remove('hidden');
-    document.getElementById('download-json').classList.remove('hidden');
     
-    // Update graph node
-    updateGraphNode(node, data);
-    
-    // Update graph data
-    const graphItem = graphData.find(item => item.term === data.term);
-    if (graphItem) {
-        // Check if edges changed before updating
-        const edgesChanged = JSON.stringify(graphItem.edges || []) !== JSON.stringify(data.edges || []);
+    // Handle new term vs existing term
+    if (node) {
+        // Existing term - update graph node
+        updateGraphNode(node, data);
         
-        Object.assign(graphItem, data);
-        
-        // Only rebuild if edges were actually changed
-        if (edgesChanged) {
-            rebuildGraphElements();
+        // Update graph data
+        const graphItem = graphData.find(item => item.term === data.term || item.id === data.id);
+        if (graphItem) {
+            // Check if edges changed before updating
+            const edgesChanged = JSON.stringify(graphItem.edges || []) !== JSON.stringify(data.edges || []);
+            
+            Object.assign(graphItem, data);
+            
+            // Rebuild and recalculate layout if edges changed
+            rebuildGraphElements(edgesChanged);
+        }
+    } else {
+        // New term - add to graph data and rebuild
+        if (newTerm && data.id) {
+            const existingItem = graphData.find(item => item.id === data.id);
+            if (!existingItem) {
+                graphData.push(data);
+                rebuildGraphElements(true); // Always recalculate for new terms
+            }
         }
     }
 }
@@ -969,14 +1079,16 @@ function updateGraphNode(node, data) {
 }
 
 // Rebuild graph elements when edges change
-function rebuildGraphElements() {
+function rebuildGraphElements(recalculateLayout = false) {
     const newElements = createCytoscapeElements(graphData);
     
-    // Store current positions
+    // Store current positions only if we're not recalculating
     const positions = {};
-    cy.nodes().forEach(node => {
-        positions[node.id()] = node.position();
-    });
+    if (!recalculateLayout) {
+        cy.nodes().forEach(node => {
+            positions[node.id()] = node.position();
+        });
+    }
     
     // Update elements
     allNodes = newElements.nodes;
@@ -985,34 +1097,74 @@ function rebuildGraphElements() {
     // Apply current filters
     applyFilters();
     
-    // Restore positions where possible
-    cy.nodes().forEach(node => {
-        if (positions[node.id()]) {
-            node.position(positions[node.id()]);
-        }
-    });
+    if (recalculateLayout) {
+        // Recalculate layout with new edges
+        cy.layout({
+            name: 'cose',
+            idealEdgeLength: 100,
+            nodeOverlap: 20,
+            refresh: 20,
+            fit: true,
+            padding: 30,
+            randomize: false, // Don't randomize to maintain some stability
+            componentSpacing: 100,
+            nodeRepulsion: 400000,
+            edgeElasticity: 100,
+            nestingFactor: 5,
+            gravity: 80,
+            numIter: 1000,
+            initialTemp: 200,
+            coolingFactor: 0.95,
+            minTemp: 1.0,
+            animate: true // Animate the position changes
+        }).run();
+    } else {
+        // Restore positions where possible
+        cy.nodes().forEach(node => {
+            if (positions[node.id()]) {
+                node.position(positions[node.id()]);
+            }
+        });
+    }
 }
 
-// Download edited JSON file
-function downloadJSON() {
-    if (modifiedNodes.size === 0) {
-        alert('No changes detected!');
-        return;
+// Copy JSON to clipboard
+async function copyJSON() {
+    try {
+        // Create JSON string with current graph data
+        const jsonString = JSON.stringify(graphData, null, 2);
+        
+        // Copy to clipboard
+        await navigator.clipboard.writeText(jsonString);
+        
+        // Show feedback message
+        showCopyFeedback();
+        
+    } catch (err) {
+        console.error('Failed to copy to clipboard:', err);
+        
+        // Fallback: create a text area and select it
+        const textArea = document.createElement('textarea');
+        textArea.value = JSON.stringify(graphData, null, 2);
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        // Show feedback message for fallback too
+        showCopyFeedback();
     }
+}
+
+// Show copy feedback message
+function showCopyFeedback() {
+    const feedback = document.getElementById('copy-feedback');
+    feedback.classList.remove('hidden');
     
-    // Create JSON string with current graph data
-    const jsonString = JSON.stringify(graphData, null, 2);
-    
-    // Download JSON file
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `ai-knowledge-graph-edited-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // Hide after 1 second
+    setTimeout(() => {
+        feedback.classList.add('hidden');
+    }, 1000);
 }
 
 // URL parameter management for filter persistence

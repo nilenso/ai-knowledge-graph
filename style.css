@@ -44,7 +44,7 @@ body {
     gap: 15px;
 }
 
-.download-btn {
+.copy-btn {
     background: #17a2b8;
     color: white;
     border: none;
@@ -55,8 +55,34 @@ body {
     transition: background-color 0.3s;
 }
 
-.download-btn:hover {
+.copy-btn:hover {
     background: #138496;
+}
+
+.copy-json-container {
+    position: relative;
+    display: inline-block;
+}
+
+.copy-feedback {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    margin-top: 4px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.copy-feedback.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .edit-toggle-btn {
@@ -80,6 +106,21 @@ body {
 
 .edit-toggle-btn.active:hover {
     background: #c0392b;
+}
+
+.add-term-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.add-term-btn:hover {
+    background: #229954;
 }
 
 .mode-indicator {
@@ -442,6 +483,22 @@ body {
 .form-actions {
     padding-top: 15px;
     border-top: 1px solid #e9ecef;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+    background: #c82333;
 }
 
 /* Node modification indicators */

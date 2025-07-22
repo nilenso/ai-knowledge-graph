@@ -15,7 +15,11 @@
                 <div class="mode-controls">
                     <span id="mode-indicator" class="mode-indicator">View Mode</span>
                     <button id="edit-toggle" class="edit-toggle-btn">Switch to Edit Mode</button>
-                    <button id="download-json" class="download-btn hidden">Download JSON</button>
+                    <button id="add-new-term" class="add-term-btn hidden">+ Add New Term</button>
+                    <div class="copy-json-container">
+                        <button id="copy-json" class="copy-btn">Copy JSON</button>
+                        <div id="copy-feedback" class="copy-feedback hidden">Copied!</div>
+                    </div>
                     <span id="changes-indicator" class="changes-indicator hidden">● Changes Made</span>
                 </div>
             </div>
@@ -67,6 +71,7 @@
                             <div id="edges-list" class="edges-list"></div>
                         </div>
                         <div class="form-actions">
+                            <button type="button" id="delete-term" class="delete-btn">Delete Term</button>
                         </div>
                     </form>
                 </div>

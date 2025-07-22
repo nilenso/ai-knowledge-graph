@@ -5,7 +5,12 @@
     "definition": "AI that can do any intellectual task a human can.",
     "explanation": "While some define AGI as AI that’s as smart as a human in every way, this isn’t something you need to focus on right now. It’s more important to build AI solutions that solve your specific problems today.",
     "category": "Basics",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "ai_aritificial_intelligence"
+      }
+    ]
   },
   {
     "id": "ai_aritificial_intelligence",
@@ -17,10 +22,6 @@
       {
         "type": "synonym",
         "target": "model"
-      },
-      {
-        "type": "synonym",
-        "target": "llm"
       }
     ]
   },
@@ -28,19 +29,6 @@
     "id": "model",
     "term": "Model",
     "definition": "Refers to an LLM of a given flavour. Can be base or instruct model.",
-    "explanation": "",
-    "category": "General",
-    "edges": [
-      {
-        "type": "synonym",
-        "target": "llm"
-      }
-    ]
-  },
-  {
-    "id": "llm",
-    "term": "LLM foo",
-    "definition": "",
     "explanation": "",
     "category": "General",
     "edges": []
@@ -51,16 +39,7 @@
     "definition": "A base model that has been fine-tuned to be a honest, harmless, and helpful assistant.",
     "explanation": "This is the type of model most people interact with. The fine-tuning process is what makes it useful for real-world tasks.",
     "category": "Basics",
-    "edges": [
-      {
-        "type": "related",
-        "target": "shoggoth_with_pink_mask"
-      }
-    ]
-  },
-  {
-    "id": "shoggoth_with_pink_mask",
-    "term": "Shoggoth with pink mask"
+    "edges": []
   },
   {
     "id": "base_model",
@@ -71,10 +50,6 @@
     "edges": [
       {
         "type": "related",
-        "target": "shoggoth"
-      },
-      {
-        "type": "related",
         "target": "assistant___instruct_model"
       },
       {
@@ -82,10 +57,6 @@
         "target": "model"
       }
     ]
-  },
-  {
-    "id": "shoggoth",
-    "term": "Shoggoth"
   },
   {
     "id": "context",
@@ -107,10 +78,6 @@
         "target": "system_prompt"
       }
     ]
-  },
-  {
-    "id": "context_engineering",
-    "term": "Context engineering"
   },
   {
     "id": "hallucination",
@@ -203,7 +170,12 @@
     "definition": "Settings that affect how the model works.",
     "explanation": "These include the number of layers, vocabulary size, and dimensions of the model. By adjusting these settings, you can make the AI learn better. It often takes trying different options to find what works best.",
     "category": "Pre training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "base_model"
+      }
+    ]
   },
   {
     "id": "knowledge_cut_off",
@@ -211,7 +183,12 @@
     "definition": "The date beyond which a model has no information.",
     "explanation": "This is a fundamental limitation of current LLMs, because they stop learning after training is complete. They don't have real-time knowledge unless they are augmented with tools like web search.",
     "category": "Pre training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "base_model"
+      }
+    ]
   },
   {
     "id": "loss",
@@ -235,7 +212,16 @@
     "definition": "Design of the math functions that create the neural network",
     "explanation": "It influences ability to learn, scalability, modalities, and training / inference cost. Breakthroughs here are big. Examples include Transformer, Mixture of Experts (MoE), State Space Models (SSMs), Multimodal / Unified, Matryoshka Representation, etc.",
     "category": "Pre training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "neural_networks"
+      },
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "parameters",
@@ -281,12 +267,20 @@
       {
         "type": "related",
         "target": "attention"
+      },
+      {
+        "type": "related",
+        "target": "neural_network_architecture"
       }
     ]
   },
   {
     "id": "attention",
-    "term": "attention"
+    "term": "Attention",
+    "definition": "Mechanism that lets the model focus on relevant parts of the input",
+    "explanation": "This is a crucial ability for understanding language. It makes language models faster, more accurate and capable of capturing nuanced meaning.",
+    "category": "Pre training",
+    "edges": []
   },
   {
     "id": "vocabulary",
@@ -302,7 +296,12 @@
     "definition": "Prompting the model to think and plan before answering.",
     "explanation": "When the model thinks first, it gives better answers but takes longer. This trade-off affects speed and quality.",
     "category": "Post training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "context_engineering"
+      }
+    ]
   },
   {
     "id": "fine_tuning",
@@ -347,6 +346,10 @@
       {
         "type": "related",
         "target": "reasoning_model"
+      },
+      {
+        "type": "related",
+        "target": "assistant___instruct_model"
       }
     ]
   },
@@ -393,7 +396,12 @@
     "definition": "A model whose parameters are publicly released, allowing anyone to use, modify, and build upon it.",
     "explanation": "This fosters innovation and competition, preventing the most powerful AI technology from being controlled by only a handful of large corporations.",
     "category": "AI Engineering",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "weights"
+      }
+    ]
   },
   {
     "id": "context_engineering",
@@ -417,7 +425,12 @@
     "definition": "Teaching the model with only a few examples.",
     "explanation": "By giving the model examples, you can guide it to behave the way you want. It’s a simple but powerful way to teach the AI what is good or bad.",
     "category": "AI Engineering",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "context_engineering"
+      }
+    ]
   },
   {
     "id": "retrieval_augmented_generation_rag",
@@ -425,7 +438,16 @@
     "definition": "Providing relevant context to the LLM.",
     "explanation": "A language model needs proper context to answer questions. Like a person, it needs access to information such as data, past conversations, or documents to give a good answer. Collecting and giving this info to the AI before asking helps prevent mistakes or it saying, “I don’t know.”",
     "category": "AI Engineering",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "vector_database"
+      },
+      {
+        "type": "related",
+        "target": "context_engineering"
+      }
+    ]
   },
   {
     "id": "temperature",
@@ -450,5 +472,39 @@
     "explanation": "They store embeddings of text, images, and more, so you can search by meaning. This makes finding similar items faster and improves searches and recommendations.",
     "category": "AI Engineering",
     "edges": []
+  },
+  {
+    "id": "t",
+    "term": "Pre-Training",
+    "definition": "The initial stage of building an LLM, where a neural network learns from a vast dataset of text from the internet.",
+    "explanation": "This is where the model gains its foundational knowledge about language, facts, and reasoning. The massive scale of this stage is what gives LLMs their broad capabilities.",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "base_model"
+      }
+    ]
+  },
+  {
+    "id": "post_training",
+    "term": "Post-training",
+    "definition": "The second phase of LLM creation, where a pre-trained base model is adapted to become a helpful, instruction-following assistant.",
+    "explanation": "This stage bridges the gap between a raw \"internet simulator\" and a useful tool like ChatGPT, aligning the model with human intent.",
+    "category": "Post training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "base_model"
+      },
+      {
+        "type": "related",
+        "target": "fine_tuning"
+      },
+      {
+        "type": "related",
+        "target": "reinforcement_learning_rl"
+      }
+    ]
   }
 ]
