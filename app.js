@@ -1,3 +1,24 @@
+// Layout configuration for the force-directed graph
+const LAYOUT_CONFIG = {
+    name: 'cose',
+    idealEdgeLength: 2,        // Preferred distance between connected nodes
+    nodeOverlap: 10,             // Minimum distance between all nodes
+    refresh: 20,                 // Layout refresh frequency
+    fit: true,                   // Whether to fit the viewport to the graph
+    padding: 30,                 // Padding around the graph
+    randomize: false,            // Whether to randomize node positions initially
+    componentSpacing: 200,       // Space between disconnected components
+    nodeRepulsion: 10000000,       // How much nodes push away from each other
+    edgeElasticity: 5,         // How strongly edges pull connected nodes together
+    nestingFactor: 50,            // How strongly parent nodes pull child nodes
+    gravity: 0,                 // Force pulling nodes toward the center
+    numIter: 1000,               // Maximum iterations for layout algorithm
+    initialTemp: 200,            // Initial temperature for simulated annealing
+    coolingFactor: 0.95,         // Temperature reduction factor per iteration
+    minTemp: 1.0,                // Minimum temperature (layout stops here)
+    animate: false               // Whether to animate layout changes
+};
+
 let cy;
 let graphData = [];
 let allEdges = [];
@@ -112,23 +133,8 @@ async function initGraph() {
                 }
             ],
             layout: {
-                name: 'cose',
-                idealEdgeLength: 100,
-                nodeOverlap: 20,
-                refresh: 20,
-                fit: true,
-                padding: 30,
-                randomize: true,
-                componentSpacing: 100,
-                nodeRepulsion: 400000,
-                edgeElasticity: 100,
-                nestingFactor: 5,
-                gravity: 80,
-                numIter: 1000,
-                initialTemp: 200,
-                coolingFactor: 0.95,
-                minTemp: 1.0,
-                animate: false
+                ...LAYOUT_CONFIG,
+                randomize: true  // Override for initial layout to spread nodes
             },
             wheelSensitivity: 0.2
         });
@@ -465,25 +471,7 @@ function applyFilters() {
     cy.add([...visibleNodes, ...visibleEdges]);
     
     // Re-layout the graph
-    cy.layout({
-        name: 'cose',
-        idealEdgeLength: 100,
-        nodeOverlap: 20,
-        refresh: 20,
-        fit: true,
-        padding: 30,
-        randomize: false,
-        componentSpacing: 100,
-        nodeRepulsion: 400000,
-        edgeElasticity: 100,
-        nestingFactor: 5,
-        gravity: 80,
-        numIter: 1000,
-        initialTemp: 200,
-        coolingFactor: 0.95,
-        minTemp: 1.0,
-        animate: false
-    }).run();
+    cy.layout(LAYOUT_CONFIG).run();
 }
 
 // Setup edit mode functionality
@@ -711,7 +699,7 @@ function populateEdgesList(edges) {
 }
 
 // Add a single edge item to the list
-function addEdgeItem(type = '', target = '', index = null) {
+function addEdgeItem(type = 'related', target = '', index = null) {
     const edgesList = document.getElementById('edges-list');
     const edgeItem = document.createElement('div');
     edgeItem.className = 'edge-item';
@@ -1100,23 +1088,8 @@ function rebuildGraphElements(recalculateLayout = false) {
     if (recalculateLayout) {
         // Recalculate layout with new edges
         cy.layout({
-            name: 'cose',
-            idealEdgeLength: 100,
-            nodeOverlap: 20,
-            refresh: 20,
-            fit: true,
-            padding: 30,
-            randomize: false, // Don't randomize to maintain some stability
-            componentSpacing: 100,
-            nodeRepulsion: 400000,
-            edgeElasticity: 100,
-            nestingFactor: 5,
-            gravity: 80,
-            numIter: 1000,
-            initialTemp: 200,
-            coolingFactor: 0.95,
-            minTemp: 1.0,
-            animate: true // Animate the position changes
+            ...LAYOUT_CONFIG,
+            animate: true  // Override to animate position changes
         }).run();
     } else {
         // Restore positions where possible
