@@ -54,11 +54,20 @@ The project uses a JSON representation that remains both human and machine-reada
 
 🚧 **This project is currently in progress** 🚧
 
-We're actively developing new features and refining the knowledge graph. The current version provides a solid foundation for exploring AI terminology, but we have plans for:
-- Enhanced search and discovery features
-- Additional relationship types and metadata
-- Improved mobile experience
-- Community contribution workflows
+We're actively developing new features and refining the knowledge graph. The current version provides a solid foundation for exploring AI terminology, with comprehensive editing capabilities and real-time collaboration features.
+
+## Future Features & Enhancements
+
+- **Research Paper Links**: Add direct links to foundational papers and academic sources for each concept
+- **Educational Resources**: Include curated links to articles and tutorials for deeper learning
+- **Tag System**: Replace single categories with a flexible multi-tag system for better organization
+- **Content Expansion**: Add significantly more terms covering broader AI concepts and domains
+- **Emergent Characteristics**: Include nodes for scaling laws, emergent capabilities, and model behaviors
+- **AI Engineering**: Expand coverage of production practices, deployment, and system architecture
+- **Search Functionality**: Implement full-text search to quickly find terms across the entire graph
+- **Built-in Synonyms**: Add support for abbreviations and synonyms within nodes instead of separate entries
+- **GitHub Integration**: Enable automatic pull request creation directly from the editing interface
+- **Layout Optimization**: Eliminate node overlaps and improve force-directed graph positioning
 
 ## Data Source
 
