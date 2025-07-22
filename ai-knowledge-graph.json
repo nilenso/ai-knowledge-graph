@@ -76,6 +76,10 @@
       {
         "type": "related",
         "target": "system_prompt"
+      },
+      {
+        "type": "related",
+        "target": "inference"
       }
     ]
   },
@@ -93,7 +97,12 @@
     "definition": "Getting an answer back from the model.",
     "explanation": "When you ask the AI a question and it gives you an answer, that’s called inference. It’s the process of the AI making predictions or responses. Knowing this helps you understand how the AI works and the time or resources it might need to give answers.",
     "category": "Basics",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "model"
+      }
+    ]
   },
   {
     "id": "neural_networks",
@@ -205,7 +214,12 @@
     "definition": "A number that measures how wrong the model's predictions are during training.",
     "explanation": "The goal of training is to minimize the loss. Watching the loss go down is how researchers know the model is learning.",
     "category": "Pre training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "multimodal",
@@ -242,6 +256,10 @@
       {
         "type": "related",
         "target": "model_size"
+      },
+      {
+        "type": "related",
+        "target": "t"
       }
     ]
   },
@@ -414,7 +432,12 @@
     "definition": "Turning words into numbers that show meaning.",
     "explanation": "Embeddings let you search documents by meaning, not just exact words. This helps you find information even if different words are used, making searches smarter and more accurate.",
     "category": "AI Engineering",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "vector_database"
+      }
+    ]
   },
   {
     "id": "few_shot_learning",
