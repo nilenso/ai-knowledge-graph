@@ -567,6 +567,10 @@
       {
         "type": "related",
         "target": "top_p_sampling"
+      },
+      {
+        "type": "related",
+        "target": "inference"
       }
     ]
   }
