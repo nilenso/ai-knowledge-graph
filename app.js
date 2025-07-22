@@ -8,6 +8,7 @@ let isEditMode = false;
 let originalData = [];
 let modifiedNodes = new Set();
 let currentEditingNode = null;
+let selectedNode = null;
 
 // Simple hash function for consistent positioning
 function hashString(str) {
@@ -25,6 +26,13 @@ async function initGraph() {
     try {
         const response = await fetch('ai-knowledge-graph.json');
         graphData = await response.json();
+        
+        // Check if we have the new ID-based structure
+        const hasIds = graphData.length > 0 && graphData[0].id !== undefined;
+        if (!hasIds) {
+            console.error('JSON data missing ID fields - please regenerate the knowledge graph');
+        }
+        
         originalData = JSON.parse(JSON.stringify(graphData)); // Deep copy for change tracking
         
         const elements = createCytoscapeElements(graphData);
@@ -178,7 +186,7 @@ function createCytoscapeElements(data) {
 
     // First pass: Create all nodes from CSV data
     data.forEach(item => {
-        const nodeId = item.term;
+        const nodeId = item.id; // Use the actual ID from the data
         const category = item.category || 'General';
         const categoryColor = categoryColors[category];
         
@@ -199,7 +207,7 @@ function createCytoscapeElements(data) {
 
     // Second pass: Create edges and any missing target nodes
     data.forEach(item => {
-        const nodeId = item.term;
+        const nodeId = item.id; // Use the actual ID from the data
         
         if (item.edges) {
             item.edges.forEach(edge => {
@@ -211,13 +219,13 @@ function createCytoscapeElements(data) {
                     
                     const targetNodeData = {
                         id: targetId,
-                        label: targetId,
+                        label: targetId, // Will use ID as label since we don't have the term name
                         definition: '',
                         explanation: '',
                         category: defaultCategory,
                         hasDefinition: false,
                         labelLength: targetId.length,
-                        fullData: { term: targetId, category: defaultCategory }
+                        fullData: { id: targetId, term: targetId, category: defaultCategory }
                     };
                     
                     nodes.push({ data: targetNodeData });
@@ -270,6 +278,10 @@ function setupEventListeners() {
         const node = evt.target;
         const data = node.data('fullData');
         
+        // Update selected node
+        selectedNode = { data, node };
+        updateURL();
+        
         if (isEditMode) {
             showEditForm(data, node);
         } else {
@@ -284,7 +296,9 @@ function setupEventListeners() {
 
     // Click outside to close sidebar
     document.addEventListener('click', (evt) => {
-        if (!sidebar.contains(evt.target) && !evt.target.closest('#cy')) {
+        if (!sidebar.contains(evt.target) && 
+            !evt.target.closest('#cy') && 
+            !evt.target.closest('.mode-controls')) {
             sidebar.classList.remove('active');
         }
     });
@@ -327,7 +341,10 @@ function showSidebar(data) {
             <ul class="connections-list">`;
         
         data.edges.forEach(edge => {
-            content += `<li><span class="edge-type ${edge.type}">${edge.type}</span> → ${edge.target}</li>`;
+            // Find the target node to get its display name
+            const targetNode = cy.getElementById(edge.target);
+            const targetLabel = targetNode.length > 0 ? targetNode.data('label') : edge.target;
+            content += `<li><span class="edge-type ${edge.type}">${edge.type}</span> → ${targetLabel}</li>`;
         });
         
         content += `</ul></div>`;
@@ -472,16 +489,35 @@ function applyFilters() {
 // Setup edit mode functionality
 function setupEditMode() {
     const editToggle = document.getElementById('edit-toggle');
+    const modeIndicator = document.getElementById('mode-indicator');
     const changesIndicator = document.getElementById('changes-indicator');
-    const downloadBtn = document.getElementById('download-patch');
+    const downloadBtn = document.getElementById('download-json');
     
     editToggle.addEventListener('click', () => {
+        const wasEditMode = isEditMode;
         isEditMode = !isEditMode;
-        editToggle.textContent = isEditMode ? 'View Mode' : 'Edit Mode';
+        editToggle.textContent = isEditMode ? 'Switch to View Mode' : 'Switch to Edit Mode';
+        modeIndicator.textContent = isEditMode ? 'Edit Mode' : 'View Mode';
         editToggle.classList.toggle('active', isEditMode);
         
-        if (!isEditMode) {
-            // Hide edit form, show read-only sidebar
+        if (isEditMode && selectedNode) {
+            // Switching to edit mode with a selected node - show edit form
+            console.log('Switching to edit mode for:', selectedNode.data.term);
+            showEditForm(selectedNode.data, selectedNode.node);
+        } else if (!isEditMode && selectedNode) {
+            // Switching to view mode - hide edit form, show read-only sidebar
+            const sidebar = document.getElementById('sidebar');
+            const editForm = document.getElementById('sidebar-edit-form');
+            const sidebarContent = document.getElementById('sidebar-content');
+            
+            editForm.classList.add('hidden');
+            sidebarContent.classList.remove('hidden');
+            
+            // Show the selected node's details in view mode
+            console.log('Switching to view mode for:', selectedNode.data.term);
+            showSidebar(selectedNode.data);
+        } else if (!isEditMode) {
+            // No selected node, just hide edit form
             const sidebar = document.getElementById('sidebar');
             const editForm = document.getElementById('sidebar-edit-form');
             const sidebarContent = document.getElementById('sidebar-content');
@@ -491,12 +527,13 @@ function setupEditMode() {
         }
     });
 
-    // Download patch button
-    downloadBtn.addEventListener('click', downloadPatch);
+    // Download JSON button
+    downloadBtn.addEventListener('click', downloadJSON);
 }
 
 // Show edit form in sidebar
 function showEditForm(data, node) {
+    console.log('showEditForm called for:', data.term);
     const sidebar = document.getElementById('sidebar');
     const termEl = document.getElementById('sidebar-term');
     const contentEl = document.getElementById('sidebar-content');
@@ -520,8 +557,10 @@ function showEditForm(data, node) {
     // Populate edges
     populateEdgesList(data.edges || []);
     
-    termEl.textContent = `Editing: ${data.term}`;
+    termEl.textContent = data.term;
     sidebar.classList.add('active');
+    
+    console.log('Sidebar should now be active, classes:', sidebar.className);
     
     setupFormEventListeners();
 }
@@ -550,7 +589,10 @@ function populateEdgesList(edges) {
     edgesList.innerHTML = '';
     
     edges.forEach((edge, index) => {
-        addEdgeItem(edge.type, edge.target, index);
+        // Find the target node to get its display name
+        const targetNode = cy.getElementById(edge.target);
+        const targetLabel = targetNode.length > 0 ? targetNode.data('label') : edge.target;
+        addEdgeItem(edge.type, targetLabel, index);
     });
     
     if (edges.length === 0) {
@@ -693,9 +735,19 @@ function updateNodeFromForm() {
             edgeType = customType.value.trim();
         }
         
-        const target = targetInput.value.trim();
-        if (edgeType && target && edgeType !== '__custom__') {
-            edges.push({ type: edgeType, target });
+        const targetName = targetInput.value.trim();
+        if (edgeType && targetName && edgeType !== '__custom__') {
+            // Find the target node by name and get its ID
+            let targetId = null;
+            const targetNode = cy.nodes().filter(n => n.data('label') === targetName);
+            if (targetNode.length > 0) {
+                targetId = targetNode.data('id');
+            } else {
+                // Generate ID for new target
+                targetId = targetName.toLowerCase().replace(' ', '_').replace('(', '').replace(')', '').replace('/', '_').replace('-', '_').replace('.', '').replace(',', '').replace("'", '').replace('"', '');
+            }
+            
+            edges.push({ type: edgeType, target: targetId });
         }
     });
     
@@ -709,7 +761,7 @@ function updateNodeFromForm() {
     // Mark as modified
     modifiedNodes.add(data.term);
     document.getElementById('changes-indicator').classList.remove('hidden');
-    document.getElementById('download-patch').classList.remove('hidden');
+    document.getElementById('download-json').classList.remove('hidden');
     
     // Update graph node
     updateGraphNode(node, data);
@@ -717,11 +769,16 @@ function updateNodeFromForm() {
     // Update graph data
     const graphItem = graphData.find(item => item.term === data.term);
     if (graphItem) {
+        // Check if edges changed before updating
+        const edgesChanged = JSON.stringify(graphItem.edges || []) !== JSON.stringify(data.edges || []);
+        
         Object.assign(graphItem, data);
+        
+        // Only rebuild if edges were actually changed
+        if (edgesChanged) {
+            rebuildGraphElements();
+        }
     }
-    
-    // Rebuild graph elements to reflect edge changes
-    rebuildGraphElements();
 }
 
 // Update the visual graph node
@@ -767,125 +824,26 @@ function rebuildGraphElements() {
     });
 }
 
-// Generate and download git patch for all changes
-function downloadPatch() {
-    // Sort data consistently for comparison
-    const sortedOriginal = [...originalData].sort((a, b) => a.term.localeCompare(b.term));
-    const sortedModified = [...graphData].sort((a, b) => a.term.localeCompare(b.term));
-    
-    const originalString = JSON.stringify(sortedOriginal, null, 2);
-    const modifiedString = JSON.stringify(sortedModified, null, 2);
-    
-    if (originalString === modifiedString) {
+// Download edited JSON file
+function downloadJSON() {
+    if (modifiedNodes.size === 0) {
         alert('No changes detected!');
         return;
     }
     
-    const patch = generateGitPatch(originalString, modifiedString);
+    // Create JSON string with current graph data
+    const jsonString = JSON.stringify(graphData, null, 2);
     
-    // Download patch file
-    const blob = new Blob([patch], { type: 'text/plain' });
+    // Download JSON file
+    const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `knowledge-graph-changes-${new Date().toISOString().split('T')[0]}.patch`;
+    a.download = `ai-knowledge-graph-edited-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-}
-
-// Comprehensive git patch generator
-function generateGitPatch(original, modified) {
-    const originalLines = original.split('\n');
-    const modifiedLines = modified.split('\n');
-    
-    let patch = `diff --git a/ai-knowledge-graph.json b/ai-knowledge-graph.json
-index 1234567..abcdef0 100644
---- a/ai-knowledge-graph.json
-+++ b/ai-knowledge-graph.json
-`;
-    
-    // Find all different lines
-    const differences = [];
-    const maxLines = Math.max(originalLines.length, modifiedLines.length);
-    
-    for (let i = 0; i < maxLines; i++) {
-        const origLine = originalLines[i] || '';
-        const modLine = modifiedLines[i] || '';
-        
-        if (origLine !== modLine) {
-            differences.push({
-                lineNum: i,
-                original: origLine,
-                modified: modLine
-            });
-        }
-    }
-    
-    if (differences.length === 0) {
-        return patch + ' No differences found\n';
-    }
-    
-    // Group consecutive differences into hunks
-    const hunks = [];
-    let currentHunk = [];
-    
-    differences.forEach((diff, index) => {
-        if (currentHunk.length === 0 || diff.lineNum <= currentHunk[currentHunk.length - 1].lineNum + 5) {
-            currentHunk.push(diff);
-        } else {
-            hunks.push(currentHunk);
-            currentHunk = [diff];
-        }
-    });
-    
-    if (currentHunk.length > 0) {
-        hunks.push(currentHunk);
-    }
-    
-    // Generate patch for each hunk
-    hunks.forEach(hunk => {
-        const firstLine = hunk[0].lineNum;
-        const lastLine = hunk[hunk.length - 1].lineNum;
-        const context = 3;
-        
-        const startLine = Math.max(0, firstLine - context);
-        const endLine = Math.min(originalLines.length - 1, lastLine + context);
-        
-        const origStart = startLine + 1;
-        const origCount = endLine - startLine + 1;
-        const modStart = startLine + 1;
-        const modCount = endLine - startLine + 1;
-        
-        patch += `@@ -${origStart},${origCount} +${modStart},${modCount} @@\n`;
-        
-        // Add lines for this hunk
-        for (let i = startLine; i <= endLine; i++) {
-            const isDifferent = hunk.some(diff => diff.lineNum === i);
-            
-            if (isDifferent) {
-                const diff = hunk.find(d => d.lineNum === i);
-                // Show removed line
-                if (diff.original && i < originalLines.length) {
-                    patch += `-${diff.original}\n`;
-                }
-                // Show added line
-                if (diff.modified && i < modifiedLines.length) {
-                    patch += `+${diff.modified}\n`;
-                } else if (!diff.modified && i >= modifiedLines.length) {
-                    // Line was deleted
-                }
-            } else {
-                // Context line (unchanged)
-                if (originalLines[i] !== undefined) {
-                    patch += ` ${originalLines[i]}\n`;
-                }
-            }
-        }
-    });
-    
-    return patch;
 }
 
 // URL parameter management for filter persistence
@@ -909,6 +867,11 @@ function updateURL() {
     
     if (categoryFilters.length > 0 && categoryFilters.length < categories.length) {
         params.set('categories', categoryFilters.join(','));
+    }
+    
+    // Add selected node to URL
+    if (selectedNode) {
+        params.set('node', selectedNode.data.id);
     }
     
     // Update URL without page reload
@@ -952,6 +915,31 @@ function loadFiltersFromURL() {
             const checkbox = document.querySelector(`[data-category="${category}"]`);
             if (checkbox) checkbox.checked = true;
         });
+    }
+    
+    // Load selected node
+    const nodeParam = params.get('node');
+    if (nodeParam) {
+        const nodeId = nodeParam;
+        // Find and select the node after a brief delay to ensure graph is rendered
+        setTimeout(() => {
+            const node = cy.nodes().filter(n => n.data('fullData').id === nodeId);
+            if (node.length > 0) {
+                const nodeData = node.data('fullData');
+                selectedNode = { data: nodeData, node: node };
+                
+                // Select the node visually
+                cy.nodes().unselect();
+                node.select();
+                
+                // Show sidebar with node details
+                if (isEditMode) {
+                    showEditForm(nodeData, node);
+                } else {
+                    showSidebar(nodeData);
+                }
+            }
+        }, 100);
     }
     
     // Apply the loaded filters

@@ -82,6 +82,16 @@ body {
     background: #c0392b;
 }
 
+.mode-indicator {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6c757d;
+    padding: 6px 12px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
 .changes-indicator {
     color: #e74c3c;
     font-size: 12px;

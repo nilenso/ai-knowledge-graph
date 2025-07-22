@@ -1,0 +1,57 @@
+diff --git a/ai-knowledge-graph.json b/ai-knowledge-graph.json
+index 1234567..abcdef0 100644
+--- a/ai-knowledge-graph.json
++++ b/ai-knowledge-graph.json
+
+@@ Modified: Context @@
+-{
+-  "id": "context",
+-  "term": "Context",
+-  "definition": "Same as prompt, but usually refers to the relevant information that's necessary to answer the question or perform the task",
+-  "explanation": "It is the biggest lever in influencing the AI's response. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform.",
+-  "category": "Basics",
+-  "edges": [
+-    {
+-      "type": "related",
+-      "target": "context_engineering"
+-    }
+-  ]
+-}
++{
++  "id": "context",
++  "term": "Context",
++  "definition": "Same as prompt, but usually refers to the relevant information that's necessary to answer the question or perform the task",
++  "explanation": "It is the biggest lever in influencing the AI's response. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform.",
++  "category": "Basics",
++  "edges": [
++    {
++      "type": "related",
++      "target": "context_engineering"
++    },
++    {
++      "type": "related",
++      "target": "prompt"
++    }
++  ]
++}
+
+
+@@ Modified: model @@
+-{
+-  "id": "model",
+-  "term": "model"
+-}
++{
++  "id": "model",
++  "term": "model",
++  "definition": "",
++  "explanation": "",
++  "category": "Basics",
++  "edges": [
++    {
++      "type": "synonym",
++      "target": "llm"
++    }
++  ]
++}
+

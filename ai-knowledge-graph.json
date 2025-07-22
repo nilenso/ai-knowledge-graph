@@ -26,7 +26,16 @@
   },
   {
     "id": "model",
-    "term": "model"
+    "term": "Model",
+    "definition": "Refers to an LLM of a given flavour. Can be base or instruct model.",
+    "explanation": "",
+    "category": "General",
+    "edges": [
+      {
+        "type": "synonym",
+        "target": "llm"
+      }
+    ]
   },
   {
     "id": "llm",
