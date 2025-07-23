@@ -276,9 +276,17 @@ function setupEventListeners() {
     cy.on('mouseover', 'node', (evt) => {
         const node = evt.target;
         const definition = node.data('definition');
+        const synonyms = node.data('fullData') && node.data('fullData').synonyms;
         
-        if (definition) {
-            tooltip.innerHTML = `<strong>${node.data('label')}</strong><br>${definition}`;
+        if (definition || synonyms) {
+            let tooltipContent = `<strong>${node.data('label')}</strong>`;
+            if (synonyms) {
+                tooltipContent += `<br><em>Synonyms: ${synonyms}</em>`;
+            }
+            if (definition) {
+                tooltipContent += `<br>${definition}`;
+            }
+            tooltip.innerHTML = tooltipContent;
             tooltip.style.display = 'block';
         }
     });
@@ -337,6 +345,13 @@ function showSidebar(data) {
         content += `<div class="sidebar-section">
             <h4>Definition</h4>
             <p>${data.definition}</p>
+        </div>`;
+    }
+    
+    if (data.synonyms) {
+        content += `<div class="sidebar-section">
+            <h4>Synonyms</h4>
+            <p>${data.synonyms}</p>
         </div>`;
     }
     
@@ -558,6 +573,7 @@ function showEditForm(data, node) {
     document.getElementById('edit-term').value = data.term || '';
     document.getElementById('edit-definition').value = data.definition || '';
     document.getElementById('edit-explanation').value = data.explanation || '';
+    document.getElementById('edit-synonyms').value = data.synonyms || '';
     
     // Populate category dropdown
     populateCategoryDropdown();
@@ -589,6 +605,7 @@ function showNewTermForm() {
         term: '',
         definition: '',
         explanation: '',
+        synonyms: '',
         category: 'General',
         edges: []
     };
@@ -603,6 +620,7 @@ function showNewTermForm() {
     document.getElementById('edit-term').value = '';
     document.getElementById('edit-definition').value = '';
     document.getElementById('edit-explanation').value = '';
+    document.getElementById('edit-synonyms').value = '';
     
     // Populate category dropdown
     populateCategoryDropdown();
@@ -954,6 +972,7 @@ function updateNodeFromForm() {
     const newTerm = document.getElementById('edit-term').value;
     const newDefinition = document.getElementById('edit-definition').value;
     const newExplanation = document.getElementById('edit-explanation').value;
+    const newSynonyms = document.getElementById('edit-synonyms').value;
     let newCategory = document.getElementById('edit-category').value;
     
     // Handle custom category
@@ -1013,6 +1032,7 @@ function updateNodeFromForm() {
     data.term = newTerm;
     data.definition = newDefinition;
     data.explanation = newExplanation;
+    data.synonyms = newSynonyms;
     data.category = newCategory || 'General';
     data.edges = edges;
     
