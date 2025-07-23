@@ -13,6 +13,10 @@ Unlike traditional glossaries that present terms in alphabetical lists, this kno
 
 The project uses a JSON representation that remains both human and machine-readable, making it easy to version control, share, and programmatically process while staying accessible for manual editing.
 
+## Who This Is For
+
+This knowledge graph is designed for anyone looking to understand the landscape of AI. Rather than focusing on companies or products, it explores the fundamental concepts that form the foundation of artificial intelligence. Whether you're a student beginning your AI journey, a professional transitioning into the field, or a curious individual seeking to understand how AI works beneath the surface, this resource provides a structured way to learn, understand, and explore the interconnected concepts that define modern AI.
+
 ## Features
 
 ### 🌐 **Interactive Visualization**
