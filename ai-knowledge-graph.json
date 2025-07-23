@@ -26,12 +26,21 @@
     ]
   },
   {
-    "id": "model",
-    "term": "Model",
-    "definition": "Refers to an LLM of a given flavour. Can be base or instruct model.",
-    "explanation": "",
+    "id": "e",
+    "term": "Model Characteristics",
+    "definition": "Characteristics of an AI that are observed during usage, that aren't necessarily explained easily by theory",
+    "explanation": "Neural nets have long been black boxes, so knowing the general characteristics of the model helps in using it carefully, and effectively.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "hallucination"
+      },
+      {
+        "type": "related",
+        "target": "stochastic"
+      }
+    ]
   },
   {
     "id": "assistant___instruct_model",
@@ -61,8 +70,8 @@
   {
     "id": "context",
     "term": "Context",
-    "definition": "Same as prompt, but usually refers to the relevant information that's necessary to answer the question or perform the task",
-    "explanation": "It is the biggest lever in influencing the AI's response. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform.",
+    "definition": "The input or question you give to the AI",
+    "explanation": "Giving clear and detailed instructions helps the AI understand what you want. Just like talking to a person, good communication gets better results. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform. ",
     "category": "Basics",
     "edges": [
       {
@@ -180,7 +189,12 @@
     "definition": "Making a smaller, faster model from a big one.",
     "explanation": "It lets you use cheaper, faster models with less delay (latency). But the smaller model might not be as accurate or powerful as the big one. So, you trade some performance for speed and cost savings.",
     "category": "Pre training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "hyperparameters",
@@ -227,7 +241,12 @@
     "definition": "Models that handle different data types like text and images.",
     "explanation": "People use words, pictures, and sounds. When AI can understand all these, it can help users better. Using multimodal AI makes your tools more powerful.",
     "category": "Pre training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "neural_network_architecture",
@@ -339,13 +358,9 @@
     "edges": [
       {
         "type": "related",
-        "target": "tool_use"
+        "target": "inference"
       }
     ]
-  },
-  {
-    "id": "tool_use",
-    "term": "Tool use"
   },
   {
     "id": "guardrails",
@@ -353,7 +368,12 @@
     "definition": "Safety rules to control model outputs.",
     "explanation": "Guardrails help reduce the chance of the AI giving bad or harmful answers. But they are not perfect. It’s important to use them wisely and not rely on them completely.",
     "category": "Post training",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
   },
   {
     "id": "thinking_model",
@@ -403,7 +423,12 @@
     "definition": "AI systems that can autonomously perform a sequence of tasks over time to achieve a complex goal.",
     "explanation": "Agents represent the shift from single-shot commands to having AI assistants that can manage long-running jobs and projects.",
     "category": "AI Engineering",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "a"
+      }
+    ]
   },
   {
     "id": "open_weights_model",
@@ -571,6 +596,101 @@
       {
         "type": "related",
         "target": "inference"
+      }
+    ]
+  },
+  {
+    "id": "e",
+    "term": "Model Characteristics",
+    "definition": "Characteristics of an AI that are observed during usage, that aren't necessarily explained easily by theory",
+    "explanation": "Neural nets have long been black boxes, so knowing the general characteristics of the model helps in using it carefully, and effectively.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "hallucination"
+      },
+      {
+        "type": "related",
+        "target": "stochastic"
+      }
+    ]
+  },
+  {
+    "id": "a",
+    "term": "AI Engineering",
+    "definition": "Using AI effectively to create products for end users",
+    "explanation": "TODO",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
+  },
+  {
+    "id": "diffusion",
+    "term": "Diffusion",
+    "definition": "Diffusion in AI is a method that generates images, audio or video by gradually improving random noise.",
+    "explanation": "Diffusion often uses the U-Net architecture, which is different from Transformers. Understanding diffusion helps demystify how modern AI art and media tools actually work.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "neural_network_architecture"
+      }
+    ]
+  },
+  {
+    "id": "quantisation",
+    "term": "Quantisation",
+    "definition": "Quantisation is a technique that makes AI models smaller and faster by using lower precision numbers.",
+    "explanation": "By using fewer bits to represent numbers, quantisation allows AI to run on phones, smart devices, or in low-power environments without needing powerful servers",
+    "category": "Pre training",
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
+  },
+  {
+    "id": "evals",
+    "term": "Evals",
+    "definition": "Evals are ways to check if an AI is giving useful, accurate, and safe answers.",
+    "explanation": "Evals are how you turn an AI demo into a reliable product. They guide improvements, catch bugs before users do, and give teams confidence that changes are actually making things better. Evals can be simple unit tests, human-evals, or LLM-as-a-judge.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "a"
+      }
+    ]
+  },
+  {
+    "id": "multi_agent_system",
+    "term": "Multi Agent System",
+    "definition": "A group of agents that collaborate to achieve a single goal.",
+    "explanation": "This is useful to work around the context limits, parallelise tasks, and cover more ground in problems like research or decision making.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "agents"
+      }
+    ]
+  },
+  {
+    "id": "traces",
+    "term": "Traces",
+    "definition": "Traces let you observe what an AI model does when handling a request, step by step.",
+    "explanation": "Traces help you analyse behaviour, diagnose issues, and generate insights to improve performance and design.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "a"
       }
     ]
   }
