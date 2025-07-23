@@ -20,10 +20,11 @@
     "category": "Basics",
     "edges": [
       {
-        "type": "synonym",
+        "type": "related",
         "target": "model"
       }
-    ]
+    ],
+    "synonyms": ""
   },
   {
     "id": "model_characteristics",
@@ -80,10 +81,6 @@
     "category": "Basics",
     "edges": [
       {
-        "type": "synonym",
-        "target": "prompt"
-      },
-      {
         "type": "related",
         "target": "system_prompt"
       },
@@ -120,14 +117,6 @@
     "term": "Neural Networks",
     "definition": "Computational models inspired by the brain's structure",
     "explanation": "They are the core technology that enables AI to learn from text and generate human-like responses.",
-    "category": "Basics",
-    "edges": []
-  },
-  {
-    "id": "prompt",
-    "term": "Prompt",
-    "definition": "The input or question you give to the AI.",
-    "explanation": "Giving clear and detailed prompts helps the AI understand what you want. Just like talking to a person, good communication gets better results.",
     "category": "Basics",
     "edges": []
   },
