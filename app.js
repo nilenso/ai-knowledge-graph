@@ -1,23 +1,36 @@
-// Layout configuration for the force-directed graph
+// Layout configuration for the fCoSE graph (superior overlap prevention)
 const LAYOUT_CONFIG = {
-    name: 'cose',
-    idealEdgeLength: 2,        // Preferred distance between connected nodes
-    nodeOverlap: 10,             // Minimum distance between all nodes
-    refresh: 20,                 // Layout refresh frequency
-    fit: true,                   // Whether to fit the viewport to the graph
-    padding: 30,                 // Padding around the graph
+    name: 'fcose',               // Fast, Constraint-based Spring Embedder
+    quality: 'default',         // 'draft', 'default' or 'proof' (higher quality = slower)
     randomize: false,            // Whether to randomize node positions initially
-    componentSpacing: 200,       // Space between disconnected components
-    nodeRepulsion: 10000000,       // How much nodes push away from each other
-    edgeElasticity: 5,         // How strongly edges pull connected nodes together
-    nestingFactor: 50,            // How strongly parent nodes pull child nodes
-    gravity: 0,                 // Force pulling nodes toward the center
-    numIter: 1000,               // Maximum iterations for layout algorithm
-    initialTemp: 200,            // Initial temperature for simulated annealing
-    coolingFactor: 0.95,         // Temperature reduction factor per iteration
-    minTemp: 1.0,                // Minimum temperature (layout stops here)
-    animate: false               // Whether to animate layout changes
+    animate: false,              // Whether to animate the layout
+    fit: true,                   // Whether to fit the viewport to the graph
+    padding: 20,                 // Padding around the graph
+    nodeDimensionsIncludeLabels: false, // Whether labels are included in node dimensions
+    uniformNodeDimensions: false, // Whether to use uniform node dimensions
+    packComponents: false,        // Whether to pack disconnected components
+    step: 'all',                 // Which step to run: 'all', 'transformed', 'enforceBounds', 'cose'
+    
+    // Node separation and overlap prevention
+    nodeSeparation: 7500,          // Separation amount between nodes
+    piTol: 0.0001,           // Pi tolerance for overlap removal
+    
+    // Force values
+    nodeRepulsion: 2000000,         // Node repulsion force
+    idealEdgeLength: 70,         // Ideal edge length
+    edgeElasticity: 2,        // Edge elasticity
+    nestingFactor: 0.1,          // Nesting factor for compound nodes
+    numIter: 2500,               // Maximum iterations
+    
+    // Cooling and gravity
+    gravity: 0,               // Gravity force
+    gravityRange: 3.8,           // Gravity range
+    gravityCompound: 1.0,        // Gravity multiplier for compound nodes
+    gravityRangeCompound: 1.5,   // Gravity range for compound nodes
+    initialEnergyOnIncremental: 0.3 // Initial energy on incremental
 };
+
+// fCoSE extension registered in HTML
 
 let cy;
 let graphData = [];
@@ -1239,6 +1252,8 @@ function loadFiltersFromURL() {
     // Apply the loaded filters
     applyFilters();
 }
+
+// fCoSE extension already registered in HTML
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', initGraph);
