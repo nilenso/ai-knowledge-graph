@@ -72,6 +72,7 @@ We're actively developing new features and refining the knowledge graph. The cur
 - **Built-in Synonyms**: Add support for abbreviations and synonyms within nodes instead of separate entries
 - **GitHub Integration**: Enable automatic pull request creation directly from the editing interface
 - **Layout Optimization**: Eliminate node overlaps and improve force-directed graph positioning
+- **Simplify Edge Types**: Remove edge type complexity since only "related" connections are used
 
 ## Data Source
 
