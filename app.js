@@ -17,7 +17,7 @@ const LAYOUT_CONFIG = {
     
     // Force values
     nodeRepulsion: 2000000,         // Node repulsion force
-    idealEdgeLength: 70,         // Ideal edge length
+    idealEdgeLength: 80,         // Ideal edge length
     edgeElasticity: 2,        // Edge elasticity
     nestingFactor: 0.1,          // Nesting factor for compound nodes
     numIter: 2500,               // Maximum iterations
