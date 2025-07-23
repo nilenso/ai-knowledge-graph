@@ -26,7 +26,7 @@
     ]
   },
   {
-    "id": "e",
+    "id": "model_characteristics",
     "term": "Model Characteristics",
     "definition": "Characteristics of an AI that are observed during usage, that aren't necessarily explained easily by theory",
     "explanation": "Neural nets have long been black boxes, so knowing the general characteristics of the model helps in using it carefully, and effectively.",
@@ -39,6 +39,10 @@
       {
         "type": "related",
         "target": "stochastic"
+      },
+      {
+        "type": "related",
+        "target": "model"
       }
     ]
   },
@@ -48,7 +52,12 @@
     "definition": "A base model that has been fine-tuned to be a honest, harmless, and helpful assistant.",
     "explanation": "This is the type of model most people interact with. The fine-tuning process is what makes it useful for real-world tasks.",
     "category": "Basics",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "fine_tuning"
+      }
+    ]
   },
   {
     "id": "base_model",
@@ -59,10 +68,6 @@
     "edges": [
       {
         "type": "related",
-        "target": "assistant___instruct_model"
-      },
-      {
-        "type": "related",
         "target": "model"
       }
     ]
@@ -71,13 +76,9 @@
     "id": "context",
     "term": "Context",
     "definition": "The input or question you give to the AI",
-    "explanation": "Giving clear and detailed instructions helps the AI understand what you want. Just like talking to a person, good communication gets better results. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform. ",
+    "explanation": "Giving clear and detailed instructions helps the AI understand what you want. Just like talking to a person, good communication gets better results. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform.",
     "category": "Basics",
     "edges": [
-      {
-        "type": "related",
-        "target": "context_engineering"
-      },
       {
         "type": "synonym",
         "target": "prompt"
@@ -163,6 +164,10 @@
       {
         "type": "related",
         "target": "vocabulary"
+      },
+      {
+        "type": "related",
+        "target": "t"
       }
     ]
   },
@@ -274,24 +279,7 @@
     "edges": [
       {
         "type": "related",
-        "target": "model_size"
-      },
-      {
-        "type": "related",
         "target": "t"
-      }
-    ]
-  },
-  {
-    "id": "model_size",
-    "term": "model size",
-    "definition": "",
-    "explanation": "",
-    "category": "General",
-    "edges": [
-      {
-        "type": "related",
-        "target": "vocabulary"
       }
     ]
   },
@@ -343,7 +331,7 @@
   },
   {
     "id": "fine_tuning",
-    "term": "Fine-Tuning",
+    "term": "Supervised Fine-Tuning",
     "definition": "Adjusting a pre-trained model for a specific job.",
     "explanation": "It helps make the AI better for your needs by teaching it with your data. But it might become less good at general tasks. Fine-tuning works best for specific jobs where you need higher accuracy.",
     "category": "Post training",
@@ -426,7 +414,7 @@
     "edges": [
       {
         "type": "related",
-        "target": "a"
+        "target": "ai_engineering"
       }
     ]
   },
@@ -449,7 +437,12 @@
     "definition": "Context engineering is the art and science of strategically assembling all necessary information—such as task descriptions, few-shot examples, retrieved data (RAG), tools, and conversation history—into an LLM's context window to optimize its performance for the next step.",
     "explanation": "An LLM's performance is critically dependent on the quality and relevance of the information in its context window. Providing too little information leads to poor results, while too much or irrelevant information increases costs and can degrade performance.",
     "category": "AI Engineering",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "ai_engineering"
+      }
+    ]
   },
   {
     "id": "embeddings",
@@ -600,24 +593,7 @@
     ]
   },
   {
-    "id": "e",
-    "term": "Model Characteristics",
-    "definition": "Characteristics of an AI that are observed during usage, that aren't necessarily explained easily by theory",
-    "explanation": "Neural nets have long been black boxes, so knowing the general characteristics of the model helps in using it carefully, and effectively.",
-    "category": "General",
-    "edges": [
-      {
-        "type": "related",
-        "target": "hallucination"
-      },
-      {
-        "type": "related",
-        "target": "stochastic"
-      }
-    ]
-  },
-  {
-    "id": "a",
+    "id": "ai_engineering",
     "term": "AI Engineering",
     "definition": "Using AI effectively to create products for end users",
     "explanation": "TODO",
@@ -664,7 +640,7 @@
     "edges": [
       {
         "type": "related",
-        "target": "a"
+        "target": "ai_engineering"
       }
     ]
   },
@@ -690,7 +666,150 @@
     "edges": [
       {
         "type": "related",
-        "target": "a"
+        "target": "ai_engineering"
+      }
+    ]
+  },
+  {
+    "id": "distillation_risk",
+    "term": "Distillation risk",
+    "definition": "The risk that a competitor could steal a model's advanced reasoning abilities by training their own model on its detailed outputs.",
+    "explanation": "This is why some companies hide the \"thinking\" process of their reasoning models, as it's a valuable and hard-won capability.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "distillation"
+      }
+    ]
+  },
+  {
+    "id": "human_labelers",
+    "term": "Human labelers",
+    "definition": "People hired to create the ideal conversational data used for SFT.",
+    "explanation": "They are the source of the \"good\" behavior that the model learns to imitate. The quality of their work directly shapes the AI's personality and helpfulness.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "fine_tuning"
+      }
+    ]
+  },
+  {
+    "id": "layer_norms_matrix_multiplications_softmaxes",
+    "term": "Layer norms, Matrix multiplications, Softmaxes",
+    "definition": "The fundamental mathematical operations that make up the layers of a Transformer network.",
+    "explanation": "These simple, repeated calculations, when performed at a massive scale, enable the complex processing that LLMs do.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
+  },
+  {
+    "id": "llm_judge",
+    "term": "LLM Judge",
+    "definition": "Using a powerful LLM to automatically evaluate the quality of another LLM's output.",
+    "explanation": "This is a scalable way to get feedback for training, especially in domains that are hard to score with simple rules.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "evals"
+      }
+    ]
+  },
+  {
+    "id": "logits___softmax",
+    "term": "Logits / Softmax",
+    "definition": "The raw scores (logits) and resulting probabilities (softmax) that the model assigns to each possible next token.",
+    "explanation": "This output distribution represents the model's prediction. The model then samples from these probabilities to choose the next token.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
+  },
+  {
+    "id": "maximum_context_length",
+    "term": "Maximum context length",
+    "definition": "The maximum number of tokens the model can process at one time to make a prediction.",
+    "explanation": "This is a critical limitation. A longer context length allows the model to understand more complex documents and maintain longer conversations.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "context"
+      }
+    ]
+  },
+  {
+    "id": "reward_model",
+    "term": "Reward model",
+    "definition": "A model trained to predict which of two responses a human is likely to prefer.",
+    "explanation": "It acts as a scalable, automated proxy for human judgment, making it possible to apply RL to improve qualities like helpfulness and harmlessness.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "reinforcement_learning_rl"
+      }
+    ]
+  },
+  {
+    "id": "special_tokens",
+    "term": "Special tokens",
+    "definition": "New tokens added to the vocabulary to structure conversations, marking the beginning and end of turns for the user and assistant.",
+    "explanation": "They provide the necessary structure for the model to understand the format of a dialogue, which is different from the free-form text it saw in pre-training.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "fine_tuning"
+      }
+    ]
+  },
+  {
+    "id": "unverifiable_domains",
+    "term": "Unverifiable domains",
+    "definition": "Subjective tasks like writing a poem or a joke, where there is no single \"correct\" answer to check against.",
+    "explanation": "These domains pose a challenge for standard RL, which requires a clear reward signal.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "reinforcement_learning_rl"
+      }
+    ]
+  },
+  {
+    "id": "verifiable_domains",
+    "term": "Verifiable domains",
+    "definition": "Tasks like math or coding, where a solution can be automatically and objectively checked for correctness.",
+    "explanation": "These are the ideal environments for RL because it's easy to provide the model with a clear success or failure signal.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "reinforcement_learning_rl"
+      }
+    ]
+  },
+  {
+    "id": "zero_shot_learning",
+    "term": "Zero-Shot Learning",
+    "definition": "When the model does a new task without training or examples.",
+    "explanation": "This means you don’t give any examples to the AI. While it’s good for simple tasks, not providing examples might make it harder for the AI to perform well on complex tasks. Giving examples helps, but takes up space in the prompt. You need to balance prompt space with the need for examples.",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "context_engineering"
       }
     ]
   }
