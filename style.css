@@ -414,15 +414,21 @@ body {
 }
 
 .edge-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display: block;
     padding: 6px;
     border: 1px solid #dee2e6;
     border-radius: 3px;
     margin-bottom: 6px;
     background: #f8f9fa;
     font-size: 13px;
+}
+
+.edge-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
 }
 
 .edge-item:last-child {
@@ -456,6 +462,37 @@ body {
 
 .edge-item .remove-edge:hover {
     background: #c82333;
+}
+
+.edge-review-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+}
+
+.edge-review-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: #6c757d;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.edge-review-checkbox {
+    margin: 0;
+    cursor: pointer;
+}
+
+.edge-review-label {
+    white-space: nowrap;
+}
+
+.edge-marked-for-review {
+    border-left: 3px solid #e74c3c !important;
+    background-color: #fdf2f2 !important;
+    padding-left: 5px;
 }
 
 .add-edge-link {

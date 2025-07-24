@@ -40,6 +40,7 @@ This knowledge graph is designed for anyone looking to understand the landscape 
   - Term names, definitions, and explanations
   - Category assignment with new category creation
   - Edge management (add, remove, custom relationship types)
+- **Content review system** - mark individual fields for review with visual indicators
 - **Visual change indicators** - modified nodes show dashed borders
 
 ### 📊 **Change Management & Collaboration**
@@ -73,6 +74,7 @@ We're actively developing new features and refining the knowledge graph. The cur
 - **GitHub Integration**: Enable automatic pull request creation directly from the editing interface
 - **Layout Optimization**: Eliminate node overlaps and improve force-directed graph positioning
 - **Simplify Edge Types**: Remove edge type complexity since only "related" connections are used
+- **Review Dashboard**: Create a dedicated view that lists all terms and fields marked for review
 
 ## Data Source
 

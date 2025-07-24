@@ -399,7 +399,8 @@ function showSidebar(data) {
             // Find the target node to get its display name
             const targetNode = cy.getElementById(edge.target);
             const targetLabel = targetNode.length > 0 ? targetNode.data('label') : edge.target;
-            content += `<li><span class="edge-type ${edge.type}">${edge.type}</span> → ${targetLabel}</li>`;
+            const reviewIndicator = edge.is_marked_for_review ? ' <span style="color: #e74c3c; font-size: 11px;">⚠</span>' : '';
+            content += `<li><span class="edge-type ${edge.type}">${edge.type}</span> → ${targetLabel}${reviewIndicator}</li>`;
         });
         
         content += `</ul></div>`;
@@ -777,7 +778,8 @@ function populateEdgesList(edges) {
         // Find the target node to get its display name
         const targetNode = cy.getElementById(edge.target);
         const targetLabel = targetNode.length > 0 ? targetNode.data('label') : edge.target;
-        addEdgeItem(edge.type, targetLabel, index);
+        const isMarkedForReview = edge.is_marked_for_review || false;
+        addEdgeItem(edge.type, targetLabel, index, isMarkedForReview);
     });
     
     if (edges.length === 0) {
@@ -786,7 +788,7 @@ function populateEdgesList(edges) {
 }
 
 // Add a single edge item to the list
-function addEdgeItem(type = 'related', target = '', index = null) {
+function addEdgeItem(type = 'related', target = '', index = null, isMarkedForReview = false) {
     const edgesList = document.getElementById('edges-list');
     const edgeItem = document.createElement('div');
     edgeItem.className = 'edge-item';
@@ -796,19 +798,28 @@ function addEdgeItem(type = 'related', target = '', index = null) {
     }
     
     const targetInputId = `edge-target-${index || Date.now()}`;
+    const edgeId = index || Date.now();
     
     edgeItem.innerHTML = `
-        <select name="edge-type-${index || Date.now()}">
-            <option value="synonym" ${type === 'synonym' ? 'selected' : ''}>Synonym</option>
-            <option value="related" ${type === 'related' ? 'selected' : ''}>Related</option>
-            <option value="__custom__" ${!['synonym', 'related'].includes(type) ? 'selected' : ''}>Custom</option>
-        </select>
-        <input type="text" placeholder="Custom type" class="custom-type ${!['synonym', 'related'].includes(type) ? '' : 'hidden'}" value="${!['synonym', 'related'].includes(type) ? type : ''}">
-        <div class="autocomplete-container">
-            <input type="text" name="${targetInputId}" id="${targetInputId}" placeholder="Type to search terms..." value="${target}" autocomplete="off">
-            <div class="autocomplete-dropdown hidden"></div>
+        <div class="edge-review-header">
+            <label class="edge-review-checkbox-label">
+                <input type="checkbox" class="edge-review-checkbox" data-edge-id="${edgeId}" ${isMarkedForReview ? 'checked' : ''}>
+                <span class="edge-review-label">Mark edge for review</span>
+            </label>
         </div>
-        <button type="button" class="remove-edge">×</button>
+        <div class="edge-content ${isMarkedForReview ? 'edge-marked-for-review' : ''}">
+            <select name="edge-type-${edgeId}">
+                <option value="synonym" ${type === 'synonym' ? 'selected' : ''}>Synonym</option>
+                <option value="related" ${type === 'related' ? 'selected' : ''}>Related</option>
+                <option value="__custom__" ${!['synonym', 'related'].includes(type) ? 'selected' : ''}>Custom</option>
+            </select>
+            <input type="text" placeholder="Custom type" class="custom-type ${!['synonym', 'related'].includes(type) ? '' : 'hidden'}" value="${!['synonym', 'related'].includes(type) ? type : ''}">
+            <div class="autocomplete-container">
+                <input type="text" name="${targetInputId}" id="${targetInputId}" placeholder="Type to search terms..." value="${target}" autocomplete="off">
+                <div class="autocomplete-dropdown hidden"></div>
+            </div>
+            <button type="button" class="remove-edge">×</button>
+        </div>
     `;
     
     // Handle custom type toggle
@@ -822,6 +833,19 @@ function addEdgeItem(type = 'related', target = '', index = null) {
         } else {
             customInput.classList.add('hidden');
         }
+    });
+    
+    // Handle edge review checkbox
+    const reviewCheckbox = edgeItem.querySelector('.edge-review-checkbox');
+    const edgeContent = edgeItem.querySelector('.edge-content');
+    
+    reviewCheckbox.addEventListener('change', () => {
+        if (reviewCheckbox.checked) {
+            edgeContent.classList.add('edge-marked-for-review');
+        } else {
+            edgeContent.classList.remove('edge-marked-for-review');
+        }
+        updateNodeFromForm();
     });
     
     // Handle remove
@@ -1085,6 +1109,7 @@ function updateNodeFromForm() {
         const typeSelect = item.querySelector('select');
         const customType = item.querySelector('.custom-type');
         const targetInput = item.querySelector('input[name^="edge-target"]');
+        const reviewCheckbox = item.querySelector('.edge-review-checkbox');
         
         let edgeType = typeSelect.value;
         if (edgeType === '__custom__' && customType.value.trim()) {
@@ -1107,7 +1132,14 @@ function updateNodeFromForm() {
             
             // Only add edge if we found a valid target ID (existing term)
             if (targetId) {
-                edges.push({ type: edgeType, target: targetId });
+                const edge = { type: edgeType, target: targetId };
+                
+                // Add review status if marked for review
+                if (reviewCheckbox && reviewCheckbox.checked) {
+                    edge.is_marked_for_review = true;
+                }
+                
+                edges.push(edge);
             }
         }
     });
