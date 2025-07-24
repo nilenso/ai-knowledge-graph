@@ -856,7 +856,12 @@
     "acronyms": "MoE",
     "technical_summary": "Mixture of Experts was introduced in the 1990s but gained prominence with large language models like Switch Transformer in 2021. The architecture divides a model into multiple expert networks, with a gating mechanism that decides which experts to activate for each input. This allows models to have billions or trillions of parameters while only using a fraction during any single forward pass. Modern MoE implementations address challenges like load balancing, expert utilization, and training stability. The approach has become crucial for scaling language models efficiently, with systems like PaLM-2 and GPT-4 likely using MoE architectures.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "neural_network_architecture"
+      }
+    ]
   },
   {
     "id": "image_generation",
@@ -1021,7 +1026,12 @@
     "acronyms": "",
     "technical_summary": "Model efficiency research intensified as AI models grew exponentially in size and computational demands. The field encompasses multiple dimensions: parameter efficiency (achieving good performance with fewer parameters), computational efficiency (reducing FLOPs and memory usage), and energy efficiency (minimizing power consumption). Key techniques include neural architecture search for efficient designs, pruning for removing unnecessary parameters, quantization for reducing precision, and knowledge distillation for training smaller models. Modern approaches include early exit mechanisms, adaptive computation, and hardware-aware model design. The field has developed comprehensive benchmarking frameworks and efficiency metrics to evaluate trade-offs between accuracy and resource usage.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "model_integration",
@@ -1153,7 +1163,12 @@
     "acronyms": "",
     "technical_summary": "Hallucination detection emerged as a critical research area when large language models demonstrated impressive fluency but occasional factual inaccuracy. Early approaches focused on consistency checking and confidence estimation, but modern methods use external knowledge bases, retrieval systems, and specialized verification models. Key techniques include uncertainty quantification, multi-model consensus, fact-checking against reliable sources, and training specialized models to detect inconsistencies. The field has developed benchmarks for different types of hallucinations and evaluation frameworks for detection systems. Current research explores real-time detection during generation, user-friendly uncertainty communication, and integration with retrieval-augmented generation systems.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "hallucination"
+      }
+    ]
   },
   {
     "id": "hardware_optimization",
