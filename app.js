@@ -156,7 +156,7 @@ async function initGraph() {
             elements: elements,
             style: [
                 {
-                    selector: 'node',
+                    selector: 'node[labelLength]',
                     style: {
                         'shape': 'roundrectangle',
                         'background-color': '#f8f9fa',
@@ -173,6 +173,64 @@ async function initGraph() {
                         'border-width': 2,
                         'border-color': '#dee2e6',
                         'padding': '8px'
+                    }
+                },
+                {
+                    selector: ':parent',
+                    style: {
+                        'background-color': 'rgba(180, 180, 180, 0.8)',
+                        'background-opacity': 0.8,
+                        'border-color': '#95a5a6',
+                        'border-width': 4,
+                        'border-style': 'dashed',
+                        'text-valign': 'bottom',
+                        'text-halign': 'center',
+                        'color': '#2c3e50',
+                        'font-size': '18px',
+                        'font-weight': 'bold',
+                        'padding': '30px',
+                        'min-width': '300px',
+                        'min-height': '200px'
+                    }
+                },
+                {
+                    selector: 'node[id="category_general"]',
+                    style: {
+                        'background-color': 'rgba(52, 152, 219, 0.6)',
+                        'border-color': '#3498db',
+                        'color': '#2980b9'
+                    }
+                },
+                {
+                    selector: 'node[id="category_pre_training"]',
+                    style: {
+                        'background-color': 'rgba(46, 204, 113, 0.6)',
+                        'border-color': '#2ecc71',
+                        'color': '#27ae60'
+                    }
+                },
+                {
+                    selector: 'node[id="category_post_training"]',
+                    style: {
+                        'background-color': 'rgba(243, 156, 18, 0.6)',
+                        'border-color': '#f39c12',
+                        'color': '#e67e22'
+                    }
+                },
+                {
+                    selector: 'node[id="category_inference"]',
+                    style: {
+                        'background-color': 'rgba(155, 89, 182, 0.6)',
+                        'border-color': '#9b59b6',
+                        'color': '#8e44ad'
+                    }
+                },
+                {
+                    selector: 'node[id="category_ai_engineering"]',
+                    style: {
+                        'background-color': 'rgba(231, 76, 60, 0.6)',
+                        'border-color': '#e74c3c',
+                        'color': '#c0392b'
                     }
                 },
                 {
@@ -265,11 +323,25 @@ function createCytoscapeElements(data) {
     const edges = [];
     const nodeMap = new Map(); // Use Map to store full node data
 
-    // First pass: Create all nodes from CSV data
+    // Create compound nodes for each category (parent nodes)
+    const categoriesInData = [...new Set(data.map(item => item.category || 'general'))];
+    console.log('Categories found:', categoriesInData);
+    categoriesInData.forEach(category => {
+        const categoryId = `category_${category.replace(/[\s-]+/g, '_').toLowerCase()}`;
+        nodes.push({
+            data: {
+                id: categoryId,
+                label: category.charAt(0).toUpperCase() + category.slice(1)
+            }
+        });
+    });
+
+    // First pass: Create all nodes from CSV data as children of category nodes
     data.forEach(item => {
         const nodeId = item.id; // Use the actual ID from the data
-        const category = item.category || 'General';
+        const category = item.category || 'general';
         const categoryColor = categoryColors[category];
+        const parentId = `category_${category.replace(/[\s-]+/g, '_').toLowerCase()}`;
         
         const nodeData = {
             id: nodeId,
@@ -279,7 +351,8 @@ function createCytoscapeElements(data) {
             category: category,
             hasDefinition: !!item.definition,
             labelLength: item.term.length,
-            fullData: item
+            fullData: item,
+            parent: parentId // This makes it a child of the compound node
         };
         
         nodes.push({ data: nodeData });
@@ -296,7 +369,8 @@ function createCytoscapeElements(data) {
                 
                 // Add target node if it doesn't exist
                 if (!nodeMap.has(targetId)) {
-                    const defaultCategory = 'General';
+                    const defaultCategory = 'general';
+                    const parentId = `category_${defaultCategory.replace(/[\s-]+/g, '_').toLowerCase()}`;
                     
                     const targetNodeData = {
                         id: targetId,
@@ -306,7 +380,8 @@ function createCytoscapeElements(data) {
                         category: defaultCategory,
                         hasDefinition: false,
                         labelLength: targetId.length,
-                        fullData: { id: targetId, term: targetId, category: defaultCategory }
+                        fullData: { id: targetId, term: targetId, category: defaultCategory },
+                        parent: parentId // Assign to general category compound node
                     };
                     
                     nodes.push({ data: targetNodeData });

@@ -4,7 +4,7 @@
     "term": "AGI (Artificial General Intelligence)",
     "definition": "AI that can do any intellectual task a human can.",
     "explanation": "While some define AGI as AI that’s as smart as a human in every way, this isn’t something you need to focus on right now. It’s more important to build AI solutions that solve your specific problems today.",
-    "category": "Basics",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -17,7 +17,7 @@
     "term": "AI (Aritificial Intelligence)",
     "definition": "A language model like ChatGPT",
     "explanation": "Colloquially we say AI to refer to the current generation LLMs / models. The field of AI is broad and spans decades, covers Machine Learning, Computer Vision, Speech recognition, AGI, Robotics, etc.",
-    "category": "Basics",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -31,7 +31,7 @@
     "term": "Model Characteristics",
     "definition": "Characteristics of an AI that are observed during usage, that aren't necessarily explained easily by theory",
     "explanation": "Neural nets have long been black boxes, so knowing the general characteristics of the model helps in using it carefully, and effectively.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -55,7 +55,7 @@
     "term": "Assistant / Instruct model",
     "definition": "A base model that has been fine-tuned to be a honest, harmless, and helpful assistant.",
     "explanation": "This is the type of model most people interact with. The fine-tuning process is what makes it useful for real-world tasks.",
-    "category": "Basics",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -75,7 +75,7 @@
     "term": "Base model",
     "definition": "A powerful text-completion engine but not a conversational assistant.",
     "explanation": "There are only 10s of these out there because they're prohibitively expensive to train. They are foundational building blocks that can be customised, and taught new skills or behaviours.",
-    "category": "Basics",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -88,7 +88,7 @@
     "term": "Context",
     "definition": "The input or question you give to the AI",
     "explanation": "Giving clear and detailed instructions helps the AI understand what you want. Just like talking to a person, good communication gets better results. The context is the model's \"short-term memory\" and it limits the complexity of tasks it can perform.",
-    "category": "Basics",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -106,7 +106,7 @@
     "term": "Hallucination",
     "definition": "When AI makes up things that aren’t true.",
     "explanation": "AIs sometimes make stuff up, and you can’t completely stop this. It’s important to be aware that mistakes can happen, so you should check the AI’s answers.",
-    "category": "Basics",
+    "category": "general",
     "edges": []
   },
   {
@@ -114,7 +114,7 @@
     "term": "Inference",
     "definition": "Getting an answer back from the model.",
     "explanation": "When you ask the AI a question and it gives you an answer, that’s called inference. It’s the process of the AI making predictions or responses. Knowing this helps you understand how the AI works and the time or resources it might need to give answers.",
-    "category": "Basics",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -127,7 +127,7 @@
     "term": "Neural Networks",
     "definition": "Computational models inspired by the brain's structure",
     "explanation": "They are the core technology that enables AI to learn from text and generate human-like responses.",
-    "category": "Basics",
+    "category": "general",
     "edges": []
   },
   {
@@ -135,7 +135,7 @@
     "term": "Stochastic",
     "definition": "AI's Nature of being probabalistic, rolling the dice",
     "explanation": "This is why you can get a different answer every time you ask the same question. It allows for creativity but also unpredictability.",
-    "category": "Basics",
+    "category": "general",
     "edges": []
   },
   {
@@ -143,7 +143,7 @@
     "term": "System Prompt",
     "definition": "A hidden instruction given to the model about its persona, rules, and identity.",
     "explanation": "It's a powerful way to steer the AI's behavior consistently without the user seeing the underlying instructions.",
-    "category": "Basics",
+    "category": "inference",
     "edges": []
   },
   {
@@ -151,7 +151,7 @@
     "term": "Tokens",
     "definition": "The pieces of text that a model understands, it can be a word, a part of a word, or a character.",
     "explanation": "Token impacts model abilities, especially with tasks like spelling or character manipulation. Also, you pay for AI based on the number of tokens used, so knowing about tokens helps manage costs. The vocabulary of tokens depends on training data, and it impacts performance in multilingual or esoteric domains.",
-    "category": "Basics",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -173,14 +173,15 @@
   },
   {
     "id": "tokenisation",
-    "term": "Tokenisation"
+    "term": "Tokenisation",
+    "category": "pre-training"
   },
   {
     "id": "encoding",
     "term": "Encoding",
     "definition": "The process of converting data from a human-readable format (e.g., text, images, audio) into a numerical representation that a machine learning model can process.",
     "explanation": "AI models operate on numbers, not raw data like pixels or characters. Encoding is the crucial bridge that translates real-world information into a mathematical format the model can process, making it the foundational first step for any AI task.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -193,7 +194,7 @@
     "term": "Distillation",
     "definition": "Making a smaller, faster model from a big one.",
     "explanation": "It lets you use cheaper, faster models with less delay (latency). But the smaller model might not be as accurate or powerful as the big one. So, you trade some performance for speed and cost savings.",
-    "category": "Pre training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -206,7 +207,7 @@
     "term": "Hyperparameters",
     "definition": "Settings that affect how the model works.",
     "explanation": "These include the number of layers, vocabulary size, and dimensions of the model. By adjusting these settings, you can make the AI learn better. It often takes trying different options to find what works best.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -219,7 +220,7 @@
     "term": "Knowledge cut-off",
     "definition": "The date beyond which a model has no information.",
     "explanation": "This is a fundamental limitation of current LLMs, because they stop learning after training is complete. They don't have real-time knowledge unless they are augmented with tools like web search.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -232,7 +233,7 @@
     "term": "Loss",
     "definition": "A number that measures how wrong the model's predictions are during training.",
     "explanation": "The goal of training is to minimize the loss. Watching the loss go down is how researchers know the model is learning.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -245,7 +246,7 @@
     "term": "Multimodal",
     "definition": "Models that handle different data types like text and images.",
     "explanation": "People use words, pictures, and sounds. When AI can understand all these, it can help users better. Using multimodal AI makes your tools more powerful.",
-    "category": "Pre training",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -261,7 +262,7 @@
     "term": "Neural network architecture",
     "definition": "Design of the math functions that create the neural network",
     "explanation": "It influences ability to learn, scalability, modalities, and training / inference cost. Breakthroughs here are big. Examples include Transformer, Mixture of Experts (MoE), State Space Models (SSMs), Multimodal / Unified, Matryoshka Representation, etc.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -278,7 +279,7 @@
     "term": "Parameters",
     "definition": "The learned \"long-term\" memory, represented as billions of numbers",
     "explanation": "Providing more parameters allows training on more data and creating more capabilities. It's also slower and more expensive to train and run. Conversely, smaller models are cheaper and faster, but lesser capable.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -291,7 +292,7 @@
     "term": "Transformer",
     "definition": "The main type of neural network architecture used in AI today",
     "explanation": "It provides the crucial ability for understanding language, letting the model focus on relevant parts of input. It makes language models faster, more accurate and capable of capturing nuanced meaning.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -308,7 +309,7 @@
     "term": "Attention",
     "definition": "Mechanism that lets the model focus on relevant parts of the input",
     "explanation": "This is a crucial ability for understanding language. It makes language models faster, more accurate and capable of capturing nuanced meaning.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": []
   },
   {
@@ -316,7 +317,7 @@
     "term": "Vocabulary",
     "definition": "The complete set of unique tokens that a model can recognize and produce.",
     "explanation": "The vocabulary defines the atomic units of language the model works with. Its size is a key design choice in an LLM's architecture.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": []
   },
   {
@@ -324,7 +325,7 @@
     "term": "Chain of Thought",
     "definition": "Prompting the model to think and plan before answering.",
     "explanation": "When the model thinks first, it gives better answers but takes longer. This trade-off affects speed and quality.",
-    "category": "Post training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -337,7 +338,7 @@
     "term": "Supervised Fine-Tuning",
     "definition": "Adjusting a pre-trained model for a specific job.",
     "explanation": "It helps make the AI better for your needs by teaching it with your data. But it might become less good at general tasks. Fine-tuning works best for specific jobs where you need higher accuracy.",
-    "category": "Post training",
+    "category": "post-training",
     "edges": []
   },
   {
@@ -345,7 +346,7 @@
     "term": "Tools",
     "definition": "Giving AI the ability to call external programs, like a web search, a calculator, a database, or a code interpreter.",
     "explanation": "This overcomes the model's inherent limitations (like knowledge cut-offs or poor arithmetic) by allowing it to access real-time data and precise computation. Having tools to access the file system or databases can support the \"skill\" of programming.",
-    "category": "Post training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -358,7 +359,7 @@
     "term": "Guardrails",
     "definition": "Safety rules to control model outputs.",
     "explanation": "Guardrails help reduce the chance of the AI giving bad or harmful answers. But they are not perfect. It’s important to use them wisely and not rely on them completely.",
-    "category": "Post training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -371,7 +372,7 @@
     "term": "Thinking model",
     "definition": "A model that has undergone extensive RL, making it adept at complex, multi-step problem solving.",
     "explanation": "These models represent the frontier of AI capabilities, moving from simple Q&A to genuine problem-solving.",
-    "category": "Post training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -384,7 +385,7 @@
     "term": "Reinforcement Learning (RL)",
     "definition": "Training by making the AI do exercises and learn from its mistakes",
     "explanation": "RL allows the model to go beyond imitating human experts and discover novel, more effective strategies for solving problems on its own. This is how it acquired difficult skills like solving math problems, or writing code.\n\nIt can get the feedback from humans (RLHF) or from another AI model (RLAIF).",
-    "category": "Post training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -401,19 +402,20 @@
     "term": "Reinforcement Learning from Human Feedback (RLHF)",
     "definition": "A technique that uses human preferences to train a \"reward model\" which then guides the reinforcement learning process.",
     "explanation": "RLHF is the key that unlocks RL for subjective, unverifiable domains like writing quality or helpfulness. It's used to fine-tune most modern chatbots.",
-    "category": "General",
+    "category": "post-training",
     "edges": []
   },
   {
     "id": "rlaif",
-    "term": "RLAIF"
+    "term": "RLAIF",
+    "category": "post-training"
   },
   {
     "id": "agents",
     "term": "Agents",
     "definition": "AI systems that can autonomously perform a sequence of tasks over time to achieve a complex goal.",
     "explanation": "Agents represent the shift from single-shot commands to having AI assistants that can manage long-running jobs and projects.",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -426,7 +428,7 @@
     "term": "Open weights model",
     "definition": "A model whose parameters are publicly released, allowing anyone to use, modify, and build upon it.",
     "explanation": "This fosters innovation and competition, preventing the most powerful AI technology from being controlled by only a handful of large corporations.",
-    "category": "AI Engineering",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -442,7 +444,7 @@
     "term": "Context Engineering",
     "definition": "Context engineering is the art and science of strategically assembling all necessary information—such as task descriptions, few-shot examples, retrieved data (RAG), tools, and conversation history—into an LLM's context window to optimize its performance for the next step.",
     "explanation": "An LLM's performance is critically dependent on the quality and relevance of the information in its context window. Providing too little information leads to poor results, while too much or irrelevant information increases costs and can degrade performance.",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -455,7 +457,7 @@
     "term": "Embeddings",
     "definition": "Turning words into numbers that show meaning.",
     "explanation": "Embeddings let you search documents by meaning, not just exact words. This helps you find information even if different words are used, making searches smarter and more accurate.",
-    "category": "AI Engineering",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -468,7 +470,7 @@
     "term": "Few-Shot Learning",
     "definition": "Teaching the model with only a few examples.",
     "explanation": "By giving the model examples, you can guide it to behave the way you want. It’s a simple but powerful way to teach the AI what is good or bad.",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -481,7 +483,7 @@
     "term": "Retrieval Augmented Generation (RAG)",
     "definition": "Providing relevant context to the LLM.",
     "explanation": "A language model needs proper context to answer questions. Like a person, it needs access to information such as data, past conversations, or documents to give a good answer. Collecting and giving this info to the AI before asking helps prevent mistakes or it saying, “I don’t know.”",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -498,7 +500,7 @@
     "term": "Temperature",
     "definition": "A setting that controls how creative AI responses are.",
     "explanation": "Lets you choose between predictable or more imaginative answers. Adjusting temperature can affect the quality and usefulness of the AI’s responses.",
-    "category": "AI Engineering",
+    "category": "inference",
     "edges": []
   },
   {
@@ -506,7 +508,7 @@
     "term": "Top-p Sampling",
     "definition": "Choosing the next word from top choices making up a set probability.",
     "explanation": "Balances predictability and creativity in AI responses. The trade-off is between safe answers and more varied ones.",
-    "category": "AI Engineering",
+    "category": "inference",
     "edges": []
   },
   {
@@ -514,7 +516,7 @@
     "term": "Vector Database",
     "definition": "A special database for storing and searching embeddings.",
     "explanation": "They store embeddings of text, images, and more, so you can search by meaning. This makes finding similar items faster and improves searches and recommendations.",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": []
   },
   {
@@ -522,7 +524,7 @@
     "term": "Pre-Training",
     "definition": "The initial stage of building an LLM, where a neural network learns from a vast dataset of text from the internet.",
     "explanation": "This is where the model gains its foundational knowledge about language, facts, and reasoning. The massive scale of this stage is what gives LLMs their broad capabilities.",
-    "category": "Pre training",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -535,7 +537,7 @@
     "term": "Post-training",
     "definition": "The second phase of LLM creation, where a pre-trained base model is adapted to become a helpful, instruction-following assistant.",
     "explanation": "This stage bridges the gap between a raw \"internet simulator\" and a useful tool like ChatGPT, aligning the model with human intent.",
-    "category": "Post training",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -556,7 +558,7 @@
     "term": "Prompt Injection",
     "definition": "A security risk where bad instructions are added to prompts.",
     "explanation": "Users might try to trick the AI into ignoring your rules and doing things you don’t want. Knowing about prompt injection helps you protect your AI system from misuse.",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -569,7 +571,7 @@
     "term": "Prompt Templates",
     "definition": "Pre-made formats for prompts to keep inputs consistent.",
     "explanation": "They help you communicate with the AI consistently by filling in blanks in a set format. This makes it easier to use the AI in different situations and ensures you get good results.",
-    "category": "AI Engineering",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -582,7 +584,7 @@
     "term": "Sampling",
     "definition": "Settings that control predictability, and creativity.",
     "explanation": "Higher temperature for more creative responses, and lower top-p / top-k for more predictable responses. Generating fewer responses also save compute resources.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -603,7 +605,7 @@
     "term": "AI Engineering",
     "definition": "Using AI effectively to create products for end users",
     "explanation": "TODO",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -616,7 +618,7 @@
     "term": "Diffusion",
     "definition": "Diffusion in AI is a method that generates images, audio or video by gradually improving random noise.",
     "explanation": "Diffusion often uses the U-Net architecture, which is different from Transformers. Understanding diffusion helps demystify how modern AI art and media tools actually work.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -629,7 +631,7 @@
     "term": "Quantisation",
     "definition": "Quantisation is a technique that makes AI models smaller and faster by using lower precision numbers.",
     "explanation": "By using fewer bits to represent numbers, quantisation allows AI to run on phones, smart devices, or in low-power environments without needing powerful servers",
-    "category": "Pre training",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -642,7 +644,7 @@
     "term": "Evals",
     "definition": "Evals are ways to check if an AI is giving useful, accurate, and safe answers.",
     "explanation": "Evals are how you turn an AI demo into a reliable product. They guide improvements, catch bugs before users do, and give teams confidence that changes are actually making things better. Evals can be simple unit tests, human-evals, or LLM-as-a-judge.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -655,7 +657,7 @@
     "term": "Multi Agent System",
     "definition": "A group of agents that collaborate to achieve a single goal.",
     "explanation": "This is useful to work around the context limits, parallelise tasks, and cover more ground in problems like research or decision making.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -668,7 +670,7 @@
     "term": "Traces",
     "definition": "Traces let you observe what an AI model does when handling a request, step by step.",
     "explanation": "Traces help you analyse behaviour, diagnose issues, and generate insights to improve performance and design.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -681,7 +683,7 @@
     "term": "Distillation risk",
     "definition": "The risk that a competitor could steal a model's advanced reasoning abilities by training their own model on its detailed outputs.",
     "explanation": "This is why some companies hide the \"thinking\" process of their reasoning models, as it's a valuable and hard-won capability.",
-    "category": "General",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -694,7 +696,7 @@
     "term": "Human labelers",
     "definition": "People hired to create the ideal conversational data used for SFT.",
     "explanation": "They are the source of the \"good\" behavior that the model learns to imitate. The quality of their work directly shapes the AI's personality and helpfulness.",
-    "category": "General",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -707,7 +709,7 @@
     "term": "Layer norms, Matrix multiplications, Softmaxes",
     "definition": "The fundamental mathematical operations that make up the layers of a Transformer network.",
     "explanation": "These simple, repeated calculations, when performed at a massive scale, enable the complex processing that LLMs do.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -723,7 +725,7 @@
     "term": "LLM Judge",
     "definition": "Using a powerful LLM to automatically evaluate the quality of another LLM's output.",
     "explanation": "This is a scalable way to get feedback for training, especially in domains that are hard to score with simple rules.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -736,7 +738,7 @@
     "term": "Logits / Softmax",
     "definition": "The raw scores (logits) and resulting probabilities (softmax) that the model assigns to each possible next token.",
     "explanation": "This output distribution represents the model's prediction. The model then samples from these probabilities to choose the next token.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -749,7 +751,7 @@
     "term": "Maximum context length",
     "definition": "The maximum number of tokens the model can process at one time to make a prediction.",
     "explanation": "This is a critical limitation. A longer context length allows the model to understand more complex documents and maintain longer conversations.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -762,7 +764,7 @@
     "term": "Reward model",
     "definition": "A model trained to predict which of two responses a human is likely to prefer.",
     "explanation": "It acts as a scalable, automated proxy for human judgment, making it possible to apply RL to improve qualities like helpfulness and harmlessness.",
-    "category": "General",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -775,7 +777,7 @@
     "term": "Special tokens",
     "definition": "New tokens added to the vocabulary to structure conversations, marking the beginning and end of turns for the user and assistant.",
     "explanation": "They provide the necessary structure for the model to understand the format of a dialogue, which is different from the free-form text it saw in pre-training.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -788,7 +790,7 @@
     "term": "Unverifiable domains",
     "definition": "Subjective tasks like writing a poem or a joke, where there is no single \"correct\" answer to check against.",
     "explanation": "These domains pose a challenge for standard RL, which requires a clear reward signal.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -801,7 +803,7 @@
     "term": "Verifiable domains",
     "definition": "Tasks like math or coding, where a solution can be automatically and objectively checked for correctness.",
     "explanation": "These are the ideal environments for RL because it's easy to provide the model with a clear success or failure signal.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -814,7 +816,7 @@
     "term": "Zero-Shot Learning",
     "definition": "When the model does a new task without training or examples.",
     "explanation": "This means you don’t give any examples to the AI. While it’s good for simple tasks, not providing examples might make it harder for the AI to perform well on complex tasks. Giving examples helps, but takes up space in the prompt. You need to balance prompt space with the need for examples.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -830,7 +832,7 @@
     "synonyms": "Performance testing, evaluation, assessment",
     "acronyms": "",
     "technical_summary": "Benchmarking in AI emerged as models became more sophisticated and numerous, creating a need for standardized comparison methods. Early benchmarks like ImageNet for computer vision and GLUE for natural language processing established frameworks for fair comparison. Modern benchmarking involves running models on curated datasets with specific tasks, measuring metrics like accuracy, speed, and resource usage. Benchmarks have evolved to include more complex evaluations like reasoning capabilities, safety assessments, and real-world performance scenarios, becoming essential for model development and deployment decisions.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -846,7 +848,7 @@
     "synonyms": "Model efficiency, system performance, computational performance",
     "acronyms": "",
     "technical_summary": "Model performance became a critical focus as AI models grew larger and more complex, requiring significant computational resources. Performance encompasses multiple dimensions: accuracy (how correct the outputs are), latency (how fast the model responds), throughput (how many requests it can handle), and efficiency (resource usage per operation). Modern performance optimization involves techniques like quantization, pruning, knowledge distillation, and specialized hardware acceleration. The field has developed sophisticated profiling tools and metrics to measure and optimize these various performance aspects across different hardware configurations and deployment scenarios.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -866,7 +868,7 @@
     "synonyms": "Computer vision, visual AI, image understanding",
     "acronyms": "CV",
     "technical_summary": "Computer vision has roots in the 1960s but achieved breakthrough success with deep learning, particularly convolutional neural networks (CNNs) in the 2010s. AlexNet's 2012 ImageNet victory marked the beginning of the deep learning revolution in vision. Modern vision systems can perform complex tasks like object detection, semantic segmentation, and scene understanding. The field has evolved to include transformer-based architectures, multimodal models that combine vision with language, and generative models for image creation. Current research focuses on few-shot learning, video understanding, and 3D scene reconstruction.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -882,7 +884,7 @@
     "synonyms": "MoE, sparse models, expert routing",
     "acronyms": "MoE",
     "technical_summary": "Mixture of Experts was introduced in the 1990s but gained prominence with large language models like Switch Transformer in 2021. The architecture divides a model into multiple expert networks, with a gating mechanism that decides which experts to activate for each input. This allows models to have billions or trillions of parameters while only using a fraction during any single forward pass. Modern MoE implementations address challenges like load balancing, expert utilization, and training stability. The approach has become crucial for scaling language models efficiently, with systems like PaLM-2 and GPT-4 likely using MoE architectures.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -898,7 +900,7 @@
     "synonyms": "Image synthesis, visual generation, AI art creation",
     "acronyms": "",
     "technical_summary": "Image generation evolved from early generative adversarial networks (GANs) in 2014 to modern diffusion models like DALL-E, Midjourney, and Stable Diffusion. The breakthrough came with text-to-image models that can generate highly realistic images from natural language descriptions. Diffusion models, which gradually denoise random pixels into coherent images, became the dominant approach due to their stability and quality. Modern systems incorporate advanced techniques like attention mechanisms, classifier-free guidance, and controllable generation, enabling precise control over style, composition, and content.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -914,7 +916,7 @@
     "synonyms": "Multilingual support, cross-lingual capability, language diversity",
     "acronyms": "",
     "technical_summary": "Multilingual AI development began with machine translation systems but expanded to general-purpose language models trained on diverse language data. Models like mBERT, XLM-R, and multilingual versions of GPT demonstrate that transformer architectures can learn shared representations across languages. Modern approaches use techniques like cross-lingual alignment, code-switching during training, and language-specific adapters. Challenges include handling low-resource languages, cultural context, and maintaining performance across different scripts and linguistic structures. Recent work focuses on improving zero-shot cross-lingual transfer and developing truly polyglot models.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -930,7 +932,7 @@
     "synonyms": "Artificial data, generated data, simulated data",
     "acronyms": "",
     "technical_summary": "Synthetic data generation gained prominence as privacy regulations tightened and AI training data requirements grew. Early approaches used statistical methods and rule-based systems, but modern techniques leverage generative models, GANs, and diffusion models to create realistic synthetic datasets. Applications span from computer vision (synthetic images for autonomous driving) to natural language processing (generated text for training). Advanced techniques include differential privacy for privacy-preserving synthesis, domain adaptation for bridging synthetic-real gaps, and adversarial training to improve synthetic data quality. The field addresses challenges like maintaining statistical properties, avoiding mode collapse, and ensuring synthetic data doesn't introduce harmful biases.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -946,7 +948,7 @@
     "synonyms": "Code synthesis, automated programming, AI coding",
     "acronyms": "",
     "technical_summary": "Code generation emerged from early program synthesis research but achieved practical success with large language models trained on code repositories. Models like GitHub Copilot, CodeT5, and GPT-4 demonstrate impressive coding capabilities across multiple programming languages. The breakthrough came from training transformer models on massive code datasets, learning patterns in syntax, semantics, and programming practices. Modern systems incorporate techniques like retrieval-augmented generation, multi-step reasoning, and code execution feedback. Challenges include ensuring code correctness, security, and handling complex requirements, leading to research in formal verification, test-driven generation, and interactive coding assistants.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -962,7 +964,7 @@
     "synonyms": "Model fusion, weight interpolation, model combination",
     "acronyms": "",
     "technical_summary": "Model merging techniques emerged as researchers sought ways to combine the capabilities of different fine-tuned models without full retraining. Early approaches included simple weight averaging and linear interpolation between models. Modern techniques include TIES (Trimming, Electing, and Merging), DARE (Drop and Rescale), and task-specific merging strategies. The field has developed methods for merging models trained on different tasks, datasets, or with different architectures. Key challenges include resolving conflicts between model parameters, maintaining performance across merged capabilities, and ensuring stable training dynamics. Recent work explores automated merging procedures and theoretical frameworks for understanding when and why merging works effectively.",
-    "category": "General",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -979,7 +981,7 @@
     "synonyms": "Video synthesis, motion generation, temporal modeling",
     "acronyms": "",
     "technical_summary": "Video generation builds on image generation techniques but adds the complexity of temporal consistency and motion modeling. Early approaches used recurrent networks and 3D convolutions, but modern systems leverage diffusion models extended to the temporal domain. Models like Make-A-Video, Imagen Video, and Runway's Gen-2 demonstrate text-to-video capabilities. Key technical challenges include maintaining temporal consistency, generating realistic motion, and handling long sequences. Current approaches use techniques like latent diffusion in compressed video representations, motion priors, and frame interpolation. The field is rapidly evolving with improvements in resolution, duration, and controllability of generated videos.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -995,7 +997,7 @@
     "synonyms": "Application Programming Interface, service interface, endpoint",
     "acronyms": "API",
     "technical_summary": "APIs became crucial as AI models transitioned from research tools to production services. REST APIs emerged as the standard for web-based AI services, with companies like OpenAI, Google, and Anthropic providing standardized interfaces to their models. Modern AI APIs handle authentication, rate limiting, request formatting, and response parsing. Key considerations include latency optimization, error handling, versioning, and cost management. The field has developed patterns for streaming responses, batch processing, and fine-tuning through APIs. Current trends include GraphQL adoption, real-time APIs for interactive applications, and edge deployment APIs for reduced latency.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -1011,7 +1013,7 @@
     "synonyms": "Model serving, production deployment, model hosting",
     "acronyms": "",
     "technical_summary": "Model deployment evolved from simple script execution to sophisticated production systems handling millions of requests. Early deployment involved basic web servers, but modern deployment uses containerization, orchestration platforms like Kubernetes, and specialized serving frameworks like TensorFlow Serving, TorchServe, and Triton. Key considerations include load balancing, auto-scaling, model versioning, A/B testing, and monitoring. The field has developed patterns for blue-green deployments, canary releases, and shadow testing. Current trends include edge deployment for reduced latency, serverless deployment for cost efficiency, and MLOps practices for automated deployment pipelines.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -1030,7 +1032,7 @@
     "synonyms": "Robotic systems, autonomous machines, embodied AI",
     "acronyms": "",
     "technical_summary": "AI-powered robotics combines traditional robotics with modern machine learning, particularly reinforcement learning and computer vision. Classical robotics relied on precise programming and sensing, but AI enables robots to learn from experience and adapt to new situations. Modern approaches use deep learning for perception, reinforcement learning for control, and simulation for training. Key challenges include sim-to-real transfer, sample efficiency, and safety in unpredictable environments. Current research focuses on foundation models for robotics, learning from demonstration, and multi-modal perception combining vision, touch, and proprioception. The field is advancing toward more general-purpose robots that can perform diverse tasks in unstructured environments.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1049,7 +1051,7 @@
     "synonyms": "AI agents, autonomous AI, goal-directed AI",
     "acronyms": "",
     "technical_summary": "Agentic AI builds on advances in large language models, adding planning, memory, and tool-use capabilities. The concept draws from classical AI agent research but gained practical relevance with LLMs that can reason about goals and actions. Modern agentic systems use techniques like chain-of-thought reasoning, tool calling, and iterative refinement. Key components include goal decomposition, action planning, environment interaction, and feedback incorporation. Challenges include ensuring alignment with human intentions, handling uncertainty and failure modes, and maintaining controllability. Current research focuses on multi-agent systems, long-term memory, and safe exploration in complex environments.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -1068,7 +1070,7 @@
     "synonyms": "Graphics processing optimization, parallel computing optimization, accelerator tuning",
     "acronyms": "GPGPU (General-Purpose GPU)",
     "technical_summary": "GPU optimization for AI became critical with the deep learning revolution, as GPUs provided massive parallel processing power needed for neural network training. Key techniques include memory management, kernel optimization, mixed precision training, and batch size optimization. Modern optimization involves understanding GPU architecture, memory hierarchies, and parallel execution patterns. Tools like CUDA, cuDNN, and TensorRT provide optimized libraries for common operations. Advanced techniques include custom kernel development, memory pooling, and multi-GPU parallelization strategies. The field continues evolving with new GPU architectures, specialized AI chips, and automated optimization tools.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -1084,7 +1086,7 @@
     "synonyms": "Latency optimization, response time, throughput optimization",
     "acronyms": "",
     "technical_summary": "Inference speed optimization became crucial as AI models moved from research to production environments serving millions of users. Key techniques include model quantization, pruning, knowledge distillation, and architectural optimizations. Hardware-specific optimizations leverage specialized instructions, memory hierarchies, and parallel processing capabilities. Modern approaches include dynamic batching, caching strategies, and speculative execution. The field has developed sophisticated profiling tools to identify bottlenecks and optimize critical paths. Current trends focus on edge inference optimization, streaming processing for long sequences, and adaptive inference that adjusts computation based on input complexity.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -1100,7 +1102,7 @@
     "synonyms": "Denoising diffusion models, score-based generative models",
     "acronyms": "DDPM (Denoising Diffusion Probabilistic Models), DDIM (Denoising Diffusion Implicit Models)",
     "technical_summary": "Diffusion models emerged from non-equilibrium thermodynamics and gained prominence in 2020 with DDPM. The key insight is to learn the reverse of a gradual noising process, enabling generation by starting from random noise and iteratively denoising. This approach proved more stable than GANs and achieved superior sample quality. Modern diffusion models use U-Net architectures with attention mechanisms and are often implemented in latent spaces for efficiency. Key innovations include classifier-free guidance for controllable generation, improved sampling schedules, and integration with transformer architectures. The field has expanded beyond images to audio, video, and 3D content generation, with ongoing research in faster sampling methods and improved controllability.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1116,7 +1118,7 @@
     "synonyms": "Computational efficiency, resource optimization, energy efficiency",
     "acronyms": "",
     "technical_summary": "Model efficiency research intensified as AI models grew exponentially in size and computational demands. The field encompasses multiple dimensions: parameter efficiency (achieving good performance with fewer parameters), computational efficiency (reducing FLOPs and memory usage), and energy efficiency (minimizing power consumption). Key techniques include neural architecture search for efficient designs, pruning for removing unnecessary parameters, quantization for reducing precision, and knowledge distillation for training smaller models. Modern approaches include early exit mechanisms, adaptive computation, and hardware-aware model design. The field has developed comprehensive benchmarking frameworks and efficiency metrics to evaluate trade-offs between accuracy and resource usage.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1132,7 +1134,7 @@
     "synonyms": "Edge AI, mobile AI, local inference",
     "acronyms": "",
     "technical_summary": "On-device AI became viable with advances in mobile processors, model compression techniques, and specialized AI chips. Early mobile AI was limited to simple tasks, but modern devices can run sophisticated models through techniques like quantization, pruning, and optimized runtime engines. Key frameworks include TensorFlow Lite, ONNX Runtime, and Core ML for different platforms. Challenges include memory constraints, battery life, thermal management, and maintaining accuracy with compressed models. The field has developed specialized neural processing units (NPUs), efficient model architectures like MobileNets, and automated optimization tools for target hardware platforms.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -1148,7 +1150,7 @@
     "synonyms": "AI alignment, responsible AI, AI risk mitigation",
     "acronyms": "",
     "technical_summary": "AI safety emerged as a formal research area as AI capabilities advanced and potential risks became apparent. Early work focused on robustness and fairness, but modern safety research addresses alignment (ensuring AI goals match human intentions), interpretability (understanding AI decision-making), and control (maintaining human oversight). Key techniques include constitutional AI, red-teaming, adversarial testing, and mechanistic interpretability. The field has developed frameworks for risk assessment, safety evaluation, and governance. Current challenges include scaling oversight to superhuman AI systems, ensuring robust alignment under distribution shift, and balancing capability advancement with safety measures.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1164,7 +1166,7 @@
     "synonyms": "Data publication, dataset sharing, open data",
     "acronyms": "",
     "technical_summary": "Dataset release practices evolved from individual researcher sharing to institutional and commercial data publication programs. Early datasets like MNIST and ImageNet established benchmarks that drove significant progress in AI. Modern dataset releases involve careful curation, documentation, ethics review, and legal clearance. Key considerations include privacy protection, bias assessment, licensing terms, and maintenance commitments. The field has developed standards for dataset documentation, versioning, and impact assessment. Current trends include synthetic dataset releases to address privacy concerns, dynamic datasets that evolve over time, and community-driven curation efforts.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -1180,7 +1182,7 @@
     "synonyms": "Optical character recognition, text recognition, document digitization",
     "acronyms": "OCR",
     "technical_summary": "OCR technology dates back to the 1920s but achieved practical success with pattern recognition algorithms in the 1970s. Traditional OCR used template matching and feature extraction, but modern systems leverage deep learning for superior accuracy and robustness. Convolutional neural networks excel at character recognition, while attention mechanisms and sequence models handle text layout and context. Current OCR systems can handle complex layouts, multiple languages, and challenging conditions like poor image quality or distorted text. The field has expanded to include scene text recognition, handwriting recognition, and mathematical formula extraction, with applications in document processing, autonomous vehicles, and accessibility technologies.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1196,7 +1198,7 @@
     "synonyms": "Memory management, RAM optimization, storage efficiency",
     "acronyms": "",
     "technical_summary": "Memory optimization became critical as AI models grew beyond available GPU memory capacities. Key techniques include gradient checkpointing (trading computation for memory), activation recomputation, and mixed precision training. Modern approaches use memory pooling, dynamic memory allocation, and offloading strategies that move data between GPU, CPU, and disk storage. Advanced techniques include parameter sharing, gradient compression, and model parallelism strategies. The field has developed tools for memory profiling, automated optimization, and memory-efficient training algorithms. Current research focuses on extreme memory efficiency for training massive models and zero-memory techniques that eliminate most memory overhead.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -1212,7 +1214,7 @@
     "synonyms": "Scaling relationships, power laws, model scaling",
     "acronyms": "",
     "technical_summary": "Scaling laws in AI were formalized by researchers studying language model performance across different model sizes, dataset sizes, and training compute. The seminal work by OpenAI in 2020 showed predictable power-law relationships between these factors and model performance. Key findings include the importance of model size over architecture details, the relationship between optimal model size and training data, and compute-optimal training strategies. These laws have influenced major AI investments and model development decisions. Current research explores scaling laws for different modalities, tasks, and architectures, including investigations of emergence, phase transitions, and the limits of scaling. The field continues studying whether scaling laws hold for novel architectures and training paradigms.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -1228,7 +1230,7 @@
     "synonyms": "Model size increase, parameter scaling, capacity expansion",
     "acronyms": "",
     "technical_summary": "Model scaling became the dominant paradigm in AI development following the success of large language models like GPT-3. The approach involves systematically increasing model parameters, layer depth, hidden dimensions, and attention heads while maintaining architectural principles. Key innovations include efficient training techniques for massive models, distributed computing strategies, and memory optimization methods. Modern scaling efforts require coordination of thousands of GPUs and sophisticated engineering for model parallelism, data parallelism, and pipeline parallelism. The field has developed techniques for gradual scaling, transfer learning across model sizes, and efficient inference for large models. Current research investigates the limits of scaling, alternative scaling dimensions, and the emergence of new capabilities at different scales.",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
@@ -1244,7 +1246,7 @@
     "synonyms": "AI alignment, value alignment, goal alignment",
     "acronyms": "",
     "technical_summary": "AI alignment emerged as a formal research area in the 2010s as researchers recognized that optimizing for stated objectives might not capture human intentions. Early work focused on reward hacking and specification gaming, where AI systems found unexpected ways to maximize their training objectives. The field gained prominence with the development of reinforcement learning from human feedback (RLHF), constitutional AI, and other techniques for incorporating human preferences into model training. Modern alignment research addresses the challenge of teaching AI systems to understand complex, context-dependent human values that are difficult to specify formally. Key approaches include preference learning (training models to predict human preferences), interpretability research (understanding how models make decisions), and robustness techniques (ensuring aligned behavior persists across different contexts). The field has developed frameworks for measuring alignment, detecting misalignment, and maintaining human oversight as AI capabilities advance.",
-    "category": "General",
+    "category": "post-training",
     "edges": [
       {
         "type": "related",
@@ -1260,7 +1262,7 @@
     "synonyms": "Speech synthesis, voice generation, TTS",
     "acronyms": "TTS",
     "technical_summary": "Text-to-speech technology evolved from concatenative synthesis (combining recorded speech segments) to parametric synthesis using neural networks. Early systems produced robotic-sounding speech, but modern neural TTS systems like WaveNet, Tacotron, and FastSpeech generate highly natural-sounding voices. The breakthrough came with end-to-end neural architectures that learn direct mappings from text to audio waveforms, incorporating prosody, intonation, and speaker characteristics. Current systems can clone voices from minimal samples, generate expressive speech with emotional control, and support real-time synthesis for interactive applications. The field continues advancing toward more controllable, efficient, and multilingual speech synthesis systems.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1276,7 +1278,7 @@
     "synonyms": "Economic efficiency, cost optimization, resource economics",
     "acronyms": "",
     "technical_summary": "Cost efficiency in AI became a major focus as organizations moved from experimental to production AI deployments. The field encompasses training cost optimization (through efficient algorithms, hardware utilization, and data strategies), inference cost reduction (via model compression, caching, and serving optimization), and operational cost management (including monitoring, maintenance, and scaling strategies). Key techniques include spot instance usage, auto-scaling, model sharing, and cost-aware architecture design. Modern approaches include serverless computing for variable workloads, edge deployment to reduce bandwidth costs, and automated resource management. The field has developed sophisticated cost modeling tools and optimization frameworks that balance performance requirements with budget constraints.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1292,7 +1294,7 @@
     "synonyms": "Factuality detection, truthfulness verification, accuracy assessment",
     "acronyms": "",
     "technical_summary": "Hallucination detection emerged as a critical research area when large language models demonstrated impressive fluency but occasional factual inaccuracy. Early approaches focused on consistency checking and confidence estimation, but modern methods use external knowledge bases, retrieval systems, and specialized verification models. Key techniques include uncertainty quantification, multi-model consensus, fact-checking against reliable sources, and training specialized models to detect inconsistencies. The field has developed benchmarks for different types of hallucinations and evaluation frameworks for detection systems. Current research explores real-time detection during generation, user-friendly uncertainty communication, and integration with retrieval-augmented generation systems.",
-    "category": "General",
+    "category": "ai-engineering",
     "edges": [
       {
         "type": "related",
@@ -1308,7 +1310,7 @@
     "synonyms": "Hardware acceleration, chip optimization, silicon optimization",
     "acronyms": "",
     "technical_summary": "Hardware optimization for AI evolved from general-purpose processors to specialized accelerators designed for machine learning workloads. The field encompasses GPU optimization, custom AI chip design (like TPUs and neuromorphic processors), and system-level optimizations including memory hierarchies and interconnects. Key developments include tensor processing units for matrix operations, quantization-aware hardware for reduced precision arithmetic, and memory-compute integration to reduce data movement. Modern optimization involves co-design of algorithms and hardware, with specialized architectures for different AI workloads like training, inference, and edge deployment. The field continues advancing with novel computing paradigms like optical computing, quantum acceleration, and brain-inspired architectures.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -1328,7 +1330,7 @@
     "synonyms": "Data protection, confidentiality, privacy preservation",
     "acronyms": "",
     "technical_summary": "Privacy in AI gained prominence with the recognition that machine learning models can inadvertently memorize and leak training data. Early approaches focused on data anonymization and access controls, but modern privacy-preserving techniques include differential privacy, federated learning, and homomorphic encryption. Differential privacy adds calibrated noise to protect individual data points while preserving statistical properties. Federated learning enables model training without centralizing data, while secure multi-party computation allows collaborative learning without data sharing. The field has developed privacy accounting methods, attack detection systems, and practical frameworks for privacy-utility trade-offs. Current research addresses privacy in large language models, membership inference attacks, and privacy-preserving synthetic data generation.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1344,7 +1346,7 @@
     "synonyms": "AI governance, AI policy, regulatory compliance",
     "acronyms": "",
     "technical_summary": "AI regulation emerged as governments recognized the societal impact of AI technologies. Early frameworks focused on data protection (like GDPR) and algorithmic accountability, but comprehensive AI regulations like the EU AI Act now address the full AI lifecycle. Key regulatory areas include high-risk AI system requirements, transparency obligations, bias prevention, and safety standards. Modern regulations classify AI systems by risk level and impose corresponding requirements for testing, documentation, and human oversight. The field has developed compliance frameworks, auditing standards, and technical tools for regulatory adherence. Current developments include international coordination efforts, sector-specific regulations, and adaptive governance frameworks that can evolve with technology.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1360,7 +1362,7 @@
     "synonyms": "Vector models, representation models, semantic encoders",
     "acronyms": "",
     "technical_summary": "Embedding models evolved from word2vec and GloVe for word representations to transformer-based models that create contextual embeddings for entire documents. The breakthrough came with models like BERT and Sentence-BERT that generate embeddings capturing semantic similarity and meaning. Modern embedding models are trained on massive datasets using contrastive learning, where similar content is mapped to nearby vectors in high-dimensional space. Key developments include multimodal embeddings that align text and images, domain-specific embeddings for specialized applications, and retrieval-optimized embeddings for search applications. The field has developed evaluation benchmarks, fine-tuning techniques, and efficient serving systems for embedding models at scale.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1376,7 +1378,7 @@
     "synonyms": "Video synthesis from text, text-driven video generation",
     "acronyms": "T2V",
     "technical_summary": "Text-to-video generation builds on advances in text-to-image models and video generation techniques. Early approaches extended image diffusion models to the temporal domain, but modern systems like Make-A-Video, Imagen Video, and Runway's Gen-2 use specialized architectures for temporal consistency and motion modeling. Key challenges include maintaining coherent motion, handling complex scene dynamics, and generating videos of sufficient length and resolution. Current approaches use latent diffusion models, temporal attention mechanisms, and motion priors learned from video datasets. The field is rapidly advancing with improvements in video quality, duration, controllability, and the ability to generate specific camera movements and scene transitions.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1393,7 +1395,7 @@
     "synonyms": "Language generation, natural language generation, text synthesis",
     "acronyms": "NLG (Natural Language Generation)",
     "technical_summary": "Text generation evolved from template-based systems and n-gram models to neural language models based on recurrent networks and eventually transformers. The breakthrough came with GPT models that demonstrated emergent capabilities in text generation, including coherent long-form writing, creative content, and task-specific outputs. Modern text generation uses autoregressive models trained on massive text corpora, learning statistical patterns in language to generate contextually appropriate text. Key techniques include attention mechanisms for long-range dependencies, reinforcement learning from human feedback for alignment, and various decoding strategies for controlling generation quality and diversity. The field continues advancing with better controllability, factual accuracy, and specialized generation for different domains and formats.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1409,7 +1411,7 @@
     "synonyms": "Video analysis, video comprehension, temporal visual understanding",
     "acronyms": "",
     "technical_summary": "Video understanding extends computer vision techniques to handle temporal information and motion patterns. Early approaches used 3D convolutions and recurrent networks to process video frames sequentially, but modern systems leverage transformer architectures and attention mechanisms for long-range temporal modeling. Key tasks include action recognition, object tracking, scene understanding, and temporal localization of events. Current approaches use video transformers, self-supervised learning on video data, and multimodal models that combine visual and audio information. The field has developed sophisticated benchmarks for different video understanding tasks and continues advancing toward more comprehensive video analysis that can understand complex narratives, cause-and-effect relationships, and contextual meaning in video content.",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1425,7 +1427,7 @@
     "synonyms": "Context caching, prompt optimization, input caching",
     "acronyms": "",
     "technical_summary": "Prompt caching emerged as large language models became computationally expensive to run, particularly for applications with repetitive or partially overlapping inputs. The technique involves storing intermediate computational states from processing prompts, allowing models to reuse previous work when encountering similar inputs. Modern caching systems use sophisticated matching algorithms to identify reusable prompt segments, manage cache invalidation, and optimize memory usage. Key considerations include cache hit rates, storage efficiency, and maintaining consistency across different requests. The field has developed techniques for semantic caching (matching similar rather than identical prompts), hierarchical caching for different prompt components, and distributed caching systems for scalable deployment. Current research focuses on learned caching policies, adaptive cache management, and integration with model serving frameworks.",
-    "category": "General",
+    "category": "inference",
     "edges": [
       {
         "type": "related",
@@ -1441,7 +1443,7 @@
     "synonyms": "",
     "acronyms": "",
     "technical_summary": "",
-    "category": "General",
+    "category": "general",
     "edges": [
       {
         "type": "related",
@@ -1457,7 +1459,7 @@
     "synonyms": "",
     "acronyms": "",
     "technical_summary": "",
-    "category": "General",
+    "category": "pre-training",
     "edges": [
       {
         "type": "related",
