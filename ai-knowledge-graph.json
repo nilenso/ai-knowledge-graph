@@ -821,7 +821,12 @@
     "acronyms": "",
     "technical_summary": "Benchmarking in AI emerged as models became more sophisticated and numerous, creating a need for standardized comparison methods. Early benchmarks like ImageNet for computer vision and GLUE for natural language processing established frameworks for fair comparison. Modern benchmarking involves running models on curated datasets with specific tasks, measuring metrics like accuracy, speed, and resource usage. Benchmarks have evolved to include more complex evaluations like reasoning capabilities, safety assessments, and real-world performance scenarios, becoming essential for model development and deployment decisions.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "model_performance"
+      }
+    ]
   },
   {
     "id": "model_performance",
@@ -852,7 +857,12 @@
     "acronyms": "CV",
     "technical_summary": "Computer vision has roots in the 1960s but achieved breakthrough success with deep learning, particularly convolutional neural networks (CNNs) in the 2010s. AlexNet's 2012 ImageNet victory marked the beginning of the deep learning revolution in vision. Modern vision systems can perform complex tasks like object detection, semantic segmentation, and scene understanding. The field has evolved to include transformer-based architectures, multimodal models that combine vision with language, and generative models for image creation. Current research focuses on few-shot learning, video understanding, and 3D scene reconstruction.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "mixture_of_experts",
@@ -911,7 +921,12 @@
     "acronyms": "",
     "technical_summary": "Synthetic data generation gained prominence as privacy regulations tightened and AI training data requirements grew. Early approaches used statistical methods and rule-based systems, but modern techniques leverage generative models, GANs, and diffusion models to create realistic synthetic datasets. Applications span from computer vision (synthetic images for autonomous driving) to natural language processing (generated text for training). Advanced techniques include differential privacy for privacy-preserving synthesis, domain adaptation for bridging synthetic-real gaps, and adversarial training to improve synthetic data quality. The field addresses challenges like maintaining statistical properties, avoiding mode collapse, and ensuring synthetic data doesn't introduce harmful biases.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "d"
+      }
+    ]
   },
   {
     "id": "code_generation",
@@ -922,7 +937,12 @@
     "acronyms": "",
     "technical_summary": "Code generation emerged from early program synthesis research but achieved practical success with large language models trained on code repositories. Models like GitHub Copilot, CodeT5, and GPT-4 demonstrate impressive coding capabilities across multiple programming languages. The breakthrough came from training transformer models on massive code datasets, learning patterns in syntax, semantics, and programming practices. Modern systems incorporate techniques like retrieval-augmented generation, multi-step reasoning, and code execution feedback. Challenges include ensuring code correctness, security, and handling complex requirements, leading to research in formal verification, test-driven generation, and interactive coding assistants.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "model_merging",
@@ -950,18 +970,12 @@
     "acronyms": "",
     "technical_summary": "Video generation builds on image generation techniques but adds the complexity of temporal consistency and motion modeling. Early approaches used recurrent networks and 3D convolutions, but modern systems leverage diffusion models extended to the temporal domain. Models like Make-A-Video, Imagen Video, and Runway's Gen-2 demonstrate text-to-video capabilities. Key technical challenges include maintaining temporal consistency, generating realistic motion, and handling long sequences. Current approaches use techniques like latent diffusion in compressed video representations, motion priors, and frame interpolation. The field is rapidly evolving with improvements in resolution, duration, and controllability of generated videos.",
     "category": "General",
-    "edges": []
-  },
-  {
-    "id": "model_evaluation",
-    "term": "Model Evaluation",
-    "definition": "The process of testing and measuring how well an AI model performs on specific tasks and datasets.",
-    "explanation": "Model evaluation ensures AI systems work reliably before deployment and helps identify potential issues or biases. It's essential for building trust in AI systems and making informed decisions about model selection.",
-    "synonyms": "Model assessment, performance measurement, validation",
-    "acronyms": "",
-    "technical_summary": "Model evaluation has evolved from simple accuracy metrics to comprehensive assessment frameworks covering multiple dimensions of model performance. Traditional evaluation focused on held-out test sets and standard metrics, but modern evaluation includes robustness testing, fairness assessment, and real-world performance measurement. The field has developed sophisticated techniques like cross-validation, bootstrap sampling, and statistical significance testing. Contemporary challenges include evaluating generative models, assessing safety and alignment, and developing human-centered evaluation metrics. Emerging approaches incorporate human feedback, adversarial testing, and continuous monitoring in production environments.",
-    "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "api",
@@ -972,7 +986,12 @@
     "acronyms": "API",
     "technical_summary": "APIs became crucial as AI models transitioned from research tools to production services. REST APIs emerged as the standard for web-based AI services, with companies like OpenAI, Google, and Anthropic providing standardized interfaces to their models. Modern AI APIs handle authentication, rate limiting, request formatting, and response parsing. Key considerations include latency optimization, error handling, versioning, and cost management. The field has developed patterns for streaming responses, batch processing, and fine-tuning through APIs. Current trends include GraphQL adoption, real-time APIs for interactive applications, and edge deployment APIs for reduced latency.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
   },
   {
     "id": "model_deployment",
@@ -983,7 +1002,15 @@
     "acronyms": "",
     "technical_summary": "Model deployment evolved from simple script execution to sophisticated production systems handling millions of requests. Early deployment involved basic web servers, but modern deployment uses containerization, orchestration platforms like Kubernetes, and specialized serving frameworks like TensorFlow Serving, TorchServe, and Triton. Key considerations include load balancing, auto-scaling, model versioning, A/B testing, and monitoring. The field has developed patterns for blue-green deployments, canary releases, and shadow testing. Current trends include edge deployment for reduced latency, serverless deployment for cost efficiency, and MLOps practices for automated deployment pipelines.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ],
+    "fields_to_review": [
+      "term"
+    ]
   },
   {
     "id": "robotics",
@@ -994,7 +1021,10 @@
     "acronyms": "",
     "technical_summary": "AI-powered robotics combines traditional robotics with modern machine learning, particularly reinforcement learning and computer vision. Classical robotics relied on precise programming and sensing, but AI enables robots to learn from experience and adapt to new situations. Modern approaches use deep learning for perception, reinforcement learning for control, and simulation for training. Key challenges include sim-to-real transfer, sample efficiency, and safety in unpredictable environments. Current research focuses on foundation models for robotics, learning from demonstration, and multi-modal perception combining vision, touch, and proprioception. The field is advancing toward more general-purpose robots that can perform diverse tasks in unstructured environments.",
     "category": "General",
-    "edges": []
+    "edges": [],
+    "fields_to_review": [
+      "term"
+    ]
   },
   {
     "id": "agentic_ai",
@@ -1005,7 +1035,15 @@
     "acronyms": "",
     "technical_summary": "Agentic AI builds on advances in large language models, adding planning, memory, and tool-use capabilities. The concept draws from classical AI agent research but gained practical relevance with LLMs that can reason about goals and actions. Modern agentic systems use techniques like chain-of-thought reasoning, tool calling, and iterative refinement. Key components include goal decomposition, action planning, environment interaction, and feedback incorporation. Challenges include ensuring alignment with human intentions, handling uncertainty and failure modes, and maintaining controllability. Current research focuses on multi-agent systems, long-term memory, and safe exploration in complex environments.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "ai_engineering"
+      }
+    ],
+    "fields_to_review": [
+      "term"
+    ]
   },
   {
     "id": "gpu_optimization",
@@ -1016,7 +1054,12 @@
     "acronyms": "GPGPU (General-Purpose GPU)",
     "technical_summary": "GPU optimization for AI became critical with the deep learning revolution, as GPUs provided massive parallel processing power needed for neural network training. Key techniques include memory management, kernel optimization, mixed precision training, and batch size optimization. Modern optimization involves understanding GPU architecture, memory hierarchies, and parallel execution patterns. Tools like CUDA, cuDNN, and TensorRT provide optimized libraries for common operations. Advanced techniques include custom kernel development, memory pooling, and multi-GPU parallelization strategies. The field continues evolving with new GPU architectures, specialized AI chips, and automated optimization tools.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "hardware_optimization"
+      }
+    ]
   },
   {
     "id": "inference_speed",
@@ -1027,7 +1070,12 @@
     "acronyms": "",
     "technical_summary": "Inference speed optimization became crucial as AI models moved from research to production environments serving millions of users. Key techniques include model quantization, pruning, knowledge distillation, and architectural optimizations. Hardware-specific optimizations leverage specialized instructions, memory hierarchies, and parallel processing capabilities. Modern approaches include dynamic batching, caching strategies, and speculative execution. The field has developed sophisticated profiling tools to identify bottlenecks and optimize critical paths. Current trends focus on edge inference optimization, streaming processing for long sequences, and adaptive inference that adjusts computation based on input complexity.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "model_performance"
+      }
+    ]
   },
   {
     "id": "diffusion_models",
@@ -1038,7 +1086,12 @@
     "acronyms": "DDPM (Denoising Diffusion Probabilistic Models), DDIM (Denoising Diffusion Implicit Models)",
     "technical_summary": "Diffusion models emerged from non-equilibrium thermodynamics and gained prominence in 2020 with DDPM. The key insight is to learn the reverse of a gradual noising process, enabling generation by starting from random noise and iteratively denoising. This approach proved more stable than GANs and achieved superior sample quality. Modern diffusion models use U-Net architectures with attention mechanisms and are often implemented in latent spaces for efficiency. Key innovations include classifier-free guidance for controllable generation, improved sampling schedules, and integration with transformer architectures. The field has expanded beyond images to audio, video, and 3D content generation, with ongoing research in faster sampling methods and improved controllability.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "neural_network_architecture"
+      }
+    ]
   },
   {
     "id": "model_efficiency",
@@ -1055,17 +1108,6 @@
         "target": "t"
       }
     ]
-  },
-  {
-    "id": "model_integration",
-    "term": "Model Integration",
-    "definition": "Combining AI models with existing software systems and workflows to create complete applications.",
-    "explanation": "Model integration transforms AI research into practical business solutions. It ensures AI capabilities work seamlessly within existing technology stacks and organizational processes.",
-    "synonyms": "System integration, model orchestration, pipeline integration",
-    "acronyms": "",
-    "technical_summary": "Model integration evolved from simple API calls to sophisticated orchestration systems managing multiple models and data flows. Early integration involved basic input/output handling, but modern systems require complex preprocessing, model chaining, fallback mechanisms, and result fusion. Key challenges include handling different model formats, managing dependencies, ensuring consistent performance, and maintaining data quality throughout pipelines. The field has developed patterns for microservices architectures, event-driven processing, and real-time model serving. Current trends include low-code/no-code integration platforms, automated model monitoring, and seamless updates without service interruption.",
-    "category": "General",
-    "edges": []
   },
   {
     "id": "on_device_ai",
@@ -1087,7 +1129,12 @@
     "acronyms": "",
     "technical_summary": "AI safety emerged as a formal research area as AI capabilities advanced and potential risks became apparent. Early work focused on robustness and fairness, but modern safety research addresses alignment (ensuring AI goals match human intentions), interpretability (understanding AI decision-making), and control (maintaining human oversight). Key techniques include constitutional AI, red-teaming, adversarial testing, and mechanistic interpretability. The field has developed frameworks for risk assessment, safety evaluation, and governance. Current challenges include scaling oversight to superhuman AI systems, ensuring robust alignment under distribution shift, and balancing capability advancement with safety measures.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
   },
   {
     "id": "dataset_release",
@@ -1098,7 +1145,12 @@
     "acronyms": "",
     "technical_summary": "Dataset release practices evolved from individual researcher sharing to institutional and commercial data publication programs. Early datasets like MNIST and ImageNet established benchmarks that drove significant progress in AI. Modern dataset releases involve careful curation, documentation, ethics review, and legal clearance. Key considerations include privacy protection, bias assessment, licensing terms, and maintenance commitments. The field has developed standards for dataset documentation, versioning, and impact assessment. Current trends include synthetic dataset releases to address privacy concerns, dynamic datasets that evolve over time, and community-driven curation efforts.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "d"
+      }
+    ]
   },
   {
     "id": "ocr",
@@ -1109,7 +1161,12 @@
     "acronyms": "OCR",
     "technical_summary": "OCR technology dates back to the 1920s but achieved practical success with pattern recognition algorithms in the 1970s. Traditional OCR used template matching and feature extraction, but modern systems leverage deep learning for superior accuracy and robustness. Convolutional neural networks excel at character recognition, while attention mechanisms and sequence models handle text layout and context. Current OCR systems can handle complex layouts, multiple languages, and challenging conditions like poor image quality or distorted text. The field has expanded to include scene text recognition, handwriting recognition, and mathematical formula extraction, with applications in document processing, autonomous vehicles, and accessibility technologies.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "memory_optimization",
@@ -1136,7 +1193,12 @@
     "acronyms": "",
     "technical_summary": "Scaling laws in AI were formalized by researchers studying language model performance across different model sizes, dataset sizes, and training compute. The seminal work by OpenAI in 2020 showed predictable power-law relationships between these factors and model performance. Key findings include the importance of model size over architecture details, the relationship between optimal model size and training data, and compute-optimal training strategies. These laws have influenced major AI investments and model development decisions. Current research explores scaling laws for different modalities, tasks, and architectures, including investigations of emergence, phase transitions, and the limits of scaling. The field continues studying whether scaling laws hold for novel architectures and training paradigms.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "model_scaling",
@@ -1147,7 +1209,12 @@
     "acronyms": "",
     "technical_summary": "Model scaling became the dominant paradigm in AI development following the success of large language models like GPT-3. The approach involves systematically increasing model parameters, layer depth, hidden dimensions, and attention heads while maintaining architectural principles. Key innovations include efficient training techniques for massive models, distributed computing strategies, and memory optimization methods. Modern scaling efforts require coordination of thousands of GPUs and sophisticated engineering for model parallelism, data parallelism, and pipeline parallelism. The field has developed techniques for gradual scaling, transfer learning across model sizes, and efficient inference for large models. Current research investigates the limits of scaling, alternative scaling dimensions, and the emergence of new capabilities at different scales.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "alignment",
@@ -1158,7 +1225,12 @@
     "acronyms": "",
     "technical_summary": "AI alignment emerged as a formal research area in the 2010s as researchers recognized that optimizing for stated objectives might not capture human intentions. Early work focused on reward hacking and specification gaming, where AI systems found unexpected ways to maximize their training objectives. The field gained prominence with the development of reinforcement learning from human feedback (RLHF), constitutional AI, and other techniques for incorporating human preferences into model training. Modern alignment research addresses the challenge of teaching AI systems to understand complex, context-dependent human values that are difficult to specify formally. Key approaches include preference learning (training models to predict human preferences), interpretability research (understanding how models make decisions), and robustness techniques (ensuring aligned behavior persists across different contexts). The field has developed frameworks for measuring alignment, detecting misalignment, and maintaining human oversight as AI capabilities advance.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "ai_safety"
+      }
+    ]
   },
   {
     "id": "text_to_speech",
@@ -1169,7 +1241,12 @@
     "acronyms": "TTS",
     "technical_summary": "Text-to-speech technology evolved from concatenative synthesis (combining recorded speech segments) to parametric synthesis using neural networks. Early systems produced robotic-sounding speech, but modern neural TTS systems like WaveNet, Tacotron, and FastSpeech generate highly natural-sounding voices. The breakthrough came with end-to-end neural architectures that learn direct mappings from text to audio waveforms, incorporating prosody, intonation, and speaker characteristics. Current systems can clone voices from minimal samples, generate expressive speech with emotional control, and support real-time synthesis for interactive applications. The field continues advancing toward more controllable, efficient, and multilingual speech synthesis systems.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "cost_efficiency",
@@ -1180,7 +1257,12 @@
     "acronyms": "",
     "technical_summary": "Cost efficiency in AI became a major focus as organizations moved from experimental to production AI deployments. The field encompasses training cost optimization (through efficient algorithms, hardware utilization, and data strategies), inference cost reduction (via model compression, caching, and serving optimization), and operational cost management (including monitoring, maintenance, and scaling strategies). Key techniques include spot instance usage, auto-scaling, model sharing, and cost-aware architecture design. Modern approaches include serverless computing for variable workloads, edge deployment to reduce bandwidth costs, and automated resource management. The field has developed sophisticated cost modeling tools and optimization frameworks that balance performance requirements with budget constraints.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "model_performance"
+      }
+    ]
   },
   {
     "id": "hallucination_detection",
@@ -1227,7 +1309,12 @@
     "acronyms": "",
     "technical_summary": "Privacy in AI gained prominence with the recognition that machine learning models can inadvertently memorize and leak training data. Early approaches focused on data anonymization and access controls, but modern privacy-preserving techniques include differential privacy, federated learning, and homomorphic encryption. Differential privacy adds calibrated noise to protect individual data points while preserving statistical properties. Federated learning enables model training without centralizing data, while secure multi-party computation allows collaborative learning without data sharing. The field has developed privacy accounting methods, attack detection systems, and practical frameworks for privacy-utility trade-offs. Current research addresses privacy in large language models, membership inference attacks, and privacy-preserving synthetic data generation.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "ai_safety"
+      }
+    ]
   },
   {
     "id": "ai_regulation",
@@ -1238,7 +1325,12 @@
     "acronyms": "",
     "technical_summary": "AI regulation emerged as governments recognized the societal impact of AI technologies. Early frameworks focused on data protection (like GDPR) and algorithmic accountability, but comprehensive AI regulations like the EU AI Act now address the full AI lifecycle. Key regulatory areas include high-risk AI system requirements, transparency obligations, bias prevention, and safety standards. Modern regulations classify AI systems by risk level and impose corresponding requirements for testing, documentation, and human oversight. The field has developed compliance frameworks, auditing standards, and technical tools for regulatory adherence. Current developments include international coordination efforts, sector-specific regulations, and adaptive governance frameworks that can evolve with technology.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
   },
   {
     "id": "embedding_models",
@@ -1249,7 +1341,12 @@
     "acronyms": "",
     "technical_summary": "Embedding models evolved from word2vec and GloVe for word representations to transformer-based models that create contextual embeddings for entire documents. The breakthrough came with models like BERT and Sentence-BERT that generate embeddings capturing semantic similarity and meaning. Modern embedding models are trained on massive datasets using contrastive learning, where similar content is mapped to nearby vectors in high-dimensional space. Key developments include multimodal embeddings that align text and images, domain-specific embeddings for specialized applications, and retrieval-optimized embeddings for search applications. The field has developed evaluation benchmarks, fine-tuning techniques, and efficient serving systems for embedding models at scale.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "embeddings"
+      }
+    ]
   },
   {
     "id": "text_to_video",
@@ -1260,7 +1357,13 @@
     "acronyms": "T2V",
     "technical_summary": "Text-to-video generation builds on advances in text-to-image models and video generation techniques. Early approaches extended image diffusion models to the temporal domain, but modern systems like Make-A-Video, Imagen Video, and Runway's Gen-2 use specialized architectures for temporal consistency and motion modeling. Key challenges include maintaining coherent motion, handling complex scene dynamics, and generating videos of sufficient length and resolution. Current approaches use latent diffusion models, temporal attention mechanisms, and motion priors learned from video datasets. The field is rapidly advancing with improvements in video quality, duration, controllability, and the ability to generate specific camera movements and scene transitions.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m",
+        "is_marked_for_review": true
+      }
+    ]
   },
   {
     "id": "text_generation",
@@ -1271,7 +1374,12 @@
     "acronyms": "NLG (Natural Language Generation)",
     "technical_summary": "Text generation evolved from template-based systems and n-gram models to neural language models based on recurrent networks and eventually transformers. The breakthrough came with GPT models that demonstrated emergent capabilities in text generation, including coherent long-form writing, creative content, and task-specific outputs. Modern text generation uses autoregressive models trained on massive text corpora, learning statistical patterns in language to generate contextually appropriate text. Key techniques include attention mechanisms for long-range dependencies, reinforcement learning from human feedback for alignment, and various decoding strategies for controlling generation quality and diversity. The field continues advancing with better controllability, factual accuracy, and specialized generation for different domains and formats.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "video_understanding",
@@ -1298,7 +1406,12 @@
     "acronyms": "",
     "technical_summary": "Prompt caching emerged as large language models became computationally expensive to run, particularly for applications with repetitive or partially overlapping inputs. The technique involves storing intermediate computational states from processing prompts, allowing models to reuse previous work when encountering similar inputs. Modern caching systems use sophisticated matching algorithms to identify reusable prompt segments, manage cache invalidation, and optimize memory usage. Key considerations include cache hit rates, storage efficiency, and maintaining consistency across different requests. The field has developed techniques for semantic caching (matching similar rather than identical prompts), hierarchical caching for different prompt components, and distributed caching systems for scalable deployment. Current research focuses on learned caching policies, adaptive cache management, and integration with model serving frameworks.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
   },
   {
     "id": "m",
@@ -1314,6 +1427,22 @@
         "type": "related",
         "target": "t"
       }
+    ]
+  },
+  {
+    "id": "d",
+    "term": "Data Prep",
+    "definition": "The entire section in model training where data collection, cleaning, denoising, structuring, etc happen.",
+    "explanation": "Preparing the data for training is a very expensive, and sensitive process. There's a big field in the industry here. I don't know what the name for it is.",
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": "",
+    "category": "General",
+    "edges": [],
+    "fields_to_review": [
+      "term",
+      "definition",
+      "explanation"
     ]
   }
 ]
