@@ -343,7 +343,7 @@ function showSidebar(data) {
     
     if (data.definition) {
         content += `<div class="sidebar-section">
-            <h4>Definition</h4>
+            <h4>Short Definition</h4>
             <p>${data.definition}</p>
         </div>`;
     }
@@ -355,10 +355,24 @@ function showSidebar(data) {
         </div>`;
     }
     
+    if (data.acronyms) {
+        content += `<div class="sidebar-section">
+            <h4>Acronyms</h4>
+            <p>${data.acronyms}</p>
+        </div>`;
+    }
+    
     if (data.explanation) {
         content += `<div class="sidebar-section">
-            <h4>Explanation</h4>
+            <h4>Why it matters?</h4>
             <p>${data.explanation}</p>
+        </div>`;
+    }
+    
+    if (data.technical_summary) {
+        content += `<div class="sidebar-section">
+            <h4>Technical Summary</h4>
+            <p>${data.technical_summary}</p>
         </div>`;
     }
     
@@ -574,6 +588,8 @@ function showEditForm(data, node) {
     document.getElementById('edit-definition').value = data.definition || '';
     document.getElementById('edit-explanation').value = data.explanation || '';
     document.getElementById('edit-synonyms').value = data.synonyms || '';
+    document.getElementById('edit-acronyms').value = data.acronyms || '';
+    document.getElementById('edit-technical-summary').value = data.technical_summary || '';
     
     // Populate category dropdown
     populateCategoryDropdown();
@@ -606,6 +622,8 @@ function showNewTermForm() {
         definition: '',
         explanation: '',
         synonyms: '',
+        acronyms: '',
+        technical_summary: '',
         category: 'General',
         edges: []
     };
@@ -621,6 +639,8 @@ function showNewTermForm() {
     document.getElementById('edit-definition').value = '';
     document.getElementById('edit-explanation').value = '';
     document.getElementById('edit-synonyms').value = '';
+    document.getElementById('edit-acronyms').value = '';
+    document.getElementById('edit-technical-summary').value = '';
     
     // Populate category dropdown
     populateCategoryDropdown();
@@ -973,6 +993,8 @@ function updateNodeFromForm() {
     const newDefinition = document.getElementById('edit-definition').value;
     const newExplanation = document.getElementById('edit-explanation').value;
     const newSynonyms = document.getElementById('edit-synonyms').value;
+    const newAcronyms = document.getElementById('edit-acronyms').value;
+    const newTechnicalSummary = document.getElementById('edit-technical-summary').value;
     let newCategory = document.getElementById('edit-category').value;
     
     // Handle custom category
@@ -1033,6 +1055,8 @@ function updateNodeFromForm() {
     data.definition = newDefinition;
     data.explanation = newExplanation;
     data.synonyms = newSynonyms;
+    data.acronyms = newAcronyms;
+    data.technical_summary = newTechnicalSummary;
     data.category = newCategory || 'General';
     data.edges = edges;
     
