@@ -337,41 +337,48 @@ function showSidebar(data) {
     const termEl = document.getElementById('sidebar-term');
     const contentEl = document.getElementById('sidebar-content');
 
-    termEl.textContent = data.term;
+    const fieldsToReview = data.fields_to_review || [];
+    const termReviewIndicator = fieldsToReview.includes('term') ? ' <span style="color: #e74c3c; font-size: 14px;">⚠</span>' : '';
+    termEl.innerHTML = data.term + termReviewIndicator;
     
     let content = '';
     
+    // Helper function to add review indicator
+    function getReviewIndicator(fieldName) {
+        return fieldsToReview.includes(fieldName) ? ' <span style="color: #e74c3c; font-size: 12px;">⚠ For Review</span>' : '';
+    }
+    
     if (data.definition) {
         content += `<div class="sidebar-section">
-            <h4>Short Definition</h4>
+            <h4>Short Definition${getReviewIndicator('definition')}</h4>
             <p>${data.definition}</p>
         </div>`;
     }
     
     if (data.synonyms) {
         content += `<div class="sidebar-section">
-            <h4>Synonyms</h4>
+            <h4>Synonyms${getReviewIndicator('synonyms')}</h4>
             <p>${data.synonyms}</p>
         </div>`;
     }
     
     if (data.acronyms) {
         content += `<div class="sidebar-section">
-            <h4>Acronyms</h4>
+            <h4>Acronyms${getReviewIndicator('acronyms')}</h4>
             <p>${data.acronyms}</p>
         </div>`;
     }
     
     if (data.explanation) {
         content += `<div class="sidebar-section">
-            <h4>Why it matters?</h4>
+            <h4>Why it matters?${getReviewIndicator('explanation')}</h4>
             <p>${data.explanation}</p>
         </div>`;
     }
     
     if (data.technical_summary) {
         content += `<div class="sidebar-section">
-            <h4>Technical Summary</h4>
+            <h4>Technical Summary${getReviewIndicator('technical_summary')}</h4>
             <p>${data.technical_summary}</p>
         </div>`;
     }
@@ -595,6 +602,9 @@ function showEditForm(data, node) {
     populateCategoryDropdown();
     document.getElementById('edit-category').value = data.category || '';
     
+    // Populate review checkboxes and mark fields
+    populateReviewCheckboxes(data.fields_to_review || []);
+    
     // Populate edges
     populateEdgesList(data.edges || []);
     
@@ -625,7 +635,8 @@ function showNewTermForm() {
         acronyms: '',
         technical_summary: '',
         category: 'General',
-        edges: []
+        edges: [],
+        fields_to_review: []
     };
     
     currentEditingNode = { data: newTermData, node: null };
@@ -645,6 +656,9 @@ function showNewTermForm() {
     // Populate category dropdown
     populateCategoryDropdown();
     document.getElementById('edit-category').value = 'General';
+    
+    // Clear review checkboxes and field markings
+    populateReviewCheckboxes([]);
     
     // Clear edges list
     document.getElementById('edges-list').innerHTML = '<p style="color: #6c757d; font-style: italic;">No edges defined</p>';
@@ -730,6 +744,28 @@ function populateCategoryDropdown() {
     newOption.value = '__new__';
     newOption.textContent = '+ Create New Category';
     categorySelect.appendChild(newOption);
+}
+
+// Populate review checkboxes and mark fields for review
+function populateReviewCheckboxes(fieldsToReview) {
+    const reviewCheckboxes = document.querySelectorAll('.review-checkbox');
+    
+    reviewCheckboxes.forEach(checkbox => {
+        const fieldName = checkbox.dataset.field;
+        const isChecked = fieldsToReview.includes(fieldName);
+        
+        checkbox.checked = isChecked;
+        
+        // Mark the corresponding field visually
+        const fieldElement = document.getElementById(`edit-${fieldName.replace('_', '-')}`);
+        if (fieldElement) {
+            if (isChecked) {
+                fieldElement.classList.add('field-marked-for-review');
+            } else {
+                fieldElement.classList.remove('field-marked-for-review');
+            }
+        }
+    });
 }
 
 // Populate edges list with current edges
@@ -962,6 +998,13 @@ function setupFormEventListeners() {
     const addEdgeBtn = document.getElementById('add-edge');
     addEdgeBtn.removeEventListener('click', handleAddEdge);
     addEdgeBtn.addEventListener('click', handleAddEdge);
+    
+    // Review checkboxes
+    const reviewCheckboxes = document.querySelectorAll('.review-checkbox');
+    reviewCheckboxes.forEach(checkbox => {
+        checkbox.removeEventListener('change', handleReviewCheckboxChange);
+        checkbox.addEventListener('change', handleReviewCheckboxChange);
+    });
 }
 
 // Handle category selection changes
@@ -979,6 +1022,25 @@ function handleCategoryChange(e) {
 // Handle add edge button
 function handleAddEdge() {
     addEdgeItem();
+    updateNodeFromForm();
+}
+
+// Handle review checkbox changes
+function handleReviewCheckboxChange(e) {
+    const fieldName = e.target.dataset.field;
+    const isChecked = e.target.checked;
+    
+    // Mark the corresponding field visually
+    const fieldElement = document.getElementById(`edit-${fieldName.replace('_', '-')}`);
+    if (fieldElement) {
+        if (isChecked) {
+            fieldElement.classList.add('field-marked-for-review');
+        } else {
+            fieldElement.classList.remove('field-marked-for-review');
+        }
+    }
+    
+    // Update the data
     updateNodeFromForm();
 }
 
@@ -1050,6 +1112,13 @@ function updateNodeFromForm() {
         }
     });
     
+    // Collect fields marked for review
+    const fieldsToReview = [];
+    const reviewCheckboxes = document.querySelectorAll('.review-checkbox:checked');
+    reviewCheckboxes.forEach(checkbox => {
+        fieldsToReview.push(checkbox.dataset.field);
+    });
+    
     // Update data objects
     data.term = newTerm;
     data.definition = newDefinition;
@@ -1059,6 +1128,13 @@ function updateNodeFromForm() {
     data.technical_summary = newTechnicalSummary;
     data.category = newCategory || 'General';
     data.edges = edges;
+    
+    // Set fields_to_review (only include if not empty)
+    if (fieldsToReview.length > 0) {
+        data.fields_to_review = fieldsToReview;
+    } else {
+        delete data.fields_to_review; // Remove the field if empty
+    }
     
     // For new terms, generate ID if not present
     if (!data.id && newTerm) {

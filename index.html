@@ -51,27 +51,63 @@
                 <div id="sidebar-edit-form" class="edit-form hidden">
                     <form id="node-edit-form">
                         <div class="form-group">
-                            <label for="edit-term">Term:</label>
+                            <div class="field-header">
+                                <label for="edit-term">Term:</label>
+                                <label class="review-checkbox-label">
+                                    <input type="checkbox" class="review-checkbox" data-field="term">
+                                    <span class="review-label">Mark for review</span>
+                                </label>
+                            </div>
                             <input type="text" id="edit-term" name="term" required>
                         </div>
                         <div class="form-group">
-                            <label for="edit-definition">Definition:</label>
+                            <div class="field-header">
+                                <label for="edit-definition">Definition:</label>
+                                <label class="review-checkbox-label">
+                                    <input type="checkbox" class="review-checkbox" data-field="definition">
+                                    <span class="review-label">Mark for review</span>
+                                </label>
+                            </div>
                             <textarea id="edit-definition" name="definition" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="edit-explanation">Explanation:</label>
+                            <div class="field-header">
+                                <label for="edit-explanation">Explanation:</label>
+                                <label class="review-checkbox-label">
+                                    <input type="checkbox" class="review-checkbox" data-field="explanation">
+                                    <span class="review-label">Mark for review</span>
+                                </label>
+                            </div>
                             <textarea id="edit-explanation" name="explanation" rows="4"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="edit-synonyms">Synonyms:</label>
+                            <div class="field-header">
+                                <label for="edit-synonyms">Synonyms:</label>
+                                <label class="review-checkbox-label">
+                                    <input type="checkbox" class="review-checkbox" data-field="synonyms">
+                                    <span class="review-label">Mark for review</span>
+                                </label>
+                            </div>
                             <input type="text" id="edit-synonyms" name="synonyms" placeholder="Enter synonyms separated by commas">
                         </div>
                         <div class="form-group">
-                            <label for="edit-acronyms">Acronyms:</label>
+                            <div class="field-header">
+                                <label for="edit-acronyms">Acronyms:</label>
+                                <label class="review-checkbox-label">
+                                    <input type="checkbox" class="review-checkbox" data-field="acronyms">
+                                    <span class="review-label">Mark for review</span>
+                                </label>
+                            </div>
                             <input type="text" id="edit-acronyms" name="acronyms" placeholder="Enter acronyms separated by commas">
                         </div>
                         <div class="form-group">
-                            <label for="edit-technical-summary">Technical Summary:</label>
+                            <div class="field-header">
+                                <label for="edit-technical-summary">Technical Summary:</label>
+                                <label class="review-checkbox-label">
+                                    <input type="checkbox" class="review-checkbox" data-field="technical_summary">
+                                    <span class="review-label">Mark for review</span>
+                                </label>
+                            </div>
                             <textarea id="edit-technical-summary" name="technical_summary" rows="6" placeholder="Detailed technical background and context"></textarea>
                         </div>
                         <div class="form-group">
