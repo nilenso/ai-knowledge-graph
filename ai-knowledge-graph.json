@@ -239,9 +239,12 @@
     "edges": [
       {
         "type": "related",
-        "target": "t"
+        "target": "m"
       }
-    ]
+    ],
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": ""
   },
   {
     "id": "neural_network_architecture",
@@ -419,7 +422,10 @@
         "type": "related",
         "target": "parameters"
       }
-    ]
+    ],
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": ""
   },
   {
     "id": "context_engineering",
@@ -695,9 +701,12 @@
     "edges": [
       {
         "type": "related",
-        "target": "t"
+        "target": "neural_network_architecture"
       }
-    ]
+    ],
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": ""
   },
   {
     "id": "llm_judge",
@@ -823,18 +832,16 @@
     "acronyms": "",
     "technical_summary": "Model performance became a critical focus as AI models grew larger and more complex, requiring significant computational resources. Performance encompasses multiple dimensions: accuracy (how correct the outputs are), latency (how fast the model responds), throughput (how many requests it can handle), and efficiency (resource usage per operation). Modern performance optimization involves techniques like quantization, pruning, knowledge distillation, and specialized hardware acceleration. The field has developed sophisticated profiling tools and metrics to measure and optimize these various performance aspects across different hardware configurations and deployment scenarios.",
     "category": "General",
-    "edges": []
-  },
-  {
-    "id": "model_optimization",
-    "term": "Model Optimization",
-    "definition": "Techniques to make AI models run faster, use less memory, or consume less power while maintaining quality.",
-    "explanation": "Model optimization makes AI accessible to more devices and reduces costs for companies deploying AI at scale. It enables AI to run on smartphones, edge devices, and in resource-constrained environments.",
-    "synonyms": "Model compression, efficiency optimization, performance tuning",
-    "acronyms": "",
-    "technical_summary": "Model optimization emerged as deep learning models grew exponentially in size, making deployment challenging and expensive. Key techniques include quantization (reducing numerical precision), pruning (removing unnecessary parameters), knowledge distillation (training smaller models to mimic larger ones), and architectural improvements. Modern optimization approaches use automated tools and neural architecture search to find optimal model configurations. The field has evolved to include hardware-aware optimization, where models are specifically tuned for target deployment hardware like mobile chips or specialized AI accelerators.",
-    "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      },
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "vision",
@@ -872,7 +879,12 @@
     "acronyms": "",
     "technical_summary": "Image generation evolved from early generative adversarial networks (GANs) in 2014 to modern diffusion models like DALL-E, Midjourney, and Stable Diffusion. The breakthrough came with text-to-image models that can generate highly realistic images from natural language descriptions. Diffusion models, which gradually denoise random pixels into coherent images, became the dominant approach due to their stability and quality. Modern systems incorporate advanced techniques like attention mechanisms, classifier-free guidance, and controllable generation, enabling precise control over style, composition, and content.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "multilinguality",
@@ -883,7 +895,12 @@
     "acronyms": "",
     "technical_summary": "Multilingual AI development began with machine translation systems but expanded to general-purpose language models trained on diverse language data. Models like mBERT, XLM-R, and multilingual versions of GPT demonstrate that transformer architectures can learn shared representations across languages. Modern approaches use techniques like cross-lingual alignment, code-switching during training, and language-specific adapters. Challenges include handling low-resource languages, cultural context, and maintaining performance across different scripts and linguistic structures. Recent work focuses on improving zero-shot cross-lingual transfer and developing truly polyglot models.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "synthetic_data",
@@ -916,7 +933,13 @@
     "acronyms": "",
     "technical_summary": "Model merging techniques emerged as researchers sought ways to combine the capabilities of different fine-tuned models without full retraining. Early approaches included simple weight averaging and linear interpolation between models. Modern techniques include TIES (Trimming, Electing, and Merging), DARE (Drop and Rescale), and task-specific merging strategies. The field has developed methods for merging models trained on different tasks, datasets, or with different architectures. Key challenges include resolving conflicts between model parameters, maintaining performance across merged capabilities, and ensuring stable training dynamics. Recent work explores automated merging procedures and theoretical frameworks for understanding when and why merging works effectively.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "t",
+        "is_marked_for_review": true
+      }
+    ]
   },
   {
     "id": "video_generation",
@@ -1097,7 +1120,12 @@
     "acronyms": "",
     "technical_summary": "Memory optimization became critical as AI models grew beyond available GPU memory capacities. Key techniques include gradient checkpointing (trading computation for memory), activation recomputation, and mixed precision training. Modern approaches use memory pooling, dynamic memory allocation, and offloading strategies that move data between GPU, CPU, and disk storage. Advanced techniques include parameter sharing, gradient compression, and model parallelism strategies. The field has developed tools for memory profiling, automated optimization, and memory-efficient training algorithms. Current research focuses on extreme memory efficiency for training massive models and zero-memory techniques that eliminate most memory overhead.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "model_performance"
+      }
+    ]
   },
   {
     "id": "scaling_laws",
@@ -1179,7 +1207,16 @@
     "acronyms": "",
     "technical_summary": "Hardware optimization for AI evolved from general-purpose processors to specialized accelerators designed for machine learning workloads. The field encompasses GPU optimization, custom AI chip design (like TPUs and neuromorphic processors), and system-level optimizations including memory hierarchies and interconnects. Key developments include tensor processing units for matrix operations, quantization-aware hardware for reduced precision arithmetic, and memory-compute integration to reduce data movement. Modern optimization involves co-design of algorithms and hardware, with specialized architectures for different AI workloads like training, inference, and edge deployment. The field continues advancing with novel computing paradigms like optical computing, quantum acceleration, and brain-inspired architectures.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      },
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   },
   {
     "id": "privacy",
@@ -1245,7 +1282,12 @@
     "acronyms": "",
     "technical_summary": "Video understanding extends computer vision techniques to handle temporal information and motion patterns. Early approaches used 3D convolutions and recurrent networks to process video frames sequentially, but modern systems leverage transformer architectures and attention mechanisms for long-range temporal modeling. Key tasks include action recognition, object tracking, scene understanding, and temporal localization of events. Current approaches use video transformers, self-supervised learning on video data, and multimodal models that combine visual and audio information. The field has developed sophisticated benchmarks for different video understanding tasks and continues advancing toward more comprehensive video analysis that can understand complex narratives, cause-and-effect relationships, and contextual meaning in video content.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "m"
+      }
+    ]
   },
   {
     "id": "prompt_caching",
@@ -1257,5 +1299,21 @@
     "technical_summary": "Prompt caching emerged as large language models became computationally expensive to run, particularly for applications with repetitive or partially overlapping inputs. The technique involves storing intermediate computational states from processing prompts, allowing models to reuse previous work when encountering similar inputs. Modern caching systems use sophisticated matching algorithms to identify reusable prompt segments, manage cache invalidation, and optimize memory usage. Key considerations include cache hit rates, storage efficiency, and maintaining consistency across different requests. The field has developed techniques for semantic caching (matching similar rather than identical prompts), hierarchical caching for different prompt components, and distributed caching systems for scalable deployment. Current research focuses on learned caching policies, adaptive cache management, and integration with model serving frameworks.",
     "category": "General",
     "edges": []
+  },
+  {
+    "id": "m",
+    "term": "Model Capabilities",
+    "definition": "The abilities that an AI has",
+    "explanation": "Models have varying skills based on their training data, architecture, and intended purpose. Choosing the right model for the right task, based on its abilities can be very effective.",
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": "",
+    "category": "General",
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ]
   }
 ]
