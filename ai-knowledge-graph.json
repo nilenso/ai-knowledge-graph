@@ -43,9 +43,12 @@
       },
       {
         "type": "related",
-        "target": "model"
+        "target": "t"
       }
-    ]
+    ],
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": ""
   },
   {
     "id": "assistant___instruct_model",
@@ -57,8 +60,15 @@
       {
         "type": "related",
         "target": "fine_tuning"
+      },
+      {
+        "type": "related",
+        "target": "base_model"
       }
-    ]
+    ],
+    "synonyms": "",
+    "acronyms": "",
+    "technical_summary": ""
   },
   {
     "id": "base_model",
@@ -1021,7 +1031,12 @@
     "acronyms": "",
     "technical_summary": "AI-powered robotics combines traditional robotics with modern machine learning, particularly reinforcement learning and computer vision. Classical robotics relied on precise programming and sensing, but AI enables robots to learn from experience and adapt to new situations. Modern approaches use deep learning for perception, reinforcement learning for control, and simulation for training. Key challenges include sim-to-real transfer, sample efficiency, and safety in unpredictable environments. Current research focuses on foundation models for robotics, learning from demonstration, and multi-modal perception combining vision, touch, and proprioception. The field is advancing toward more general-purpose robots that can perform diverse tasks in unstructured environments.",
     "category": "General",
-    "edges": [],
+    "edges": [
+      {
+        "type": "related",
+        "target": "ai_engineering"
+      }
+    ],
     "fields_to_review": [
       "term"
     ]
@@ -1118,7 +1133,12 @@
     "acronyms": "",
     "technical_summary": "On-device AI became viable with advances in mobile processors, model compression techniques, and specialized AI chips. Early mobile AI was limited to simple tasks, but modern devices can run sophisticated models through techniques like quantization, pruning, and optimized runtime engines. Key frameworks include TensorFlow Lite, ONNX Runtime, and Core ML for different platforms. Challenges include memory constraints, battery life, thermal management, and maintaining accuracy with compressed models. The field has developed specialized neural processing units (NPUs), efficient model architectures like MobileNets, and automated optimization tools for target hardware platforms.",
     "category": "General",
-    "edges": []
+    "edges": [
+      {
+        "type": "related",
+        "target": "inference"
+      }
+    ]
   },
   {
     "id": "ai_safety",
@@ -1425,7 +1445,7 @@
     "edges": [
       {
         "type": "related",
-        "target": "t"
+        "target": "base_model"
       }
     ]
   },
@@ -1438,7 +1458,12 @@
     "acronyms": "",
     "technical_summary": "",
     "category": "General",
-    "edges": [],
+    "edges": [
+      {
+        "type": "related",
+        "target": "t"
+      }
+    ],
     "fields_to_review": [
       "term",
       "definition",
